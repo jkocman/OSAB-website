@@ -91,6 +91,10 @@ watch(
 
 <style scoped lang="scss">
 header {
+  position: fixed;
+  left: 0;
+  right: 0;
+
   background-color: var(--primary-background-color);
   display: flex;
   align-items: center;
