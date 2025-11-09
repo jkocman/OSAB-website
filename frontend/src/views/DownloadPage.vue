@@ -1,1 +1,3 @@
-<template>Download</template>
+<template>
+  <main></main>
+</template>
