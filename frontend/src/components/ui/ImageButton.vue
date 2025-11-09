@@ -26,7 +26,7 @@ const emit = defineEmits<{
 div {
   height: 375px;
   width: 725px;
-  border: 2px solid var(--secondary-background-color);
+  border: 2px solid var(--highlight-color);
   border-radius: 20px;
   cursor: pointer;
   display: flex;

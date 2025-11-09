@@ -9,14 +9,18 @@ import './assets/styles/base.scss'
 
 const app = createApp(App)
 
-import Header from './components/nav/Header.vue'
+import Header from './components/sections/Header.vue'
 app.component('Header', Header)
+import Footer from './components/sections/Footer.vue'
+app.component('Footer', Footer)
 import Button from './components/ui/Button.vue'
 app.component('Button', Button)
 import Input from './components/ui/Input.vue'
 app.component('Input', Input)
 import ImageButton from './components/ui/ImageButton.vue'
 app.component('ImageButton', ImageButton)
+import TextArticle from './components/ui/TextArticle.vue'
+app.component('TextArticle', TextArticle)
 
 app.use(createPinia())
 app.use(router)

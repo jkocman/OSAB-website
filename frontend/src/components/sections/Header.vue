@@ -94,13 +94,14 @@ header {
   position: fixed;
   left: 0;
   right: 0;
+  z-index: 100;
 
   background-color: var(--primary-background-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.5em var(--global-padding);
-  border-bottom: solid var(--secondary-background-color) 2px;
+  border-bottom: solid var(--highlight-color) 2px;
   nav {
     ul {
       display: flex;

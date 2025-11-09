@@ -44,6 +44,71 @@
         </ImageButton>
       </section>
     </section>
+    <section class="about-section">
+      <h2>Learn More</h2>
+      <TextArticle>
+        <h3>About the game</h3>
+        <p>
+          Irure mollit culpa laboris nostrud mollit. Sint dolore amet pariatur fugiat. Laborum ea ex
+          veniam proident adipisicing anim. Proident laboris dolor qui tempor Lorem esse officia
+          ullamco ea exercitation labore. Aute anim voluptate proident dolore velit fugiat voluptate
+          minim esse velit minim laborum. Magna fugiat cupidatat adipisicing aliquip sunt qui minim
+          commodo et et sunt. Qui culpa excepteur est officia duis nostrud cillum enim consequat.
+          Dolor in adipisicing veniam ipsum tempor excepteur aliquip. Nisi duis ut nulla non aliquip
+          laboris nulla fugiat irure ipsum magna. Proident ad nostrud veniam exercitation fugiat ut
+          incididunt ullamco officia reprehenderit deserunt nisi dolore. Reprehenderit esse do enim
+          pariatur cupidatat deserunt sunt consequat est sit voluptate dolore minim. Aliqua ut elit
+          aute et ut voluptate cupidatat non Lorem aliqua qui aliquip nulla pariatur. Enim quis sint
+          dolor esse culpa excepteur duis ex occaecat fugiat commodo. Et esse eu pariatur ullamco
+          excepteur magna et esse sunt sit. Laborum ea dolor do enim fugiat aute quis commodo minim
+          occaecat esse laboris pariatur. Enim id ipsum ut dolore cupidatat. Qui sit sit deserunt
+          culpa laboris commodo dolor ex in ullamco id sint occaecat. Veniam exercitation quis ea
+          officia irure aute excepteur aliqua incididunt eiusmod.Minim ea est labore ea laborum
+          dolor veniam. Veniam cupidatat enim culpa amet cillum non consectetur labore et pariatur
+          fugiat cupidatat. Elit et tempor officia culpa proident fugiat aliqua aliqua ullamco aute
+          ut. Ipsum officia fugiat cupidatat qui sint sunt quis dolore. Lorem magna dolor dolore
+          consectetur eiusmod magna quis ullamco. Minim quis reprehenderit nisi pariatur
+          exercitation excepteur proident proident Lorem sint et qui exercitation. Sint cupidatat
+          fugiat duis pariatur adipisicing sit.
+        </p>
+        <Button
+          title="Learn more"
+          :fontSize="18"
+          :paddingHorizontal="30"
+          :paddingVertical="10"
+          buttonType="secondary"
+          @click="router.push('/about')"
+        ></Button>
+      </TextArticle>
+    </section>
+    <section class="download-section">
+      <h2>Download</h2>
+      <TextArticle>
+        <h3>About the download</h3>
+        <p>
+          Irure mollit culpa laboris nostrud mollit. Sint dolore amet pariatur fugiat. Laborum ea ex
+          veniam proident adipisicing anim. Proident laboris dolor qui tempor Lorem esse officia
+          ullamco ea exercitation labore. Aute anim voluptate proident dolore velit fugiat voluptate
+          minim esse velit minim laborum. Magna fugiat cupidatat adipisicing aliquip sunt qui minim
+          commodo et et sunt. Qui culpa excepteur est officia duis nostrud cillum enim consequat.
+          Dolor in adipisicing veniam ipsum tempor excepteur aliquip. Nisi duis ut nulla non aliquip
+          laboris nulla fugiat irure ipsum magna. Proident ad nostrud veniam exercitation fugiat ut
+          incididunt ullamco officia reprehenderit deserunt nisi dolore. Reprehenderit esse do enim
+          pariatur cupidatat deserunt sunt consequat est sit voluptate dolore minim. Aliqua ut elit
+          aute et ut voluptate cupidatat non Lorem aliqua qui aliquip nulla pariatur. Enim quis sint
+          dolor esse culpa excepteur duis ex occaecat fugiat commodo. Et esse eu pariatur ullamco
+          excepteur magna et esse sunt sit. Laborum ea dolor do enim fugiat aute quis commodo minim
+        </p>
+        <Button
+          title="Download"
+          :fontSize="18"
+          :paddingHorizontal="30"
+          :paddingVertical="10"
+          buttonType="primary"
+          @click="router.push('/about')"
+        ></Button>
+      </TextArticle>
+    </section>
   </main>
 </template>
 
@@ -57,6 +122,13 @@ const router = useRouter()
 
 <style lang="scss" scoped>
 main {
+  h2 {
+    color: white;
+    font-weight: 600;
+    font-size: var(--large-text-size);
+    text-align: center;
+    margin-bottom: 40px;
+  }
   section:first-child {
     background:
       linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('../assets/img/osab.jpeg');
@@ -105,13 +177,6 @@ main {
       align-items: center;
       justify-content: space-between;
     }
-    h2 {
-      color: white;
-      font-weight: 600;
-      font-size: var(--large-text-size);
-      text-align: center;
-      margin-bottom: 40px;
-    }
 
     .card {
       text-align: center;
@@ -132,6 +197,40 @@ main {
         color: var(--terciary-foreground-color);
         font-size: var(--small-text-size);
       }
+    }
+  }
+  .about-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 100px;
+    h3 {
+      font-weight: 600;
+      font-size: var(--larger-text-size);
+      color: var(--secondary-foreground-color);
+    }
+    p {
+      font-size: var(--small-text-size);
+      color: white;
+      line-height: 1.2;
+    }
+  }
+  .download-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 100px;
+    h3 {
+      font-weight: 600;
+      font-size: var(--larger-text-size);
+      color: var(--primary-foreground-color);
+    }
+    p {
+      font-size: var(--small-text-size);
+      color: white;
+      line-height: 1.2;
     }
   }
 }
