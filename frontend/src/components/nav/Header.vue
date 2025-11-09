@@ -42,9 +42,9 @@ const router = useRouter()
 const page = ref(1)
 
 const positions: Record<number, string> = {
-  1: '198px',
-  2: '283px',
-  3: '372px',
+  1: '230px',
+  2: '316px',
+  3: '405px',
 }
 
 const width: Record<number, string> = {

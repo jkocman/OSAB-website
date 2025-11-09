@@ -15,6 +15,8 @@ import Button from './components/ui/Button.vue'
 app.component('Button', Button)
 import Input from './components/ui/Input.vue'
 app.component('Input', Input)
+import ImageButton from './components/ui/ImageButton.vue'
+app.component('ImageButton', ImageButton)
 
 app.use(createPinia())
 app.use(router)
