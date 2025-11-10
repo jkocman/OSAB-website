@@ -7,20 +7,20 @@
             <img src="../../assets/img/logo-without-text.png" alt="logo" />
           </RouterLink>
         </li>
-        <li>
+        <li class="item" ref="home">
           <RouterLink to="/">Home</RouterLink>
         </li>
-        <li>
+        <li class="item" ref="about">
           <RouterLink to="/about">About</RouterLink>
         </li>
-        <li>
+        <li class="item" ref="beatmaps">
           <RouterLink to="/beatmaps">Beatmaps</RouterLink>
         </li>
         <li>
           <Input inputType="text" inputPlaceholder="Search beatmaps..." />
         </li>
       </ul>
-      <div class="nav-indicator" :style="indicatorStyle"></div>
+      <div v-if="page !== 0" class="nav-indicator" :style="indicatorStyle"></div>
     </nav>
     <Button
       title="Download"
@@ -34,34 +34,58 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
 const page = ref(1)
 
-const positions: Record<number, string> = {
-  1: '230px',
-  2: '316px',
-  3: '405px',
-}
-
-const width: Record<number, string> = {
-  1: '50px',
-  2: '50px',
-  3: '80px',
-}
-
-const indicatorStyle = computed(() => ({
-  left: positions[page.value] ?? '200px',
-  width: width[page.value],
-  transition: 'left 0.3s ease',
-}))
+const home = ref<HTMLLIElement | null>(null)
+const about = ref<HTMLLIElement | null>(null)
+const beatmaps = ref<HTMLLIElement | null>(null)
+const indicatorLeft = ref(0)
+const indicatorWidth = ref(0)
 
 const buttonType = computed(() => {
   return route.path === '/download' ? 'reverse' : 'primary'
 })
+
+const getCurrentRef = () => {
+  switch (page.value) {
+    case 1:
+      return home.value
+    case 2:
+      return about.value
+    case 3:
+      return beatmaps.value
+    default:
+      return null
+  }
+}
+
+const updateIndicator = () => {
+  const el = getCurrentRef()
+  if (!el) return
+
+  const rect = el.getBoundingClientRect()
+  const navRect = el.parentElement?.getBoundingClientRect()
+
+  const rootStyles = getComputedStyle(document.documentElement)
+  const paddingSize = rootStyles.getPropertyValue('--global-padding').split('p')
+  const paddingSizeNum = Number(paddingSize[0])
+
+  if (navRect) {
+    indicatorLeft.value = rect.left - navRect.left + paddingSizeNum
+    indicatorWidth.value = rect.width
+  }
+}
+
+const indicatorStyle = computed(() => ({
+  left: indicatorLeft.value + 'px',
+  width: indicatorWidth.value + 'px',
+  transition: 'left 0.3s ease, width 0.3s ease',
+}))
 
 const updatePageFromRoute = () => {
   switch (route.path) {
@@ -77,9 +101,9 @@ const updatePageFromRoute = () => {
     case '/download':
       page.value = 0
       break
-    default:
-      page.value = 1
   }
+
+  nextTick(updateIndicator)
 }
 
 watch(
@@ -87,6 +111,11 @@ watch(
   () => updatePageFromRoute(),
   { immediate: true },
 )
+
+onMounted(() => {
+  nextTick(updateIndicator)
+  window.addEventListener('resize', updateIndicator)
+})
 </script>
 
 <style scoped lang="scss">
@@ -113,6 +142,11 @@ header {
           color: var(--terciary-foreground-color);
           font-size: var(--nav-text-size);
           text-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+          transition: ease 0.3s;
+
+          &:hover {
+            color: var(--primary-foreground-color);
+          }
         }
         img {
           width: 70px;

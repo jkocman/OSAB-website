@@ -6,16 +6,16 @@
     <section>
       <p>&#169; Krooby & Inkking</p>
       <section>
-        <a href="">
+        <a href="" target="_blank">
           <img src="../../assets/img/icons/discord.png" alt="" />
         </a>
-        <a href="">
+        <a href="" target="_blank">
           <img src="../../assets/img/icons/itch.png" alt="" />
         </a>
-        <a href="">
+        <a href="" target="_blank">
           <img src="../../assets/img/icons/github.png" alt="" />
         </a>
-        <a href="">
+        <a href="" target="_blank">
           <img src="../../assets/img/icons/twitter.png" alt="" />
         </a>
       </section>
@@ -28,7 +28,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--global-padding);
+  padding: 10px var(--global-padding);
   background-color: var(--terciary-background-color);
 
   section:first-child {
@@ -38,20 +38,19 @@ footer {
   }
 
   section:nth-child(2) {
+    p {
+      color: white;
+      font-size: var(--medium-text-size);
+      margin-bottom: 10px;
+    }
     section {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 20px;
       a {
-        img:nth-child(2n - 1) {
+        img {
           width: 35px;
-        }
-        img:nth-child(2) {
-          width: 45px;
-        }
-        img:nth-child(4) {
-          width: 40px;
         }
       }
     }

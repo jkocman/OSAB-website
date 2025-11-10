@@ -25,7 +25,6 @@ const emit = defineEmits<{
 <style lang="scss" scoped>
 div {
   height: 375px;
-  width: 725px;
   border: 2px solid var(--highlight-color);
   border-radius: 20px;
   cursor: pointer;
