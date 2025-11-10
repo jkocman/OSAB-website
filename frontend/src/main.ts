@@ -19,8 +19,8 @@ import Input from './components/ui/Input.vue'
 app.component('Input', Input)
 import ImageButton from './components/ui/ImageButton.vue'
 app.component('ImageButton', ImageButton)
-import TextArticle from './components/ui/TextArticle.vue'
-app.component('TextArticle', TextArticle)
+import Article from './components/ui/Article.vue'
+app.component('Article', Article)
 
 app.use(createPinia())
 app.use(router)

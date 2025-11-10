@@ -1,12 +1,23 @@
 <template>
-  <div>
+  <article :style="articleStyle">
     <slot></slot>
-  </div>
+  </article>
 </template>
 
+<script lang="ts" setup>
+import { computed } from 'vue'
+
+const props = defineProps({
+  width: { Number, default: 1000 },
+})
+
+const articleStyle = computed(() => ({
+  width: props.width + 'px',
+}))
+</script>
+
 <style lang="scss" scoped>
-div {
-  width: 1000px;
+article {
   background-color: var(--secondary-background-color);
   padding: 20px 40px;
   border-radius: 20px;

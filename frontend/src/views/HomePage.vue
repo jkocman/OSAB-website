@@ -46,7 +46,7 @@
     </section>
     <section class="about-section">
       <h2>Learn More</h2>
-      <TextArticle>
+      <Article>
         <h3>About the game</h3>
         <p>
           Irure mollit culpa laboris nostrud mollit. Sint dolore amet pariatur fugiat. Laborum ea ex
@@ -79,11 +79,11 @@
           buttonType="secondary"
           @click="router.push('/about')"
         ></Button>
-      </TextArticle>
+      </Article>
     </section>
     <section class="download-section">
       <h2>Download</h2>
-      <TextArticle>
+      <Article>
         <h3>About the download</h3>
         <p>
           Irure mollit culpa laboris nostrud mollit. Sint dolore amet pariatur fugiat. Laborum ea ex
@@ -107,7 +107,7 @@
           buttonType="primary"
           @click="router.push('/about')"
         ></Button>
-      </TextArticle>
+      </Article>
     </section>
   </main>
 </template>
