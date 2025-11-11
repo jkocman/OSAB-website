@@ -242,9 +242,9 @@ header {
     padding-top: 20px;
     ul {
       display: flex;
-      flex-direction: column; /* položky pod sebe */
+      flex-direction: column;
       align-items: center;
-      gap: 20px; /* <--- mezery mezi položkami */
+      gap: 20px;
     }
     a {
       text-decoration: none;
