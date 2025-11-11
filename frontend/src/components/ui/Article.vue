@@ -5,15 +5,32 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 const props = defineProps({
-  width: { Number, default: 1000 },
+  width: { type: Number, default: 1000 },
 })
 
-const articleStyle = computed(() => ({
-  width: props.width + 'px',
-}))
+const windowWidth = ref(window.innerWidth)
+
+function handleResize() {
+  windowWidth.value = window.innerWidth
+}
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+})
+
+const articleStyle = computed(() => {
+  if (windowWidth.value <= 1300) {
+    return { width: '100%' }
+  }
+  return { width: props.width + 'px', maxWidth: '100%' }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -21,9 +38,7 @@ article {
   background-color: var(--secondary-background-color);
   padding: 20px 40px;
   border-radius: 20px;
-  border:
-    2px,
-    solid var(--highlight-color);
+  border: 2px solid var(--highlight-color);
   text-align: center;
 
   display: flex;

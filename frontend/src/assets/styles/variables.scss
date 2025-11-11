@@ -17,4 +17,14 @@
   --xl-text-size: 80px;
 
   --global-padding: 200px;
+
+  @media (max-width: 1700px) {
+    --global-padding: 150px;
+  }
+  @media (max-width: 1410px) {
+    --global-padding: 100px;
+  }
+  @media (max-width: 1100px) {
+    --global-padding: 50px;
+  }
 }

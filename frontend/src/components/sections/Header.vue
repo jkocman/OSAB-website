@@ -1,35 +1,74 @@
 <template>
   <header>
-    <nav>
+    <section class="header">
+      <nav>
+        <ul>
+          <li>
+            <RouterLink to="/" @click="page = 1">
+              <img src="../../assets/img/logo-without-text.png" alt="logo" />
+            </RouterLink>
+          </li>
+          <li class="item" ref="home">
+            <RouterLink to="/">Home</RouterLink>
+          </li>
+          <li class="item" ref="about">
+            <RouterLink to="/about">About</RouterLink>
+          </li>
+          <li class="item" ref="beatmaps">
+            <RouterLink to="/beatmaps">Beatmaps</RouterLink>
+          </li>
+          <li>
+            <Input inputType="text" inputPlaceholder="Search beatmaps..." />
+          </li>
+        </ul>
+        <div v-if="page !== 0" class="nav-indicator" :style="indicatorStyle"></div>
+      </nav>
+      <Button
+        title="Download"
+        :fontSize="18"
+        :paddingHorizontal="25"
+        :paddingVertical="10"
+        :buttonType="buttonType"
+        @click="router.push('/download')"
+      ></Button>
+    </section>
+
+    <section class="burger-header">
+      <RouterLink to="/" @click="page = 1">
+        <img src="../../assets/img/logo-without-text.png" alt="logo" />
+      </RouterLink>
+
+      <button class="burger" @click="toggleMenu()">
+        <div :class="{ open: isOpen }"></div>
+        <div :class="{ open: isOpen }"></div>
+        <div :class="{ open: isOpen }"></div>
+      </button>
+    </section>
+
+    <section class="burger-menu" v-if="isOpen">
       <ul>
-        <li>
-          <RouterLink to="/" @click="page = 1">
-            <img src="../../assets/img/logo-without-text.png" alt="logo" />
-          </RouterLink>
-        </li>
-        <li class="item" ref="home">
-          <RouterLink to="/">Home</RouterLink>
-        </li>
-        <li class="item" ref="about">
-          <RouterLink to="/about">About</RouterLink>
-        </li>
-        <li class="item" ref="beatmaps">
-          <RouterLink to="/beatmaps">Beatmaps</RouterLink>
-        </li>
         <li>
           <Input inputType="text" inputPlaceholder="Search beatmaps..." />
         </li>
+        <li class="item">
+          <RouterLink to="/">Home</RouterLink>
+        </li>
+        <li class="item">
+          <RouterLink to="/about">About</RouterLink>
+        </li>
+        <li class="item">
+          <RouterLink to="/beatmaps">Beatmaps</RouterLink>
+        </li>
+        <Button
+          title="Download"
+          :fontSize="18"
+          :paddingHorizontal="25"
+          :paddingVertical="10"
+          :buttonType="buttonType"
+          @click="router.push('/download')"
+        ></Button>
       </ul>
-      <div v-if="page !== 0" class="nav-indicator" :style="indicatorStyle"></div>
-    </nav>
-    <Button
-      title="Download"
-      :fontSize="18"
-      :paddingHorizontal="25"
-      :paddingVertical="10"
-      :buttonType="buttonType"
-      @click="router.push('/download')"
-    ></Button>
+    </section>
   </header>
 </template>
 
@@ -46,6 +85,8 @@ const about = ref<HTMLLIElement | null>(null)
 const beatmaps = ref<HTMLLIElement | null>(null)
 const indicatorLeft = ref(0)
 const indicatorWidth = ref(0)
+
+const isOpen = ref(false)
 
 const buttonType = computed(() => {
   return route.path === '/download' ? 'reverse' : 'primary'
@@ -76,6 +117,7 @@ const updateIndicator = () => {
   const paddingSizeNum = Number(paddingSize[0])
 
   if (navRect) {
+    console.log(indicatorLeft.value)
     indicatorLeft.value = rect.left - navRect.left + paddingSizeNum
     indicatorWidth.value = rect.width
   }
@@ -106,6 +148,10 @@ const updatePageFromRoute = () => {
   nextTick(updateIndicator)
 }
 
+const toggleMenu = (state?: boolean) => {
+  isOpen.value = state !== undefined ? state : !isOpen.value
+}
+
 watch(
   () => route.path,
   () => updatePageFromRoute(),
@@ -126,39 +172,100 @@ header {
   z-index: 100;
 
   background-color: var(--primary-background-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   padding: 0.5em var(--global-padding);
   border-bottom: solid var(--highlight-color) 2px;
-  nav {
-    ul {
-      display: flex;
-      align-items: center;
-      gap: 30px;
-      li {
-        a {
-          text-decoration: none;
-          color: var(--terciary-foreground-color);
-          font-size: var(--nav-text-size);
-          text-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
-          transition: ease 0.3s;
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    nav {
+      ul {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        li {
+          a {
+            text-decoration: none;
+            color: var(--terciary-foreground-color);
+            font-size: var(--nav-text-size);
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+            transition: ease 0.3s;
 
-          &:hover {
-            color: var(--primary-foreground-color);
+            &:hover {
+              color: var(--primary-foreground-color);
+            }
+          }
+          img {
+            width: 70px;
           }
         }
-        img {
-          width: 70px;
-        }
+      }
+      div {
+        position: absolute;
+        top: 58px;
+        height: 2px;
+        background-color: var(--primary-foreground-color);
+        border-radius: 2px;
       }
     }
-    div {
-      position: absolute;
-      top: 58px;
-      height: 2px;
-      background-color: var(--primary-foreground-color);
-      border-radius: 2px;
+  }
+
+  .burger-header {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    img {
+      width: 70px;
+    }
+    button {
+      background-color: transparent;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      div {
+        background-color: white;
+        width: 40px;
+        height: 3px;
+        border-radius: 10px;
+      }
+    }
+  }
+
+  .burger-menu {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 20px;
+    ul {
+      display: flex;
+      flex-direction: column; /* položky pod sebe */
+      align-items: center;
+      gap: 20px; /* <--- mezery mezi položkami */
+    }
+    a {
+      text-decoration: none;
+      color: var(--terciary-foreground-color);
+      font-size: var(--nav-text-size);
+      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+      transition: ease 0.3s;
+
+      &:hover {
+        color: var(--primary-foreground-color);
+      }
+    }
+  }
+
+  @media (max-width: 870px) {
+    .header {
+      display: none;
+    }
+
+    .burger-header {
+      display: flex;
     }
   }
 }

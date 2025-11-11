@@ -148,6 +148,12 @@ main {
     h1 {
       font-weight: 600;
       font-size: var(--xl-text-size);
+      @media (max-width: 830px) {
+        font-size: 60px;
+      }
+      @media (max-width: 620px) {
+        font-size: 45px;
+      }
     }
     span:first-child {
       color: var(--secondary-foreground-color);
@@ -160,6 +166,15 @@ main {
       font-size: var(--medium-text-size);
       line-height: 1.2;
       color: var(--terciary-foreground-color);
+      @media (max-width: 1230px) {
+        width: 800px;
+      }
+      @media (max-width: 830px) {
+        width: 600px;
+      }
+      @media (max-width: 620px) {
+        width: 400px;
+      }
     }
     .button-container {
       display: flex;
@@ -177,6 +192,12 @@ main {
       align-items: center;
       justify-content: space-between;
       gap: 70px;
+      @media (max-width: 1410px) {
+        gap: 40px;
+      }
+      @media (max-width: 830px) {
+        flex-direction: column;
+      }
     }
 
     .card {
@@ -205,6 +226,7 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin: 0 var(--global-padding);
     margin-bottom: 100px;
     h3 {
       font-weight: 600;
@@ -222,6 +244,7 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin: 0 var(--global-padding);
     margin-bottom: 100px;
     h3 {
       font-weight: 600;
