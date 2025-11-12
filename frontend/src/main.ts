@@ -21,6 +21,8 @@ import ImageButton from './components/ui/ImageButton.vue'
 app.component('ImageButton', ImageButton)
 import Article from './components/ui/Article.vue'
 app.component('Article', Article)
+import BeatmapPreview from './components/ui/BeatmapPreview.vue'
+app.component('BeatmapPreview', BeatmapPreview)
 
 app.use(createPinia())
 app.use(router)
