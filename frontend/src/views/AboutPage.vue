@@ -60,6 +60,7 @@ main {
   align-items: center;
   justify-content: center;
   gap: 60px;
+  margin: 0 var(--global-padding);
   margin-bottom: 100px;
 
   h1 {

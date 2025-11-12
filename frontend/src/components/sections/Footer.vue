@@ -34,6 +34,9 @@ footer {
   section:first-child {
     img {
       width: 100px;
+      @media (max-width: 1400px) {
+        width: 75px;
+      }
     }
   }
 
@@ -42,6 +45,9 @@ footer {
       color: white;
       font-size: var(--medium-text-size);
       margin-bottom: 10px;
+      @media (max-width: 1400px) {
+        font-size: 18px;
+      }
     }
     section {
       display: flex;
@@ -51,6 +57,9 @@ footer {
       a {
         img {
           width: 35px;
+          @media (max-width: 1400px) {
+            width: 25px;
+          }
         }
       }
     }
