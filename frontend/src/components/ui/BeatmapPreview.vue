@@ -1,16 +1,16 @@
 <template>
-  <section>
-    <section>
+  <main>
+    <section class="img-section">
       <img :src="img" alt="" />
     </section>
-    <section>
+    <section class="main-content">
       <section class="name-section">
         <h3>{{ title }}</h3>
         <p>{{ artist }}</p>
       </section>
       <p class="creator">{{ creator }}</p>
     </section>
-  </section>
+  </main>
 </template>
 
 <script lang="ts" setup>
@@ -22,4 +22,18 @@ const props = defineProps({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+main {
+  background-color: var(--primary-background-color);
+  display: flex;
+  justify-content: space-between;
+
+  .img-section {
+    img {
+      object-fit: cover;
+      height: 150px;
+      width: 150px;
+    }
+  }
+}
+</style>

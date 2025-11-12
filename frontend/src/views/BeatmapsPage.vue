@@ -1,7 +1,7 @@
 <template>
-  <main>
+  <main class="beatmap-section">
     <h1>List of beatmaps</h1>
-    <Article>
+    <Article :width="1400">
       <BeatmapPreview
         v-for="beatmap in BeatmapArray"
         :key="beatmap"
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import osab from '../assets/img/osab.jpeg';
+import osab from '../assets/img/osab.jpeg'
 
 const BeatmapArray = [
   {
@@ -29,12 +29,45 @@ const BeatmapArray = [
     title: 'aghoj',
     artist: 'nekdo',
     creator: 'Krooby',
-  }
+  },
+  {
+    img: osab,
+    title: 'aghoj',
+    artist: 'nekdo',
+    creator: 'Krooby',
+  },
+  {
+    img: osab,
+    title: 'aghoj',
+    artist: 'nekdo',
+    creator: 'Krooby',
+  },
+  {
+    img: osab,
+    title: 'aghoj',
+    artist: 'nekdo',
+    creator: 'Krooby',
+  },
+  {
+    img: osab,
+    title: 'aghoj',
+    artist: 'nekdo',
+    creator: 'Krooby',
+  },
 ]
 </script>
 
 <style lang="scss" scoped>
-main {
+.beatmap-section {
   padding-top: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  Article {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }
 </style>
