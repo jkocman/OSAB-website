@@ -17,9 +17,7 @@
           <li class="item" ref="beatmaps">
             <RouterLink to="/beatmaps">Beatmaps</RouterLink>
           </li>
-          <li>
-            <Input inputType="text" inputPlaceholder="Search beatmaps..." />
-          </li>
+          <li><i class="fa fa-search"></i></li>
         </ul>
         <div v-if="page !== 0" class="nav-indicator" :style="indicatorStyle"></div>
       </nav>
@@ -159,7 +157,7 @@ watch(
 )
 
 onMounted(() => {
-  nextTick(updateIndicator)
+  window.addEventListener('load', updateIndicator)
   window.addEventListener('resize', updateIndicator)
 })
 </script>
@@ -191,6 +189,15 @@ header {
             text-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
             transition: ease 0.3s;
 
+            &:hover {
+              color: var(--primary-foreground-color);
+            }
+          }
+          .fa-search {
+            color: var(--terciary-foreground-color);
+            font-size: 18px;
+            cursor: pointer;
+            transition: ease 0.3s;
             &:hover {
               color: var(--primary-foreground-color);
             }

@@ -23,6 +23,12 @@ const router = createRouter({
       component: BeatmapsPage,
     },
     {
+      path: '/beatmaps/:id',
+      name: 'beatmap-detail',
+      component: () => import('@/views/BeatmapDetailPage.vue'),
+      props: true,
+    },
+    {
       path: '/download',
       name: 'download',
       component: DownloadPage,

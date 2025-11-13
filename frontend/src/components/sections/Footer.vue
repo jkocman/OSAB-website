@@ -43,7 +43,7 @@ footer {
   section:nth-child(2) {
     p {
       color: white;
-      font-size: var(--medium-text-size);
+      font-size: var(--footer-text-size);
       margin-bottom: 10px;
       @media (max-width: 1400px) {
         font-size: 18px;

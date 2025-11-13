@@ -8,7 +8,8 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 const props = defineProps({
-  width: { type: Number, default: 1000 },
+  margin: { type: Number, default: 0 },
+  width: { type: Boolean, default: false },
 })
 
 const windowWidth = ref(window.innerWidth)
@@ -26,10 +27,16 @@ onUnmounted(() => {
 })
 
 const articleStyle = computed(() => {
-  if (windowWidth.value <= 1300) {
-    return { width: '100%' }
+  const style: Record<string, string> = {}
+
+  if (props.width || windowWidth.value <= 1300) {
+    style.width = '100%'
+  } else {
+    style.marginLeft = `${props.margin}px`
+    style.marginRight = `${props.margin}px`
   }
-  return { width: props.width + 'px', maxWidth: '100%' }
+
+  return style
 })
 </script>
 
@@ -40,7 +47,6 @@ article {
   border-radius: 20px;
   border: 2px solid var(--highlight-color);
   text-align: center;
-
   display: flex;
   flex-direction: column;
   align-items: center;
