@@ -103,6 +103,10 @@ const BeatmapArray = [
       justify-content: space-between;
       margin-bottom: 40px;
       gap: 30px;
+
+      @media (max-width: 650px) {
+        flex-direction: column;
+      }
       .icons {
         display: flex;
         align-items: center;
@@ -124,6 +128,10 @@ const BeatmapArray = [
       grid-template-columns: 1fr 1fr;
       gap: 50px;
       width: 100%;
+
+      @media (max-width: 800px) {
+        grid-template-columns: 1fr;
+      }
     }
   }
 }

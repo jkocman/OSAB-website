@@ -37,6 +37,10 @@ main {
   overflow: hidden;
   cursor: pointer;
   transition: 0.3s ease;
+  @media (max-width: 506px) {
+    flex-direction: column;
+    height: auto;
+  }
 
   &:hover {
     transform: translateY(-10px);
@@ -48,6 +52,21 @@ main {
       object-fit: cover;
       height: 175px;
       width: 250px;
+      @media (max-width: 1268px) {
+        width: 200px;
+      }
+      @media (max-width: 1000px) {
+        width: 125px;
+      }
+      @media (max-width: 800px) {
+        width: 200px;
+      }
+      @media (max-width: 570px) {
+        width: 150px;
+      }
+      @media (max-width: 506px) {
+        width: 100%;
+      }
     }
   }
 
