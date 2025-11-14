@@ -23,6 +23,12 @@ import Article from './components/ui/Article.vue'
 app.component('Article', Article)
 import BeatmapPreview from './components/ui/BeatmapPreview.vue'
 app.component('BeatmapPreview', BeatmapPreview)
+import Dialog from './components/ui/Dialog.vue'
+app.component('Dialog', Dialog)
+import TextArea from './components/ui/TextArea.vue'
+app.component('TextArea', TextArea)
+import FileUpload from './components/ui/FileUpload.vue'
+app.component('FileUpload', FileUpload)
 
 app.use(createPinia())
 app.use(router)

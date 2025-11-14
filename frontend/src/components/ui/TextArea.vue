@@ -1,7 +1,6 @@
 <template>
-  <section class="input-wrapper" @click="focusInput">
-    <i v-if="search == true" class="fa fa-search"></i>
-    <input ref="inputRef" :type="inputType" :placeholder="inputPlaceholder" />
+  <section class="textarea-wrapper" @click="focusTextarea">
+    <textarea ref="textareaRef" :placeholder="inputPlaceholder" :rows="rows"></textarea>
   </section>
 </template>
 
@@ -9,29 +8,26 @@
 import { ref } from 'vue'
 
 const props = defineProps({
-  inputType: { type: String, default: 'text' },
   inputPlaceholder: { type: String, default: '' },
-  search: { type: Boolean, default: true },
+  rows: { type: Number, default: 4 },
 })
 
-const inputRef = ref<HTMLInputElement | null>(null)
+const textareaRef = ref<HTMLTextAreaElement | null>(null)
 
-function focusInput() {
-  inputRef.value?.focus()
+function focusTextarea() {
+  textareaRef.value?.focus()
 }
 </script>
 
 <style lang="scss" scoped>
-.input-wrapper {
+.textarea-wrapper {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  width: 100%;
 
   color: var(--terciary-foreground-color);
   border: 1px solid var(--terciary-foreground-color);
   padding: 12px 16px;
   border-radius: 12px;
-  width: 100%;
 
   background-color: transparent;
   cursor: text;
@@ -43,18 +39,15 @@ function focusInput() {
     color: var(--primary-foreground-color);
   }
 
-  i {
-    font-size: 1.1rem;
-    pointer-events: none;
-  }
-
-  input {
+  textarea {
     flex: 1;
+    resize: none;
     background-color: transparent;
     border: none;
     outline: none;
     color: var(--terciary-foreground-color);
     font-size: 1rem;
+    font-family: inherit;
   }
 }
 </style>

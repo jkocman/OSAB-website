@@ -17,7 +17,7 @@
           <li class="item" ref="beatmaps">
             <RouterLink to="/beatmaps">Beatmaps</RouterLink>
           </li>
-          <li><i class="fa fa-search"></i></li>
+          <li><i class="fa fa-search" @click="openSearch = true"></i></li>
         </ul>
         <div v-if="page !== 0" class="nav-indicator" :style="indicatorStyle"></div>
       </nav>
@@ -30,6 +30,20 @@
         @click="router.push('/download')"
       ></Button>
     </section>
+
+    <Dialog v-if="openSearch" @close="openSearch = false">
+      <section class="search">
+        <Input inputPlaceholder="Search"></Input>
+        <Button
+          title="Exit"
+          :fontSize="18"
+          :paddingHorizontal="25"
+          :paddingVertical="10"
+          :buttonType="buttonType"
+          @click="openSearch = false"
+        ></Button>
+      </section>
+    </Dialog>
 
     <section class="burger-header">
       <RouterLink to="/" @click="page = 1">
@@ -77,6 +91,8 @@ import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
 const router = useRouter()
 const page = ref(1)
+
+const openSearch = ref(false)
 
 const home = ref<HTMLLIElement | null>(null)
 const about = ref<HTMLLIElement | null>(null)
@@ -168,7 +184,6 @@ header {
   left: 0;
   right: 0;
   z-index: 100;
-
   background-color: var(--primary-background-color);
   padding: 0.5em var(--global-padding);
   border-bottom: solid var(--highlight-color) 2px;
@@ -197,9 +212,16 @@ header {
             color: var(--terciary-foreground-color);
             font-size: 18px;
             cursor: pointer;
-            transition: ease 0.3s;
+            transition: 0.3s ease;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+
             &:hover {
-              color: var(--primary-foreground-color);
+              background-color: var(--primary-foreground-color);
             }
           }
           img {
@@ -215,6 +237,13 @@ header {
         border-radius: 2px;
       }
     }
+  }
+
+  .search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
   }
 
   .burger-header {

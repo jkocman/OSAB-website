@@ -2,6 +2,7 @@ import AboutPage from '@/views/AboutPage.vue'
 import BeatmapsPage from '@/views/BeatmapsPage.vue'
 import DownloadPage from '@/views/DownloadPage.vue'
 import HomePage from '@/views/HomePage.vue'
+import BeatmapDetailPage from '@/views/BeatmapDetailPage.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -25,7 +26,7 @@ const router = createRouter({
     {
       path: '/beatmaps/:id',
       name: 'beatmap-detail',
-      component: () => import('@/views/BeatmapDetailPage.vue'),
+      component: BeatmapDetailPage,
       props: true,
     },
     {
@@ -34,6 +35,9 @@ const router = createRouter({
       component: DownloadPage,
     },
   ],
+  scrollBehavior() {
+    return { top: 0 }
+  },
 })
 
 export default router
