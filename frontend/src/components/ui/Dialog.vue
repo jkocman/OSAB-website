@@ -25,7 +25,7 @@ const close = () => emit('close')
   z-index: 9999;
 
   .dialog {
-    background: #2a2a2a;
+    background-color: var(--secondary-background-color);
     color: white;
     padding: 20px;
     border-radius: 12px;
