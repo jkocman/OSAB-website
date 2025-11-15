@@ -23,12 +23,10 @@ function focusTextarea() {
 .textarea-wrapper {
   display: flex;
   width: 100%;
-
   color: var(--terciary-foreground-color);
   border: 1px solid var(--terciary-foreground-color);
   padding: 12px 16px;
   border-radius: 12px;
-
   background-color: transparent;
   cursor: text;
   transition: 0.3s ease;

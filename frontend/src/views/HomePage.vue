@@ -127,7 +127,7 @@ main {
     font-weight: 600;
     font-size: var(--large-text-size);
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
   }
   section:first-child {
     background:

@@ -52,8 +52,8 @@
       </section>
       <Button
         title="Load More"
-        :fontSize="18"
-        :paddingHorizontal="25"
+        :fontSize="22"
+        :paddingHorizontal="35"
         :paddingVertical="10"
         buttonType="primary"
         @click="visibleCount += 6"
@@ -65,58 +65,13 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import osab from '../assets/img/osab.jpeg'
+import { BeatmapArray } from '@/composables/BeatmapArray'
 
 const router = useRouter()
 const visibleCount = ref(12)
 const openAddBeatmap = ref(false)
 
-const BeatmapArray = [
-  {
-    id: 1,
-    img: osab,
-    title: 'aghoj',
-    artist: 'nekdo',
-    creator: 'Krooby',
-  },
-  {
-    id: 2,
-    img: osab,
-    title: 'aghoj',
-    artist: 'nekdo',
-    creator: 'Krooby',
-  },
-  {
-    id: 3,
-    img: osab,
-    title: 'aghoj',
-    artist: 'nekdo',
-    creator: 'Krooby',
-  },
-  {
-    id: 4,
-    img: osab,
-    title: 'aghoj',
-    artist: 'nekdo',
-    creator: 'Krooby',
-  },
-  {
-    id: 5,
-    img: osab,
-    title: 'aghoj',
-    artist: 'nekdo',
-    creator: 'Krooby',
-  },
-  {
-    id: 6,
-    img: osab,
-    title: 'aghoj',
-    artist: 'nekdo',
-    creator: 'Krooby',
-  },
-]
-
-const visibleBeatmaps: any = computed(() => {
+const visibleBeatmaps = computed(() => {
   return BeatmapArray.slice(0, visibleCount.value)
 })
 </script>
