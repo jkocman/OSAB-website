@@ -56,7 +56,7 @@
 </template>
 
 <script lang="ts" setup>
-// zatím jen lokálně (nepushuji na github), později na nějakém serveru.
+// for now only local. Later it will be on a server. I am not pushing the files to github.
 function downloadGame(file: string) {
   const url = `/files/${file}`
   const link = document.createElement('a')
