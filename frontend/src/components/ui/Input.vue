@@ -31,7 +31,7 @@ function focusInput() {
 
 function onInput(e: Event) {
   const target = e.target as HTMLInputElement
-  emit('update:modelValue', target.value) // <-- pošli ven novou hodnotu
+  emit('update:modelValue', target.value)
 }
 </script>
 
