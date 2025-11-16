@@ -28,14 +28,14 @@
     <section class="beatmap-section">
       <h2>Search Comunity Beatmaps</h2>
       <section>
-        <ImageButton :url="disorderImage" class="card" @click="router.push('/beatmaps')">
+        <ImageButton :url="disorderImage" class="card" @click="handlePopular()">
           <h3>Popular Beatmaps</h3>
           <p>
             Occaecat commodo magna enim mollit pariatur commodo consectetur tempor. Commodo eu do
             incididunt ipsum non.
           </p>
         </ImageButton>
-        <ImageButton :url="marianneImage" class="card" @click="router.push('/beatmaps')">
+        <ImageButton :url="marianneImage" class="card" @click="handleNew()">
           <h3>New Beatmaps</h3>
           <p>
             Occaecat commodo magna enim mollit pariatur commodo consectetur tempor. Commodo eu do
@@ -116,8 +116,19 @@
 import { useRouter } from 'vue-router'
 import disorderImage from '../assets/img/spr_Disorder.png'
 import marianneImage from '../assets/img/spr_MariannE.jpg'
+import { useSelectionStore } from '@/stores/selection'
 
 const router = useRouter()
+const selectionStore = useSelectionStore()
+
+const handlePopular = () => {
+  router.push('/beatmaps')
+  selectionStore.sortSelected = 'Most Downloaded'
+}
+const handleNew = () => {
+  router.push('/beatmaps')
+  selectionStore.sortSelected = 'Newest'
+}
 </script>
 
 <style lang="scss" scoped>

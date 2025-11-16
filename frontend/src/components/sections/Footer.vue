@@ -6,16 +6,16 @@
     <section>
       <p>&#169; Krooby & Inkking</p>
       <section>
-        <a href="" target="_blank">
+        <a href="https://discord.gg/FFdJgJQH" target="_blank">
           <img src="../../assets/img/icons/discord.png" alt="" />
         </a>
-        <a href="" target="_blank">
+        <a href="https://inkk-ing.itch.io/osab" target="_blank">
           <img src="../../assets/img/icons/itch.png" alt="" />
         </a>
-        <a href="" target="_blank">
+        <a href="https://github.com/matty147/OSAB" target="_blank">
           <img src="../../assets/img/icons/github.png" alt="" />
         </a>
-        <a href="" target="_blank">
+        <a href="https://x.com/Matty_inkk" target="_blank">
           <img src="../../assets/img/icons/twitter.png" alt="" />
         </a>
       </section>
