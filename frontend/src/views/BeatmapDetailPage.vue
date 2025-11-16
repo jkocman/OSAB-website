@@ -45,7 +45,7 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
-import { beatmapArray } from '@/composables/BeatmapArray'
+import { beatmapArray } from '@/composables/beatmapArray'
 
 const route = useRoute()
 

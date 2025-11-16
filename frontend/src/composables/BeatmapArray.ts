@@ -43,6 +43,7 @@ export const beatmapArray = [
     title: 'aghoj',
     artist: 'nekdo',
     creator: 'Krooby',
+    description: 'aaaa',
     difficulty: 'neco',
     downloads: 80,
     dateOfUpload: new Date('2024-02-15'),

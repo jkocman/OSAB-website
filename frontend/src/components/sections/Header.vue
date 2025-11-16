@@ -5,7 +5,7 @@
         <ul>
           <li>
             <RouterLink to="/" @click="page = 1">
-              <img src="../../assets/img/logo-without-text.png" alt="logo" />
+              <img src="../../assets/img/logo-without-text.png" alt="Logo" />
             </RouterLink>
           </li>
           <li class="item" ref="home">
@@ -47,7 +47,7 @@
 
     <section class="burger-header">
       <RouterLink to="/" @click="page = 1">
-        <img src="../../assets/img/logo-without-text.png" alt="logo" />
+        <img src="../../assets/img/logo-without-text.png" alt="Logo" />
       </RouterLink>
 
       <button class="burger" @click="toggleMenu()">

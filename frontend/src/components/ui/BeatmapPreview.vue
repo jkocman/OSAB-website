@@ -1,7 +1,7 @@
 <template>
   <main @click="handleClick()">
     <section class="img-section">
-      <img :src="img" alt="" />
+      <img :src="img" alt="Beatmap image" />
     </section>
     <section class="main-content">
       <section class="name-section">

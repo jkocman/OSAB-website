@@ -1,7 +1,13 @@
 <template>
   <section class="input-wrapper" @click="focusInput">
     <i v-if="search == true" class="fa fa-search"></i>
-    <input ref="inputRef" :type="inputType" :placeholder="inputPlaceholder" />
+    <input
+      ref="inputRef"
+      :type="inputType"
+      :placeholder="inputPlaceholder"
+      :value="modelValue"
+      @input="onInput"
+    />
   </section>
 </template>
 
@@ -9,15 +15,23 @@
 import { ref } from 'vue'
 
 const props = defineProps({
+  modelValue: { type: String, default: '' },
   inputType: { type: String, default: 'text' },
   inputPlaceholder: { type: String, default: '' },
   search: { type: Boolean, default: true },
 })
 
+const emit = defineEmits(['update:modelValue'])
+
 const inputRef = ref<HTMLInputElement | null>(null)
 
 function focusInput() {
   inputRef.value?.focus()
+}
+
+function onInput(e: Event) {
+  const target = e.target as HTMLInputElement
+  emit('update:modelValue', target.value) // <-- pošli ven novou hodnotu
 }
 </script>
 

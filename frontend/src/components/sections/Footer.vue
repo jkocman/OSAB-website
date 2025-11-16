@@ -1,22 +1,22 @@
 <template>
   <footer>
     <section>
-      <img src="../../assets/img/logo-game-text.png" alt="" />
+      <img src="../../assets/img/logo-game-text.png" alt="Logo" />
     </section>
     <section>
       <p>&#169; Krooby & Inkking</p>
       <section>
         <a href="https://discord.gg/FFdJgJQH" target="_blank">
-          <img src="../../assets/img/icons/discord.png" alt="" />
+          <img src="../../assets/img/icons/discord.png" alt="Discord icon" />
         </a>
         <a href="https://inkk-ing.itch.io/osab" target="_blank">
-          <img src="../../assets/img/icons/itch.png" alt="" />
+          <img src="../../assets/img/icons/itch.png" alt="Itch icon" />
         </a>
         <a href="https://github.com/matty147/OSAB" target="_blank">
-          <img src="../../assets/img/icons/github.png" alt="" />
+          <img src="../../assets/img/icons/github.png" alt="Github icon" />
         </a>
         <a href="https://x.com/Matty_inkk" target="_blank">
-          <img src="../../assets/img/icons/twitter.png" alt="" />
+          <img src="../../assets/img/icons/twitter.png" alt="Tiwtter icon" />
         </a>
       </section>
     </section>

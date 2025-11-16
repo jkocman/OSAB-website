@@ -3,7 +3,7 @@
     <h1>Learn more about this project</h1>
     <section class="article-container">
       <Article class="article" :margin="200">
-        <img src="../assets/img/ilustration/level.png" alt="" />
+        <img src="../assets/img/ilustration/level.png" alt="Illustration image" />
         <h2>About the game</h2>
         <p>
           Cillum id minim laboris deserunt consectetur nulla. Et est sunt sint incididunt id labore
@@ -19,7 +19,7 @@
         </p>
       </Article>
       <Article class="article" :margin="200">
-        <img src="../assets/img/ilustration/story.png" alt="" />
+        <img src="../assets/img/ilustration/story.png" alt="Illustration image" />
         <h2>About the creators</h2>
         <p>
           Cillum id minim laboris deserunt consectetur nulla. Et est sunt sint incididunt id labore
@@ -35,7 +35,7 @@
         </p>
       </Article>
       <Article class="article" :margin="200">
-        <img src="../assets/img/ilustration/menu.png" alt="" />
+        <img src="../assets/img/ilustration/menu.png" alt="Illustration image" />
         <h2>Why was this project created</h2>
         <p>
           Cillum id minim laboris deserunt consectetur nulla. Et est sunt sint incididunt id labore

@@ -2,7 +2,7 @@
   <main>
     <h1>Download Open Shapes & Beats</h1>
     <section class="image-container">
-      <img src="../assets/img/ilustration/level.png" alt="" />
+      <img src="../assets/img/ilustration/level.png" alt="Illustration image" />
     </section>
     <section class="article-container">
       <Article>
@@ -10,7 +10,7 @@
         <ul class="download-links">
           <li>
             <section>
-              <img src="../assets/img/icons/windows.png" alt="windows logo" />
+              <img src="../assets/img/icons/windows.png" alt="Windows logo" />
               <p>OS&B-stable-build.zip</p>
               <p>82mb</p>
             </section>
@@ -25,7 +25,7 @@
           </li>
           <li>
             <section>
-              <img src="../assets/img/icons/windows.png" alt="windows logo" />
+              <img src="../assets/img/icons/windows.png" alt="Windows logo" />
               <p>OS&B-experimental-build.zip</p>
               <p>82mb</p>
             </section>

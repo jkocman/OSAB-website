@@ -3,7 +3,7 @@
     <h1>List of beatmaps</h1>
     <Article :width="true">
       <section class="filter-section">
-        <Input inputPlaceholder="Search Beatmaps"></Input>
+        <Input inputPlaceholder="Search Beatmaps" v-model="searchText"></Input>
         <section class="icons">
           <i class="fa-solid fa-filter" @click="openFilter = true"></i>
           <i class="fa-solid fa-sort" @click="openSort = true"></i>
@@ -81,7 +81,7 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { beatmapArray } from '@/composables/BeatmapArray'
+import { beatmapArray } from '@/composables/beatmapArray'
 import { useSelectionStore } from '@/stores/selection'
 
 const router = useRouter()
@@ -92,8 +92,11 @@ const openAddBeatmap = ref(false)
 const openSort = ref(false)
 const openFilter = ref(false)
 
+const searchText = ref('')
+
 const visibleBeatmaps = computed(() => {
   let filtered = [...beatmapArray]
+  const searched = searchText.value.toLowerCase().trim()
 
   if (selectionStore.filterSelected.length > 0) {
     filtered = filtered.filter((beatmap) =>
@@ -114,6 +117,13 @@ const visibleBeatmaps = computed(() => {
       filtered.sort((a, b) => (b.downloads || 0) - (a.downloads || 0))
       break
   }
+
+  filtered = filtered.filter(
+    (beatmap) =>
+      beatmap.title.toLowerCase().includes(searched) ||
+      beatmap.creator.toLowerCase().includes(searched) ||
+      beatmap.artist.toLowerCase().includes(searched),
+  )
 
   return filtered.slice(0, visibleCount.value)
 })

@@ -67,6 +67,7 @@ const isSelected = (item: any) => {
       cursor: pointer;
       padding: 5px 0;
       border-radius: 12px;
+      transition: ease 0.3s;
 
       &:hover {
         outline: 1px solid var(--primary-foreground-color);
