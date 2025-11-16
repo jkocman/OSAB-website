@@ -29,6 +29,8 @@ import TextArea from './components/ui/TextArea.vue'
 app.component('TextArea', TextArea)
 import FileUpload from './components/ui/FileUpload.vue'
 app.component('FileUpload', FileUpload)
+import SelectionDialog from './components/ui/SelectionDialog.vue'
+app.component('SelectionDialog', SelectionDialog)
 
 app.use(createPinia())
 app.use(router)

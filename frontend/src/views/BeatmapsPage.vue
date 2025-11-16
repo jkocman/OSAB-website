@@ -1,14 +1,30 @@
 <template>
   <main class="main-container">
     <h1>List of beatmaps</h1>
-    <Article width="true">
+    <Article :width="true">
       <section class="filter-section">
         <Input inputPlaceholder="Search Beatmaps"></Input>
         <section class="icons">
-          <i class="fa-solid fa-filter"></i>
-          <i class="fa-solid fa-sort"></i>
+          <i class="fa-solid fa-filter" @click="openFilter = true"></i>
+          <i class="fa-solid fa-sort" @click="openSort = true"></i>
           <i class="fa-solid fa-plus" @click="openAddBeatmap = true"></i>
         </section>
+        <SelectionDialog
+          v-if="openFilter"
+          @close="openFilter = false"
+          title="Choose filters"
+          :listItems="selectionStore.filterItems"
+          :multiple="true"
+          v-model:selected="selectionStore.filterSelected"
+        />
+
+        <SelectionDialog
+          v-if="openSort"
+          @close="openSort = false"
+          title="Sort by"
+          :listItems="selectionStore.sortItems"
+          :multiple="false"
+        />
         <Dialog v-if="openAddBeatmap" @close="openAddBeatmap = false" class="add-beatmap">
           <form>
             <h3>Upload your own Beatmap</h3>
@@ -65,14 +81,41 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { BeatmapArray } from '@/composables/BeatmapArray'
+import { beatmapArray } from '@/composables/BeatmapArray'
+import { useSelectionStore } from '@/stores/selection'
 
 const router = useRouter()
+const selectionStore = useSelectionStore()
+
 const visibleCount = ref(12)
 const openAddBeatmap = ref(false)
+const openSort = ref(false)
+const openFilter = ref(false)
 
 const visibleBeatmaps = computed(() => {
-  return BeatmapArray.slice(0, visibleCount.value)
+  let filtered = [...beatmapArray]
+
+  if (selectionStore.filterSelected.length > 0) {
+    filtered = filtered.filter((beatmap) =>
+      beatmap.tags?.some((tag) => selectionStore.filterSelected.includes(tag)),
+    )
+  }
+  switch (selectionStore.sortSelected) {
+    case 'Name A-Z':
+      filtered.sort((a, b) => a.title.localeCompare(b.title))
+      break
+    case 'Name Z-A':
+      filtered.sort((a, b) => b.title.localeCompare(a.title))
+      break
+    case 'Newest':
+      filtered.sort((a, b) => b.dateOfUpload.getTime() - a.dateOfUpload.getTime())
+      break
+    case 'Most Downloaded':
+      filtered.sort((a, b) => (b.downloads || 0) - (a.downloads || 0))
+      break
+  }
+
+  return filtered.slice(0, visibleCount.value)
 })
 </script>
 

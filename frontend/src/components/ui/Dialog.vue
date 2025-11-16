@@ -29,6 +29,15 @@ const close = () => emit('close')
     padding: 20px;
     border-radius: 12px;
     min-width: 800px;
+    @media (max-width: 805px) {
+      min-width: 600px;
+    }
+    @media (max-width: 605px) {
+      min-width: 400px;
+    }
+    @media (max-width: 405px) {
+      min-width: 250px;
+    }
   }
 }
 </style>

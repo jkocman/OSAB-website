@@ -45,13 +45,13 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
-import { BeatmapArray } from '@/composables/BeatmapArray'
+import { beatmapArray } from '@/composables/BeatmapArray'
 
 const route = useRoute()
 
 const beatmapId = computed(() => Number(route.params.id))
 
-const beatmap = computed(() => BeatmapArray.find((b) => b.id === beatmapId.value))
+const beatmap = computed(() => beatmapArray.find((b) => b.id === beatmapId.value))
 
 const formatedDate = computed(() => {
   if (beatmap.value) {

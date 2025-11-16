@@ -175,6 +175,9 @@ main {
       @media (max-width: 620px) {
         width: 400px;
       }
+      @media (max-width: 415px) {
+        width: 250px;
+      }
     }
     .button-container {
       display: flex;
@@ -182,6 +185,10 @@ main {
       justify-content: center;
       gap: 40px;
       margin-top: 10px;
+      @media (max-width: 415px) {
+        flex-direction: column;
+        gap: 20px;
+      }
     }
   }
   .beatmap-section {

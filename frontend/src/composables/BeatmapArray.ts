@@ -1,7 +1,7 @@
 import osab from '../assets/img/osab.jpeg'
 
 // temporary array of beatmaps for testing
-export const BeatmapArray = [
+export const beatmapArray = [
   {
     id: 1,
     img: osab,
@@ -12,17 +12,19 @@ export const BeatmapArray = [
     difficulty: 'neco',
     downloads: 11,
     dateOfUpload: new Date('2024-02-15'),
+    tags: ['Short', 'Popular Only'],
   },
   {
     id: 2,
     img: osab,
-    title: 'aghoj',
+    title: 'bghoj',
     artist: 'nekdo',
     creator: 'Krooby',
     description: 'aaaa',
     difficulty: 'neco',
     downloads: 11,
     dateOfUpload: new Date('2024-02-15'),
+    tags: ['Normal'],
   },
   {
     id: 3,
@@ -33,6 +35,7 @@ export const BeatmapArray = [
     description: 'aaaa',
     difficulty: 'neco',
     dateOfUpload: new Date('2024-02-15'),
+    tags: ['Long'],
   },
   {
     id: 4,
@@ -43,6 +46,7 @@ export const BeatmapArray = [
     difficulty: 'neco',
     downloads: 11,
     dateOfUpload: new Date('2024-02-15'),
+    tags: ['Long'],
   },
   {
     id: 5,
@@ -54,6 +58,7 @@ export const BeatmapArray = [
     difficulty: 'neco',
     downloads: 11,
     dateOfUpload: new Date('2024-02-15'),
+    tags: ['Long', 'Popular Only'],
   },
   {
     id: 6,
@@ -65,5 +70,6 @@ export const BeatmapArray = [
     difficulty: 'neco',
     downloads: 11,
     dateOfUpload: new Date('2024-02-15'),
+    tags: ['Long', 'Popular Only'],
   },
 ]

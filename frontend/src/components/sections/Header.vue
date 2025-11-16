@@ -59,9 +59,6 @@
 
     <section class="burger-menu" v-if="isOpen">
       <ul>
-        <li>
-          <Input inputType="text" inputPlaceholder="Search beatmaps..." />
-        </li>
         <li class="item">
           <RouterLink to="/">Home</RouterLink>
         </li>
@@ -71,14 +68,19 @@
         <li class="item">
           <RouterLink to="/beatmaps">Beatmaps</RouterLink>
         </li>
-        <Button
-          title="Download"
-          :fontSize="18"
-          :paddingHorizontal="25"
-          :paddingVertical="10"
-          :buttonType="buttonType"
-          @click="router.push('/download')"
-        ></Button>
+        <li>
+          <i class="fa fa-search" @click="openSearch = true"></i>
+        </li>
+        <li>
+          <Button
+            title="Download"
+            :fontSize="18"
+            :paddingHorizontal="25"
+            :paddingVertical="10"
+            :buttonType="buttonType"
+            @click="router.push('/download')"
+          ></Button>
+        </li>
       </ul>
     </section>
   </header>
@@ -208,22 +210,6 @@ header {
               color: var(--primary-foreground-color);
             }
           }
-          .fa-search {
-            color: var(--terciary-foreground-color);
-            font-size: 18px;
-            cursor: pointer;
-            transition: 0.3s ease;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-
-            &:hover {
-              background-color: var(--primary-foreground-color);
-            }
-          }
           img {
             width: 70px;
           }
@@ -244,6 +230,27 @@ header {
     align-items: center;
     justify-content: center;
     gap: 30px;
+    @media (max-width: 415px) {
+      flex-direction: column;
+      gap: 10px;
+      align-items: stretch;
+    }
+  }
+  .fa-search {
+    color: var(--terciary-foreground-color);
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+
+    &:hover {
+      background-color: var(--primary-foreground-color);
+    }
   }
 
   .burger-header {
