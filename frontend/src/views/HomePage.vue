@@ -3,8 +3,8 @@
     <section>
       <h1>Open <span>Shapes</span> & <span>Beats</span></h1>
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit officia perferendis maiores
-        facere perspiciatis asperiores, vero inventore consequuntur omnis, voluptate.
+        An open, fully customizable rhythm-action experience inspired by Just Shapes & Beats, giving
+        players the freedom to create, share, and play their own pulse-pounding maps.
       </p>
       <section class="button-container">
         <Button
@@ -30,17 +30,11 @@
       <section>
         <ImageButton :url="disorderImage" class="card" @click="handlePopular()">
           <h3>Popular Beatmaps</h3>
-          <p>
-            Occaecat commodo magna enim mollit pariatur commodo consectetur tempor. Commodo eu do
-            incididunt ipsum non.
-          </p>
+          <p>Search through the most popular community created beatmaps for Open Shapes & Beats</p>
         </ImageButton>
         <ImageButton :url="marianneImage" class="card" @click="handleNew()">
           <h3>New Beatmaps</h3>
-          <p>
-            Occaecat commodo magna enim mollit pariatur commodo consectetur tempor. Commodo eu do
-            incididunt ipsum non.
-          </p>
+          <p>Search through the newest community created beatmaps for Open Shapes & Beats</p>
         </ImageButton>
       </section>
     </section>
@@ -49,27 +43,25 @@
       <Article :margin="200">
         <h3>About the game</h3>
         <p>
-          Irure mollit culpa laboris nostrud mollit. Sint dolore amet pariatur fugiat. Laborum ea ex
-          veniam proident adipisicing anim. Proident laboris dolor qui tempor Lorem esse officia
-          ullamco ea exercitation labore. Aute anim voluptate proident dolore velit fugiat voluptate
-          minim esse velit minim laborum. Magna fugiat cupidatat adipisicing aliquip sunt qui minim
-          commodo et et sunt. Qui culpa excepteur est officia duis nostrud cillum enim consequat.
-          Dolor in adipisicing veniam ipsum tempor excepteur aliquip. Nisi duis ut nulla non aliquip
-          laboris nulla fugiat irure ipsum magna. Proident ad nostrud veniam exercitation fugiat ut
-          incididunt ullamco officia reprehenderit deserunt nisi dolore. Reprehenderit esse do enim
-          pariatur cupidatat deserunt sunt consequat est sit voluptate dolore minim. Aliqua ut elit
-          aute et ut voluptate cupidatat non Lorem aliqua qui aliquip nulla pariatur. Enim quis sint
-          dolor esse culpa excepteur duis ex occaecat fugiat commodo. Et esse eu pariatur ullamco
-          excepteur magna et esse sunt sit. Laborum ea dolor do enim fugiat aute quis commodo minim
-          occaecat esse laboris pariatur. Enim id ipsum ut dolore cupidatat. Qui sit sit deserunt
-          culpa laboris commodo dolor ex in ullamco id sint occaecat. Veniam exercitation quis ea
-          officia irure aute excepteur aliqua incididunt eiusmod.Minim ea est labore ea laborum
-          dolor veniam. Veniam cupidatat enim culpa amet cillum non consectetur labore et pariatur
-          fugiat cupidatat. Elit et tempor officia culpa proident fugiat aliqua aliqua ullamco aute
-          ut. Ipsum officia fugiat cupidatat qui sint sunt quis dolore. Lorem magna dolor dolore
-          consectetur eiusmod magna quis ullamco. Minim quis reprehenderit nisi pariatur
-          exercitation excepteur proident proident Lorem sint et qui exercitation. Sint cupidatat
-          fugiat duis pariatur adipisicing sit.
+          Open Shapes & Beats is an open-source rhythm-action project inspired by the fast-paced
+          chaos of Just Shapes & Beats, designed for players who want more than just playing
+          levels—they want to create them. Built around music-driven gameplay, the project
+          transforms every beat, melody, and drop into an interactive challenge where shapes dance,
+          bullets explode to the rhythm, and survival becomes a matter of timing and creativity. At
+          its core, Open Shapes & Beats is a toolset and sandbox that lets anyone design their own
+          levels, craft unique bullet patterns, sync effects to music, and experiment with
+          rhythm-based mechanics. Whether you want to recreate your favorite tracks, build intense
+          boss-style sequences, or explore experimental visual designs, the editor gives you full
+          control. And because the project is fully open and community-driven, players can share
+          their creations, collaborate on larger map packs, and continuously expand the experience
+          far beyond what a traditional rhythm game offers. The gameplay remains faithful to the
+          spirit of the original inspiration—simple to understand, challenging to master. You
+          control only movement; the world does everything else. But every map has its own
+          personality, shaped entirely by the creator's imagination. With customizable visuals,
+          dynamic audio-reactive effects, and modern modding possibilities, no two levels ever feel
+          the same. Whether you're a player looking for new rhythmic challenges, a creator searching
+          for a powerful mapping platform, or simply a fan of music-driven gameplay, Open Shapes &
+          Beats invites you to jump in, experiment, and shape your own beat-powered world.
         </p>
         <Button
           title="Learn more"
@@ -86,18 +78,19 @@
       <Article :margin="200">
         <h3>About the download</h3>
         <p>
-          Irure mollit culpa laboris nostrud mollit. Sint dolore amet pariatur fugiat. Laborum ea ex
-          veniam proident adipisicing anim. Proident laboris dolor qui tempor Lorem esse officia
-          ullamco ea exercitation labore. Aute anim voluptate proident dolore velit fugiat voluptate
-          minim esse velit minim laborum. Magna fugiat cupidatat adipisicing aliquip sunt qui minim
-          commodo et et sunt. Qui culpa excepteur est officia duis nostrud cillum enim consequat.
-          Dolor in adipisicing veniam ipsum tempor excepteur aliquip. Nisi duis ut nulla non aliquip
-          laboris nulla fugiat irure ipsum magna. Proident ad nostrud veniam exercitation fugiat ut
-          incididunt ullamco officia reprehenderit deserunt nisi dolore. Reprehenderit esse do enim
-          pariatur cupidatat deserunt sunt consequat est sit voluptate dolore minim. Aliqua ut elit
-          aute et ut voluptate cupidatat non Lorem aliqua qui aliquip nulla pariatur. Enim quis sint
-          dolor esse culpa excepteur duis ex occaecat fugiat commodo. Et esse eu pariatur ullamco
-          excepteur magna et esse sunt sit. Laborum ea dolor do enim fugiat aute quis commodo minim
+          Get ready to dive into the full creative power of Open Shapes & Beats. By downloading the
+          latest build, you gain access to everything the project offers — from the core
+          rhythm-action gameplay to the complete suite of map-creation tools designed for creators
+          of all levels. Whether you're here to play custom maps, experiment with new mechanics, or
+          build entire music-driven worlds from scratch, the downloadable version gives you full
+          control. Each release includes the most up-to-date features, optimizations, and
+          improvements contributed by the community. You can explore user-made creations, test your
+          own ideas, and help shape the project by giving feedback or contributing directly. Open
+          Shapes & Beats is constantly evolving, and every new version pushes the boundaries of what
+          rhythm-based games can be — and you can be part of that evolution with just a single
+          download. No matter if you're a player looking for fresh challenges or a creator excited
+          to craft your own beat-synced experiences, this is where your journey starts. Download the
+          newest build and jump into a world where creativity and rhythm collide.
         </p>
         <Button
           title="Download"
@@ -206,7 +199,8 @@ main {
     margin: 0 var(--global-padding);
     margin-bottom: 100px;
     section {
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       align-items: center;
       justify-content: space-between;
       gap: 70px;
@@ -214,7 +208,7 @@ main {
         gap: 40px;
       }
       @media (max-width: 830px) {
-        flex-direction: column;
+        grid-template-columns: 1fr;
       }
     }
 
