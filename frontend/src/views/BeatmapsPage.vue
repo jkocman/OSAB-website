@@ -139,6 +139,11 @@ const visibleBeatmaps = computed(() => {
   gap: 30px;
   margin: 0 var(--global-padding);
   margin-bottom: 100px;
+  @media (min-width: 2000px) {
+    width: 1600px;
+    margin: 0 auto;
+    margin-bottom: 100px;
+  }
 
   h1 {
     color: white;

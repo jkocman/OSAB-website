@@ -128,13 +128,20 @@ const updateIndicator = () => {
   const rect = el.getBoundingClientRect()
   const navRect = el.parentElement?.getBoundingClientRect()
 
+  const screenWidth = window.innerWidth
+
+  let extraPadding = 0
+  if (screenWidth > 2000) {
+    extraPadding = (screenWidth - 2000) / 2
+  }
+
   const rootStyles = getComputedStyle(document.documentElement)
-  const paddingSize = rootStyles.getPropertyValue('--global-padding').split('p')
-  const paddingSizeNum = Number(paddingSize[0])
+  const paddingSize = parseInt(rootStyles.getPropertyValue('--global-padding'))
+
+  const finalPadding = paddingSize + extraPadding
 
   if (navRect) {
-    console.log(indicatorLeft.value)
-    indicatorLeft.value = rect.left - navRect.left + paddingSizeNum
+    indicatorLeft.value = rect.left - navRect.left + finalPadding
     indicatorWidth.value = rect.width
   }
 }
@@ -193,6 +200,10 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @media (min-width: 2000px) {
+      width: 1600px;
+      margin: 0 auto;
+    }
     nav {
       ul {
         display: flex;

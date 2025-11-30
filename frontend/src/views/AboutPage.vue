@@ -63,6 +63,11 @@ main {
   justify-content: center;
   gap: 40px;
   margin-bottom: 100px;
+  @media (min-width: 2000px) {
+    width: 1600px;
+    margin: 0 auto;
+    padding: 150px 0;
+  }
 
   h1 {
     color: white;
@@ -76,6 +81,7 @@ main {
     flex-direction: column;
     justify-content: center;
     gap: 100px;
+
     .article {
       padding-top: 0;
       overflow: hidden;
@@ -93,7 +99,8 @@ main {
       }
 
       p {
-        color: white;
+        color: var(--terciary-foreground-color);
+        line-height: 1.5;
         font-size: var(--small-text-size);
       }
 
@@ -102,34 +109,6 @@ main {
         height: 400px;
         width: 1200px;
       }
-    }
-  }
-
-  .article {
-    padding-top: 0;
-    overflow: hidden;
-    h2 {
-      font-weight: 600;
-      font-size: var(--larger-text-size);
-    }
-
-    &:nth-child(2n - 1) h2 {
-      color: var(--primary-foreground-color);
-    }
-
-    &:nth-child(2n) h2 {
-      color: var(--secondary-foreground-color);
-    }
-
-    p {
-      color: white;
-      font-size: var(--small-text-size);
-    }
-
-    img {
-      object-fit: cover;
-      height: 400px;
-      width: 1200px;
     }
   }
 }

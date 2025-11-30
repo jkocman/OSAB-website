@@ -204,6 +204,10 @@ main {
       align-items: center;
       justify-content: space-between;
       gap: 70px;
+      @media (min-width: 2000px) {
+        width: 1600px;
+        margin: 0 auto;
+      }
       @media (max-width: 1410px) {
         gap: 40px;
       }
@@ -240,6 +244,10 @@ main {
     justify-content: center;
     margin: 0 var(--global-padding);
     margin-bottom: 100px;
+    @media (min-width: 2000px) {
+      width: 1600px;
+      margin: 100px auto;
+    }
     h3 {
       font-weight: 600;
       font-size: var(--larger-text-size);
@@ -247,8 +255,8 @@ main {
     }
     p {
       font-size: var(--small-text-size);
-      color: white;
-      line-height: 1.2;
+      color: var(--terciary-foreground-color);
+      line-height: 1.5;
     }
   }
   .download-section {
@@ -265,8 +273,8 @@ main {
     }
     p {
       font-size: var(--small-text-size);
-      color: white;
-      line-height: 1.2;
+      color: var(--terciary-foreground-color);
+      line-height: 1.5;
     }
   }
 }
