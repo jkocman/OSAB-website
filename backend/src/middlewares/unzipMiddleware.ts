@@ -12,8 +12,11 @@ export const unzipAndParseOsab = async (
       return res.status(400).json({ error: "Soubor nebyl nahrán." });
     }
 
-    const zipPath = req.file.path;
+    if (!req.file.originalname.endsWith(".zip")) {
+      return res.status(400).json({ error: "Soubor musí být .zip" });
+    }
 
+    const zipPath = req.file.path;
     const directory = await unzipper.Open.file(zipPath);
 
     let osabContent: any = null;
@@ -28,10 +31,9 @@ export const unzipAndParseOsab = async (
         } catch (err) {
           return res.status(400).json({ error: "Soubor .osab není validní JSON." });
         }
+        break;
       }
     }
-
-    fs.unlink(zipPath, () => {});
 
     if (!osabContent) {
       return res.status(400).json({ error: "ZIP neobsahuje .osab soubor." });

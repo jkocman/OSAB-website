@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "idGame": 0,
+    "name": "Disorder",
+    "description": "First story level",
+    "length": 65,
+    "diff": 3
+  },
+  {
+    "id": 2,
+    "idGame": 0,
+    "name": "Disorder",
+    "description": "First story level",
+    "length": 65,
+    "diff": 3
+  }
+]
