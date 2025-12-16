@@ -1,5 +1,5 @@
 <template>
-  <footer :style="responsive()">
+  <footer>
     <section class="content">
       <section>
         <img src="../../assets/img/logo-game-text.png" alt="Logo" />
@@ -26,24 +26,6 @@
 </template>
 
 <script lang="ts" setup>
-
-const responsive = () => {
-  const pageHeight = document.documentElement.scrollHeight
-  const viewportHeight = window.innerHeight
-
-  if (pageHeight <= viewportHeight) {
-    return {
-      position: 'absolute' as const,
-      bottom: '0',
-      left: '0',
-      width: '100%',
-    }
-  }
-
-  return {
-    position: 'static' as const,
-  }
-}
 
 </script>
 

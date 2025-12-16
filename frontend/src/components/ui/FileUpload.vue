@@ -1,6 +1,17 @@
 <template>
-  <input type="file" />
+  <input type="file" @change="onFileChange" />
 </template>
+
+<script setup>
+const emit = defineEmits(['fileSelected']);
+
+let file = null;
+
+const onFileChange = (event) => {
+  file = event.target.files[0];
+  emit("fileSelected", file);
+};
+</script>
 
 <style lang="scss" scoped>
 input {

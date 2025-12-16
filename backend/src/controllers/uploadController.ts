@@ -1,13 +1,17 @@
 import { Request, Response } from "express";
 import fs from "fs";
 import path from "path";
+import { nextNumber } from "../middlewares/levelIdMiddleware";
 
 export const processOsab = async (req: Request, res: Response) => {
   try {
     const osab = (req as any).osab;
+    const levelDir = (req as any).levelDir;
 
     if (!osab || !osab.meta) {
-      return res.status(400).json({ error: "Soubor .osab neobsahuje meta data." });
+      return res.status(400).json({
+        error: "Soubor .osab neobsahuje meta data."
+      });
     }
 
     const meta = osab.meta;
@@ -15,16 +19,17 @@ export const processOsab = async (req: Request, res: Response) => {
     const filePath = path.join(dataDir, "levels.json");
 
     const result = {
-      id: nextNumber(filePath),
+      id: nextNumber(),
       idGame: meta.id,
       name: meta.name,
       description: meta.description,
-      length: meta.lenght,
-      diff: meta.diff
+      length: meta.length,
+      diff: meta.diff,
+      assetsPath: levelDir
     };
 
     if (!fs.existsSync(dataDir)) {
-      fs.mkdirSync(dataDir);
+      fs.mkdirSync(dataDir, { recursive: true });
     }
 
     let jsonData: any[] = [];
@@ -41,7 +46,7 @@ export const processOsab = async (req: Request, res: Response) => {
     fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2), "utf-8");
 
     res.json({
-      message: "Meta data byla uložena do JSON souboru.",
+      message: "Level byl úspěšně uložen.",
       saved: result
     });
   } catch (err) {
@@ -49,20 +54,3 @@ export const processOsab = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Chyba při zpracování meta dat." });
   }
 };
-
-function nextNumber(filePath: string){
-
-  let currentId = 0;
-
-  if (fs.existsSync(filePath)) {
-    const raw = fs.readFileSync(filePath, "utf-8");
-    if (raw.trim().length > 0) {
-      const data = JSON.parse(raw);
-      currentId = data.reduce((max: number, item: any) => {
-        return item.id > max ? item.id : max;
-      }, 0);
-    }
-  }
-
-  return currentId + 1;
-}

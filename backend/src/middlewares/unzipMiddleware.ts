@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import unzipper from "unzipper";
 import fs from "fs";
+import path from "path";
+import { nextNumber } from "../middlewares/levelIdMiddleware";
 
 export const unzipAndParseOsab = async (
   req: Request,
@@ -28,22 +30,64 @@ export const unzipAndParseOsab = async (
 
         try {
           osabContent = JSON.parse(text);
-        } catch (err) {
-          return res.status(400).json({ error: "Soubor .osab není validní JSON." });
+        } catch {
+          return res
+            .status(400)
+            .json({ error: "Soubor .osab není validní JSON." });
         }
         break;
       }
     }
 
-    if (!osabContent) {
-      return res.status(400).json({ error: "ZIP neobsahuje .osab soubor." });
+    if (!osabContent || !osabContent.meta) {
+      return res.status(400).json({
+        error: "ZIP neobsahuje validní .osab soubor s meta daty."
+      });
     }
 
+    const levelName = osabContent.meta.name;
+    const levelId = nextNumber();
+
+    if (!levelName || !levelId) {
+      return res.status(400).json({
+        error: ".osab neobsahuje meta.name nebo meta.id."
+      });
+    }
+
+    const safeName = levelName.replace(/[^a-z0-9-_]/gi, "_");
+    const targetDir = path.join(process.cwd(), "uploads", `${safeName}-${levelId}`);
+
+    fs.mkdirSync(targetDir, { recursive: true });
+
+    for (const file of directory.files) {
+      const outputPath = path.join(targetDir, file.path);
+
+      if (file.type === "Directory") {
+        fs.mkdirSync(outputPath, { recursive: true });
+        continue;
+      }
+
+      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+
+      const readStream = file.stream();
+      const writeStream = fs.createWriteStream(outputPath);
+
+      await new Promise<void>((resolve, reject) => {
+        readStream
+          .pipe(writeStream)
+          .on("finish", resolve)
+          .on("error", reject);
+      });
+    }
+
+    fs.unlinkSync(zipPath);
+
     (req as any).osab = osabContent;
+    (req as any).levelDir = targetDir;
 
     next();
   } catch (error) {
-    console.error("Chyba při rozbalování:", error);
+    console.error("Chyba při rozbalování ZIP:", error);
     return res.status(500).json({ error: "Chyba při rozbalování ZIP." });
   }
 };

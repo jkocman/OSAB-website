@@ -6,25 +6,30 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.processOsab = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
+const levelIdMiddleware_1 = require("../middlewares/levelIdMiddleware");
 const processOsab = async (req, res) => {
     try {
         const osab = req.osab;
+        const levelDir = req.levelDir;
         if (!osab || !osab.meta) {
-            return res.status(400).json({ error: "Soubor .osab neobsahuje meta data." });
+            return res.status(400).json({
+                error: "Soubor .osab neobsahuje meta data."
+            });
         }
         const meta = osab.meta;
         const dataDir = path_1.default.join(process.cwd(), "data");
         const filePath = path_1.default.join(dataDir, "levels.json");
         const result = {
-            id: nextNumber(filePath),
+            id: (0, levelIdMiddleware_1.nextNumber)(),
             idGame: meta.id,
             name: meta.name,
             description: meta.description,
-            length: meta.lenght,
-            diff: meta.diff
+            length: meta.length,
+            diff: meta.diff,
+            assetsPath: levelDir
         };
         if (!fs_1.default.existsSync(dataDir)) {
-            fs_1.default.mkdirSync(dataDir);
+            fs_1.default.mkdirSync(dataDir, { recursive: true });
         }
         let jsonData = [];
         if (fs_1.default.existsSync(filePath)) {
@@ -36,7 +41,7 @@ const processOsab = async (req, res) => {
         jsonData.push(result);
         fs_1.default.writeFileSync(filePath, JSON.stringify(jsonData, null, 2), "utf-8");
         res.json({
-            message: "Meta data byla uložena do JSON souboru.",
+            message: "Level byl úspěšně uložen.",
             saved: result
         });
     }
@@ -46,17 +51,4 @@ const processOsab = async (req, res) => {
     }
 };
 exports.processOsab = processOsab;
-function nextNumber(filePath) {
-    let currentId = 0;
-    if (fs_1.default.existsSync(filePath)) {
-        const raw = fs_1.default.readFileSync(filePath, "utf-8");
-        if (raw.trim().length > 0) {
-            const data = JSON.parse(raw);
-            currentId = data.reduce((max, item) => {
-                return item.id > max ? item.id : max;
-            }, 0);
-        }
-    }
-    return currentId + 1;
-}
 //# sourceMappingURL=uploadController.js.map
