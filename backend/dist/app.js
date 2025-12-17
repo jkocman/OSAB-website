@@ -5,8 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const uploadRoutes_1 = __importDefault(require("./routes/uploadRoutes"));
+const getDataRouter_1 = __importDefault(require("./routes/getDataRouter"));
+const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
+app.use((0, cors_1.default)());
 app.use("/upload", uploadRoutes_1.default);
+app.use("/", getDataRouter_1.default);
 app.listen(3000, () => {
     console.log("Server běží na portu 3000");
 });

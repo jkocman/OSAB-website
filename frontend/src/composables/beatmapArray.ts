@@ -1,76 +1,21 @@
 import osab from '../assets/img/osab.jpeg'
+import { getData } from './api'
 
-// temporary array of beatmaps for testing
-export const beatmapArray = [
-  {
-    id: 1,
-    img: osab,
-    title: 'aghoj',
-    artist: 'nekdo',
-    creator: 'Krooby',
-    description: 'aaaa',
-    difficulty: 'neco',
-    downloads: 19,
-    dateOfUpload: new Date('2024-02-15'),
-    tags: ['Short', 'Popular Only'],
-  },
-  {
-    id: 2,
-    img: osab,
-    title: 'bghoj',
-    artist: 'nekdo',
-    creator: 'Krooby',
-    description: 'aaaa',
-    difficulty: 'neco',
-    downloads: 15,
-    dateOfUpload: new Date('2024-02-15'),
-    tags: ['Normal'],
-  },
-  {
-    id: 3,
-    img: osab,
-    title: 'aghoj',
-    artist: 'nekdo',
-    creator: 'Krooby',
-    description: 'aaaa',
-    difficulty: 'neco',
-    dateOfUpload: new Date('2024-02-15'),
-    tags: ['Long'],
-  },
-  {
-    id: 4,
-    img: osab,
-    title: 'aghoj',
-    artist: 'nekdo',
-    creator: 'Krooby',
-    description: 'aaaa',
-    difficulty: 'neco',
-    downloads: 80,
-    dateOfUpload: new Date('2024-02-15'),
-    tags: ['Long'],
-  },
-  {
-    id: 5,
-    img: osab,
-    title: 'aghoj',
-    artist: 'nekdo',
-    creator: 'Krooby',
-    description: 'aaaa',
-    difficulty: 'neco',
-    downloads: 11,
-    dateOfUpload: new Date('2024-02-15'),
-    tags: ['Long', 'Popular Only'],
-  },
-  {
-    id: 6,
-    img: osab,
-    title: 'aghoj',
-    artist: 'nekdo',
-    creator: 'Krooby',
-    description: 'aaaa',
-    difficulty: 'neco',
-    downloads: 11,
-    dateOfUpload: new Date('2024-02-15'),
-    tags: ['Long', 'Popular Only'],
-  },
-]
+const STATIC_BEATMAP = {
+  img: osab,
+  artist: 'Krooby',
+  creator: 'Krooby',
+  downloads: 0,
+  dateOfUpload: new Date("2023-01-01"),
+  tags: ['popular-only', 'long']
+}
+
+
+export async function loadBeatmaps() {
+  const serverData = await getData()
+
+  return serverData.map((item: any) => ({
+    ...STATIC_BEATMAP,
+    ...item,
+  }))
+}

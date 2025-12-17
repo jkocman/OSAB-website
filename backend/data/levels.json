@@ -105,5 +105,41 @@
     "length": 120,
     "diff": "easy",
     "assetsPath": "D:\\Users\\Kuba\\Dokumenty\\Programming\\OSAB-website\\backend\\uploads\\TestLevel-13"
+  },
+  {
+    "id": 14,
+    "idGame": 1,
+    "name": "TestLevel",
+    "description": "Testovací level",
+    "length": 120,
+    "diff": "easy",
+    "assetsPath": "D:\\Users\\Kuba\\Dokumenty\\Programming\\OSAB-website\\backend\\uploads\\TestLevel-14"
+  },
+  {
+    "id": 15,
+    "idGame": 1,
+    "name": "TestLevel",
+    "description": "Testovací level",
+    "length": 120,
+    "diff": "easy",
+    "assetsPath": "D:\\Users\\Kuba\\Dokumenty\\Programming\\OSAB-website\\backend\\uploads\\TestLevel-15"
+  },
+  {
+    "id": 16,
+    "idGame": 1,
+    "name": "TestLevel",
+    "description": "Testovací level",
+    "length": 120,
+    "diff": "easy",
+    "assetsPath": "D:\\Users\\Kuba\\Dokumenty\\Programming\\OSAB-website\\backend\\uploads\\TestLevel-16"
+  },
+  {
+    "id": 17,
+    "idGame": 1,
+    "name": "TestLevel",
+    "description": "Testovací level",
+    "length": 120,
+    "diff": "easy",
+    "assetsPath": "D:\\Users\\Kuba\\Dokumenty\\Programming\\OSAB-website\\backend\\uploads\\TestLevel-17"
   }
 ]

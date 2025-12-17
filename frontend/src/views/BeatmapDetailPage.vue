@@ -5,7 +5,7 @@
       <section v-if="beatmap" class="beatmap-info">
         <img :src="beatmap.img" />
         <section class="heading-section">
-          <h2>{{ beatmap.title }}</h2>
+          <h2>{{ beatmap.name }}</h2>
           <p class="artist">{{ beatmap.artist }}</p>
         </section>
         <section class="info-container">
@@ -21,7 +21,7 @@
           <section class="beatmap-info-container">
             <h3>Beatmap info</h3>
             <p>Creator: {{ beatmap.creator || 'No creator provided' }}</p>
-            <p>Difficulty: {{ beatmap.difficulty || 'No difficulty provided' }}</p>
+            <p>Difficulty: {{ beatmap.diff|| 'No difficulty provided' }}</p>
             <p>Downloaded: {{ beatmap.downloads }}x</p>
             <p>Uploaded: {{ formatedDate }}</p>
           </section>
@@ -44,20 +44,28 @@
 
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
-import { computed } from 'vue'
-import { beatmapArray } from '@/composables/beatmapArray'
+import { computed, onMounted, ref } from 'vue'
+import { loadBeatmaps } from '@/composables/beatmapArray'
 
 const route = useRoute()
 
 const beatmapId = computed(() => Number(route.params.id))
 
-const beatmap = computed(() => beatmapArray.find((b) => b.id === beatmapId.value))
+const beatmaps = ref<any[]>([])
+const isLoading = ref(true)
+
+const beatmap = computed(() => beatmaps.value.find((b) => b.id === beatmapId.value))
 
 const formatedDate = computed(() => {
   if (beatmap.value) {
     return beatmap.value.dateOfUpload.toLocaleDateString('cs-CZ')
   }
   return undefined
+})
+
+onMounted(async () => {
+  beatmaps.value = await loadBeatmaps()
+  isLoading.value = false
 })
 </script>
 

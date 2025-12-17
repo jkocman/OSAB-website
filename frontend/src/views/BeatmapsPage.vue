@@ -60,7 +60,7 @@
           v-for="beatmap in visibleBeatmaps"
           :key="beatmap"
           :img="beatmap.img"
-          :title="beatmap.title"
+          :title="beatmap.name"
           :artist="beatmap.artist"
           :creator="beatmap.creator"
           @click="router.push({ name: 'beatmap-detail', params: { id: beatmap.id } })"
@@ -79,10 +79,11 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { beatmapArray } from '@/composables/beatmapArray'
+import { loadBeatmaps } from '@/composables/beatmapArray'
 import { useSelectionStore } from '@/stores/selection'
+import { postFile } from '@/composables/api'
 
 const router = useRouter()
 const selectionStore = useSelectionStore()
@@ -94,6 +95,9 @@ const openFilter = ref(false)
 
 const searchText = ref('')
 
+const beatmaps = ref<any[]>([])
+const isLoading = ref(true)
+
 let selectedFile: File | null = null;
 
 const onFileSelected = (file: File) => {
@@ -101,58 +105,57 @@ const onFileSelected = (file: File) => {
 };
 
 const submit = async () => {
-  if (!selectedFile) {
-    console.error("No file selected");
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append("file", selectedFile);
-
-  try {
-    await fetch("http://localhost:3000/upload", {
-      method: "POST",
-      body: formData
-    });
-  } catch (err) {
-    console.error(err);
-  }
-
+  if (!selectedFile) return;
+  postFile(selectedFile);
   openAddBeatmap.value = false
 };
 
 const visibleBeatmaps = computed(() => {
-  let filtered = [...beatmapArray]
+  let filtered = [...beatmaps.value]
   const searched = searchText.value.toLowerCase().trim()
 
   if (selectionStore.filterSelected.length > 0) {
     filtered = filtered.filter((beatmap) =>
-      beatmap.tags?.some((tag) => selectionStore.filterSelected.includes(tag)),
+      beatmap.tags?.some((tag: string) =>
+        selectionStore.filterSelected.includes(tag),
+      ),
     )
   }
+
   switch (selectionStore.sortSelected) {
     case 'Name A-Z':
-      filtered.sort((a, b) => a.title.localeCompare(b.title))
+      filtered.sort((a, b) => a.name.localeCompare(b.name))
       break
     case 'Name Z-A':
-      filtered.sort((a, b) => b.title.localeCompare(a.title))
+      filtered.sort((a, b) => b.name.localeCompare(a.name))
       break
     case 'Newest':
-      filtered.sort((a, b) => b.dateOfUpload.getTime() - a.dateOfUpload.getTime())
+      filtered.sort(
+        (a, b) =>
+          b.dateOfUpload.getTime() - a.dateOfUpload.getTime(),
+      )
       break
     case 'Most Downloaded':
-      filtered.sort((a, b) => (b.downloads || 0) - (a.downloads || 0))
+      filtered.sort(
+        (a, b) => (b.downloads || 0) - (a.downloads || 0),
+      )
       break
   }
 
   filtered = filtered.filter(
     (beatmap) =>
-      beatmap.title.toLowerCase().includes(searched) ||
+      beatmap.name.toLowerCase().includes(searched) ||
       beatmap.creator.toLowerCase().includes(searched) ||
       beatmap.artist.toLowerCase().includes(searched),
   )
 
   return filtered.slice(0, visibleCount.value)
+})
+
+
+onMounted(async () => {
+  beatmaps.value = await loadBeatmaps()
+  isLoading.value = false
 })
 </script>
 
