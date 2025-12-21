@@ -5,7 +5,7 @@
         </RouterLink>
         <Article>
             <h1>Log in</h1>
-            <form action="POST">
+            <form>
                 <section>
                     <label>Enter your username or email</label>
                     <Input :search="false" inputPlaceholder="Username or Email" type="text"></Input>
