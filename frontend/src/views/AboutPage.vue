@@ -6,48 +6,39 @@
         <img src="../assets/img/ilustration/level.png" alt="Illustration image" />
         <h2>About the game</h2>
         <p>
-          Cillum id minim laboris deserunt consectetur nulla. Et est sunt sint incididunt id labore
-          duis eu est in esse laboris. Magna incididunt anim Lorem non deserunt Lorem sunt ullamco
-          labore non esse officia consequat. Ea officia esse consequat commodo. Deserunt magna
-          voluptate consectetur sit enim mollit ex id ipsum anim tempor consequat. Non excepteur in
-          enim reprehenderit dolor consequat. Mollit Lorem excepteur veniam deserunt id pariatur
-          exercitation commodo mollit occaecat reprehenderit veniam esse. Sunt id consectetur ut
-          cupidatat cillum quis esse. Dolore non esse ullamco sunt tempor do laborum mollit ex
-          magna. Sint minim laboris Lorem sunt incididunt dolore enim eu. Id commodo consectetur ex
-          est. Ut eiusmod duis qui mollit veniam ad commodo pariatur. Veniam sit laborum veniam
-          pariatur sint labore ex nulla. Labore in veniam enim aute culpa fugiat.
+          This game is a rhythm-based project currently being developed by two junior developers,
+          Krooby and Inkking. It is inspired by the gameplay and audiovisual style of Just Shapes &
+          Beats and focuses on dodging obstacles in sync with music. The project includes two main
+          community-oriented features: a multiplayer mode and a map editor. Players can also upload
+          their created beatmaps to the platform, where they can be viewed shared and played by
+          others. The game aims to provide a rhythm experience with tools for both playing together
+          and creating content.
         </p>
       </Article>
       <Article class="article" :margin="200">
         <img src="../assets/img/ilustration/story.png" alt="Illustration image" />
         <h2>About the creators</h2>
         <p>
-          Cillum id minim laboris deserunt consectetur nulla. Et est sunt sint incididunt id labore
-          duis eu est in esse laboris. Magna incididunt anim Lorem non deserunt Lorem sunt ullamco
-          labore non esse officia consequat. Ea officia esse consequat commodo. Deserunt magna
-          voluptate consectetur sit enim mollit ex id ipsum anim tempor consequat. Non excepteur in
-          enim reprehenderit dolor consequat. Mollit Lorem excepteur veniam deserunt id pariatur
-          exercitation commodo mollit occaecat reprehenderit veniam esse. Sunt id consectetur ut
-          cupidatat cillum quis esse. Dolore non esse ullamco sunt tempor do laborum mollit ex
-          magna. Sint minim laboris Lorem sunt incididunt dolore enim eu. Id commodo consectetur ex
-          est. Ut eiusmod duis qui mollit veniam ad commodo pariatur. Veniam sit laborum veniam
-          pariatur sint labore ex nulla. Labore in veniam enim aute culpa fugiat.
+          The game and its web platform are developed by two Czech students studying at SSPŠ in the
+          Czech Republic. Krooby has mainly worked on the design of the game and is also responsible
+          for developing the community-focused web platform, which allows players to upload, share,
+          and rate beatmaps. Inkking focuses on programming and implementing most of the game's
+          features, including the level editor and other gameplay mechanics. Together, they combine
+          their skills in design, programming, and development to create both the rhythm game and
+          the web platform, providing a space where players can engage with the game and contribute
+          content to the community.
         </p>
       </Article>
       <Article class="article" :margin="200">
         <img src="../assets/img/ilustration/menu.png" alt="Illustration image" />
         <h2>Why was this project created</h2>
         <p>
-          Cillum id minim laboris deserunt consectetur nulla. Et est sunt sint incididunt id labore
-          duis eu est in esse laboris. Magna incididunt anim Lorem non deserunt Lorem sunt ullamco
-          labore non esse officia consequat. Ea officia esse consequat commodo. Deserunt magna
-          voluptate consectetur sit enim mollit ex id ipsum anim tempor consequat. Non excepteur in
-          enim reprehenderit dolor consequat. Mollit Lorem excepteur veniam deserunt id pariatur
-          exercitation commodo mollit occaecat reprehenderit veniam esse. Sunt id consectetur ut
-          cupidatat cillum quis esse. Dolore non esse ullamco sunt tempor do laborum mollit ex
-          magna. Sint minim laboris Lorem sunt incididunt dolore enim eu. Id commodo consectetur ex
-          est. Ut eiusmod duis qui mollit veniam ad commodo pariatur. Veniam sit laborum veniam
-          pariatur sint labore ex nulla. Labore in veniam enim aute culpa fugiat.
+          The game was originally created as part of a student project at our school. Currently, as
+          part of a graduation project, Krooby is developing the web platform while Inkking is
+          improving the game and adding new features such as multiplayer. The main motivation behind
+          this project is that the original game is very enjoyable, but it lacks community-driven
+          features like level creation. This inspired us to build both the game and the platform to
+          allow players to create, share, and interact with custom content.
         </p>
       </Article>
     </section>

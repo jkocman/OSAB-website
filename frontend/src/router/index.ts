@@ -3,6 +3,8 @@ import BeatmapsPage from '@/views/BeatmapsPage.vue'
 import DownloadPage from '@/views/DownloadPage.vue'
 import HomePage from '@/views/HomePage.vue'
 import BeatmapDetailPage from '@/views/BeatmapDetailPage.vue'
+import LoginPage from '@/views/LoginPage.vue'
+import RegisterPage from '@/views/RegisterPage.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -33,6 +35,18 @@ const router = createRouter({
       path: '/download',
       name: 'download',
       component: DownloadPage,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginPage,
+      meta: { layout: 'auth' },
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: RegisterPage,
+      meta: { layout: 'auth' },
     },
   ],
   scrollBehavior() {

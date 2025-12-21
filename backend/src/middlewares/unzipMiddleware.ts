@@ -11,11 +11,11 @@ export const unzipAndParseOsab = async (
 ) => {
   try {
     if (!req.file) {
-      return res.status(400).json({ error: "Soubor nebyl nahrán." });
+      return res.status(400);
     }
 
     if (!req.file.originalname.endsWith(".zip")) {
-      return res.status(400).json({ error: "Soubor musí být .zip" });
+      return res.status(400);
     }
 
     const zipPath = req.file.path;
@@ -33,7 +33,7 @@ export const unzipAndParseOsab = async (
         } catch {
           return res
             .status(400)
-            .json({ error: "Soubor .osab není validní JSON." });
+            .json({ error: "not a json file" });
         }
         break;
       }
@@ -41,7 +41,7 @@ export const unzipAndParseOsab = async (
 
     if (!osabContent || !osabContent.meta) {
       return res.status(400).json({
-        error: "ZIP neobsahuje validní .osab soubor s meta daty."
+        error: ".osab file with no meta found."
       });
     }
 
@@ -50,7 +50,7 @@ export const unzipAndParseOsab = async (
 
     if (!levelName || !levelId) {
       return res.status(400).json({
-        error: ".osab neobsahuje meta.name nebo meta.id."
+        error: "invalid .osab meta data"
       });
     }
 
@@ -86,8 +86,8 @@ export const unzipAndParseOsab = async (
     (req as any).levelDir = targetDir;
 
     next();
-  } catch (error) {
-    console.error("Chyba při rozbalování ZIP:", error);
-    return res.status(500).json({ error: "Chyba při rozbalování ZIP." });
+  } catch (err) {
+    console.error(err);
+    return res.status(500);
   }
 };

@@ -11,6 +11,7 @@ app.use(cors());
 app.use("/upload", uploadRoutes);
 app.use("/", getDataRouter);
 
+
 app.listen(3000, () => {
-  console.log("Server běží na portu 3000");
+  console.log("running on port 3000");
 });

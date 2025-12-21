@@ -14,7 +14,16 @@ export const postFile = async (file: File) => {
 
 
 export const getData = async () => {
-    const res = await fetch("http://localhost:3000");
+    const res = await fetch("http://localhost:3000/beatmaps/");
     const data = await res.json();
     return data;
 }
+
+export const getBeatmapImage = async (id: number) => {
+  const res = await fetch(`http://localhost:3000/beatmaps/${id}/image?v=${Date.now()}`);
+  
+  if (!res.ok) throw new Error("Image not found");
+  
+  const blob = await res.blob();
+  return URL.createObjectURL(blob);
+};

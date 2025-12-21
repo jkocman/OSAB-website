@@ -61,7 +61,7 @@
           :key="beatmap"
           :img="beatmap.img"
           :title="beatmap.name"
-          :artist="beatmap.artist"
+          :artist="beatmap.musicAuthor || 'Unknown'"
           :creator="beatmap.creator"
           @click="router.push({ name: 'beatmap-detail', params: { id: beatmap.id } })"
         ></BeatmapPreview>
@@ -132,7 +132,7 @@ const visibleBeatmaps = computed(() => {
     case 'Newest':
       filtered.sort(
         (a, b) =>
-          b.dateOfUpload.getTime() - a.dateOfUpload.getTime(),
+          new Date(b.dateUploaded).getTime() - new Date(a.dateUploaded).getTime(),
       )
       break
     case 'Most Downloaded':

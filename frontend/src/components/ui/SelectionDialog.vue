@@ -29,13 +29,15 @@ const props = defineProps({
 
 const selected = (item: any) => {
   if (props.multiple) {
-    if (!selectionStore.filterSelected.includes(item)) {
-      selectionStore.filterSelected.push(item)
+    const index = selectionStore.filterSelected.indexOf(item);
+    
+    if (index === -1) {
+      selectionStore.filterSelected = [...selectionStore.filterSelected, item];
     } else {
-      selectionStore.filterSelected = selectionStore.filterSelected.filter((i) => i !== item)
+      selectionStore.filterSelected = selectionStore.filterSelected.filter((i) => i !== item);
     }
   } else {
-    selectionStore.sortSelected = item
+    selectionStore.sortSelected = item;
   }
 }
 

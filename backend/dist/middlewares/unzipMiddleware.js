@@ -11,10 +11,10 @@ const levelIdMiddleware_1 = require("../middlewares/levelIdMiddleware");
 const unzipAndParseOsab = async (req, res, next) => {
     try {
         if (!req.file) {
-            return res.status(400).json({ error: "Soubor nebyl nahrán." });
+            return res.status(400);
         }
         if (!req.file.originalname.endsWith(".zip")) {
-            return res.status(400).json({ error: "Soubor musí být .zip" });
+            return res.status(400);
         }
         const zipPath = req.file.path;
         const directory = await unzipper_1.default.Open.file(zipPath);
@@ -29,21 +29,21 @@ const unzipAndParseOsab = async (req, res, next) => {
                 catch {
                     return res
                         .status(400)
-                        .json({ error: "Soubor .osab není validní JSON." });
+                        .json({ error: "not a json file" });
                 }
                 break;
             }
         }
         if (!osabContent || !osabContent.meta) {
             return res.status(400).json({
-                error: "ZIP neobsahuje validní .osab soubor s meta daty."
+                error: ".osab file with no meta found."
             });
         }
         const levelName = osabContent.meta.name;
         const levelId = (0, levelIdMiddleware_1.nextNumber)();
         if (!levelName || !levelId) {
             return res.status(400).json({
-                error: ".osab neobsahuje meta.name nebo meta.id."
+                error: "invalid .osab meta data"
             });
         }
         const safeName = levelName.replace(/[^a-z0-9-_]/gi, "_");
@@ -70,9 +70,9 @@ const unzipAndParseOsab = async (req, res, next) => {
         req.levelDir = targetDir;
         next();
     }
-    catch (error) {
-        console.error("Chyba při rozbalování ZIP:", error);
-        return res.status(500).json({ error: "Chyba při rozbalování ZIP." });
+    catch (err) {
+        console.error(err);
+        return res.status(500);
     }
 };
 exports.unzipAndParseOsab = unzipAndParseOsab;

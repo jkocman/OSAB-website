@@ -4,142 +4,50 @@
     "idGame": 0,
     "name": "Disorder",
     "description": "First story level",
-    "length": 65,
-    "diff": 3
+    "diff": 3,
+    "imageUrl": "/beatmaps/1/image",
+    "dateUploaded": "2025-12-21T18:21:45.596Z",
+    "musicAuthor": null
   },
   {
     "id": 2,
-    "idGame": 0,
-    "name": "Disorder",
-    "description": "First story level",
-    "length": 65,
-    "diff": 3
+    "idGame": 1,
+    "name": "TestLevel",
+    "description": "Testovací level",
+    "length": 120,
+    "diff": "easy",
+    "imageUrl": "/beatmaps/2/image",
+    "dateUploaded": "2025-12-21T18:21:54.499Z",
+    "musicAuthor": "Look Back"
   },
   {
     "id": 3,
-    "idGame": 1,
-    "name": "TestLevel",
-    "description": "Testovací level",
-    "diff": "easy"
+    "idGame": 0,
+    "name": "MariannE",
+    "description": "Second story level",
+    "diff": 5,
+    "imageUrl": "/beatmaps/3/image",
+    "dateUploaded": "2025-12-21T18:22:10.898Z",
+    "musicAuthor": null
   },
   {
     "id": 4,
-    "idGame": 1,
-    "name": "TestLevel",
-    "description": "Testovací level",
-    "diff": "easy"
+    "idGame": 0,
+    "name": "Energy Synergy Matrix",
+    "description": "Third story level",
+    "diff": 7,
+    "imageUrl": "/beatmaps/4/image",
+    "dateUploaded": "2025-12-21T18:23:02.184Z",
+    "musicAuthor": null
   },
   {
     "id": 5,
-    "idGame": 1,
-    "name": "TestLevel",
-    "description": "Testovací level",
-    "diff": "easy"
-  },
-  {
-    "id": 6,
-    "idGame": 1,
-    "name": "TestLevel",
-    "description": "Testovací level",
-    "diff": "easy"
-  },
-  {
-    "id": 7,
-    "idGame": 1,
-    "name": "TestLevel",
-    "description": "Testovací level",
-    "length": 120,
-    "diff": "easy",
-    "assetsPath": "D:\\Users\\Kuba\\Dokumenty\\Programming\\OSAB-website\\backend\\uploads\\TestLevel-1"
-  },
-  {
-    "id": 8,
-    "idGame": 1,
-    "name": "TestLevel",
-    "description": "Testovací level",
-    "length": 120,
-    "diff": "easy",
-    "assetsPath": "D:\\Users\\Kuba\\Dokumenty\\Programming\\OSAB-website\\backend\\uploads\\TestLevel-1"
-  },
-  {
-    "id": 9,
-    "idGame": 1,
-    "name": "TestLevel",
-    "description": "Testovací level",
-    "length": 120,
-    "diff": "easy",
-    "assetsPath": "D:\\Users\\Kuba\\Dokumenty\\Programming\\OSAB-website\\backend\\uploads\\TestLevel-1"
-  },
-  {
-    "id": 10,
-    "idGame": 1,
-    "name": "TestLevel",
-    "description": "Testovací level",
-    "length": 120,
-    "diff": "easy",
-    "assetsPath": "D:\\Users\\Kuba\\Dokumenty\\Programming\\OSAB-website\\backend\\uploads\\TestLevel-1"
-  },
-  {
-    "id": 11,
-    "idGame": 1,
-    "name": "TestLevel",
-    "description": "Testovací level",
-    "length": 120,
-    "diff": "easy",
-    "assetsPath": "D:\\Users\\Kuba\\Dokumenty\\Programming\\OSAB-website\\backend\\uploads\\TestLevel-11"
-  },
-  {
-    "id": 12,
-    "idGame": 1,
-    "name": "TestLevel",
-    "description": "Testovací level",
-    "length": 120,
-    "diff": "easy",
-    "assetsPath": "D:\\Users\\Kuba\\Dokumenty\\Programming\\OSAB-website\\backend\\uploads\\TestLevel-12"
-  },
-  {
-    "id": 13,
-    "idGame": 1,
-    "name": "TestLevel",
-    "description": "Testovací level",
-    "length": 120,
-    "diff": "easy",
-    "assetsPath": "D:\\Users\\Kuba\\Dokumenty\\Programming\\OSAB-website\\backend\\uploads\\TestLevel-13"
-  },
-  {
-    "id": 14,
-    "idGame": 1,
-    "name": "TestLevel",
-    "description": "Testovací level",
-    "length": 120,
-    "diff": "easy",
-    "assetsPath": "D:\\Users\\Kuba\\Dokumenty\\Programming\\OSAB-website\\backend\\uploads\\TestLevel-14"
-  },
-  {
-    "id": 15,
-    "idGame": 1,
-    "name": "TestLevel",
-    "description": "Testovací level",
-    "length": 120,
-    "diff": "easy",
-    "assetsPath": "D:\\Users\\Kuba\\Dokumenty\\Programming\\OSAB-website\\backend\\uploads\\TestLevel-15"
-  },
-  {
-    "id": 16,
-    "idGame": 1,
-    "name": "TestLevel",
-    "description": "Testovací level",
-    "length": 120,
-    "diff": "easy",
-    "assetsPath": "D:\\Users\\Kuba\\Dokumenty\\Programming\\OSAB-website\\backend\\uploads\\TestLevel-16"
-  },
-  {
-    "id": 17,
-    "idGame": 1,
-    "name": "TestLevel",
-    "description": "Testovací level",
-    "length": 120,
-    "diff": "easy",
-    "assetsPath": "D:\\Users\\Kuba\\Dokumenty\\Programming\\OSAB-website\\backend\\uploads\\TestLevel-17"
+    "idGame": 0,
+    "name": "What the devils?????",
+    "description": "Final level",
+    "diff": 9,
+    "imageUrl": "/beatmaps/5/image",
+    "dateUploaded": "2025-12-21T18:24:47.307Z",
+    "musicAuthor": null
   }
 ]

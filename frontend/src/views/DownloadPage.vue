@@ -44,11 +44,12 @@
         <h2>Installation instructions</h2>
         <ol class="instructions">
           <li>
-            Culpa reprehenderit deserunt incididunt sunt tempor ut est enim occaecat qui minim enim
-            sit anim.
+            Download the .zip file for your desired version (stable or experimental) by clicking the
+            "Download" button.
           </li>
-          <li>Labore tempor reprehenderit quis eiusmod culpa dolor elit nisi ea.</li>
-          <li>Nulla et elit exercitation minim ad. Ullamco pariatur cillum laborum.</li>
+          <li>Extract the contents of the .zip file to a folder of your choice.</li>
+          <li>Run the executable file to start the game.</li>
+          <li>You can also create a shortcut to the executable for easier access.</li>
         </ol>
       </Article>
     </section>
@@ -91,6 +92,9 @@ main {
     border-radius: 20px;
     overflow: hidden;
     line-height: 0;
+    @media(max-width: 1200px){
+      width: 100%;
+    }
     img {
       width: 100%;
       height: 100%;
@@ -103,6 +107,11 @@ main {
     align-items: stretch;
     justify-content: center;
     gap: 40px;
+    max-width: 1600px;
+    @media(max-width: 1200px){
+      flex-direction: column;
+      align-items: center;
+    }
     Article {
       width: 100%;
       padding: 50px;
@@ -127,6 +136,19 @@ main {
           display: flex;
           align-items: center;
           justify-content: space-between;
+
+          @media(max-width: 1527px){
+            flex-direction: column;
+            gap: 10px;
+          }
+          @media(max-width: 1200px){
+            flex-direction: row;
+            align-items: center;
+          }
+          @media(max-width: 700px){
+            flex-direction: column;
+            gap: 10px;
+          }
           section {
             display: flex;
             align-items: center;

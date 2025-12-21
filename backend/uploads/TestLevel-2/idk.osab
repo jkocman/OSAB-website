@@ -1,0 +1,9 @@
+{
+  "meta": {
+    "id": 1,
+    "name": "TestLevel",
+    "description": "Testovací level",
+    "length": 120,
+    "diff": "easy"
+  }
+}

@@ -69,6 +69,8 @@ function onInput(e: Event) {
     outline: none;
     color: var(--terciary-foreground-color);
     font-size: 1rem;
+    text-align: left;
+    width: 100%;
   }
 }
 </style>

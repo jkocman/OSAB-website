@@ -21,14 +21,17 @@
         </ul>
         <div v-if="page !== 0" class="nav-indicator" :style="indicatorStyle"></div>
       </nav>
-      <Button
-        title="Download"
-        :fontSize="18"
-        :paddingHorizontal="25"
-        :paddingVertical="10"
-        :buttonType="buttonType"
-        @click="router.push('/download')"
-      ></Button>
+      <section>
+        <i class="fa-solid fa-user" @click="router.push('/login')"></i>
+        <Button
+          title="Download"
+          :fontSize="18"
+          :paddingHorizontal="25"
+          :paddingVertical="10"
+          :buttonType="buttonType"
+          @click="router.push('/download')"
+        ></Button>   
+      </section>
     </section>
 
     <Dialog v-if="openSearch" @close="openSearch = false">
@@ -232,6 +235,21 @@ header {
         height: 2px;
         background-color: var(--primary-foreground-color);
         border-radius: 2px;
+      }
+    }
+    section{
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      i {
+        color: var(--terciary-foreground-color);
+        font-size: 24px;
+        cursor: pointer;
+        transition: 0.3s ease;
+
+        &:hover {
+          color: var(--primary-foreground-color);
+        }
       }
     }
   }

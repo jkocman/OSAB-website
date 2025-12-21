@@ -12,6 +12,6 @@ app.use((0, cors_1.default)());
 app.use("/upload", uploadRoutes_1.default);
 app.use("/", getDataRouter_1.default);
 app.listen(3000, () => {
-    console.log("Server běží na portu 3000");
+    console.log("running on port 3000");
 });
 //# sourceMappingURL=app.js.map
