@@ -2,13 +2,16 @@
   <input type="file" @change="onFileChange" />
 </template>
 
-<script setup>
-const emit = defineEmits(['fileSelected']);
+<script setup lang="ts">
+const emit = defineEmits<{
+  (e: 'fileSelected', file: File | null): void
+}>();
 
-let file = null;
+let file: File | null = null;
 
-const onFileChange = (event) => {
-  file = event.target.files[0];
+const onFileChange = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  file = target.files?.[0] || null;
   emit("fileSelected", file);
 };
 </script>

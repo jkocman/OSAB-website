@@ -15,7 +15,6 @@ export async function loadBeatmaps() {
       let img;
 
       try {
-        console.log("Načítám obrázek pro ID:", item.id);
         img = await getBeatmapImage(item.id);
       } catch {
         img = osab;

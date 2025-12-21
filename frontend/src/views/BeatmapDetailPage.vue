@@ -1,7 +1,7 @@
 <template>
   <main>
     <h1>Beatmap details</h1>
-    <Article width="true">
+    <Article :width="true">
       <section v-if="beatmap" class="beatmap-info">
         <img :src="beatmap.img" />
         <section class="heading-section">
