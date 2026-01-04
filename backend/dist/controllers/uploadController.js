@@ -43,6 +43,7 @@ const levelIdMiddleware_1 = require("../middlewares/levelIdMiddleware");
 const mm = __importStar(require("music-metadata"));
 const processOsab = async (req, res) => {
     try {
+        const userId = req.user.id;
         const osab = req.osab;
         const levelDir = req.levelDir;
         const dateUploaded = new Date().toISOString();
@@ -53,7 +54,7 @@ const processOsab = async (req, res) => {
         }
         const meta = osab.meta;
         const files = fs_1.default.readdirSync(levelDir);
-        const audioFile = files.find((file) => file.toLowerCase().endsWith(".ogg") ||
+        const audioFile = files.find(file => file.toLowerCase().endsWith(".ogg") ||
             file.toLowerCase().endsWith(".mp3"));
         const normalizeArtist = (artist) => {
             if (!artist)
@@ -90,6 +91,7 @@ const processOsab = async (req, res) => {
             imageUrl: `/beatmaps/${id}/image`,
             dateUploaded,
             musicAuthor,
+            creatorId: userId
         };
         if (!fs_1.default.existsSync(dataDir)) {
             fs_1.default.mkdirSync(dataDir, { recursive: true });
@@ -97,15 +99,13 @@ const processOsab = async (req, res) => {
         let jsonData = [];
         if (fs_1.default.existsSync(filePath)) {
             const raw = fs_1.default.readFileSync(filePath, "utf-8");
-            if (raw.trim().length > 0) {
+            if (raw.trim()) {
                 jsonData = JSON.parse(raw);
             }
         }
         jsonData.push(result);
         fs_1.default.writeFileSync(filePath, JSON.stringify(jsonData, null, 2), "utf-8");
-        res.json({
-            saved: result
-        });
+        res.json({ saved: result });
     }
     catch (err) {
         console.error(err);

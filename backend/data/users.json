@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "username": "krooby",
+    "email": "krooby@test.cz",
+    "passwordHash": "$2b$10$gAV4ShyO4kwMzSR3u6tzH.wEOYnWcOC2.A/oGAs734cDQoy8.f/hy",
+    "createdAt": "2026-01-03T14:53:02.534Z"
+  },
+  {
+    "id": 2,
+    "username": "kroosadby",
+    "email": "krooby@test.csadz",
+    "passwordHash": "$2b$10$88bqwkMI/4wSw1XB5YrdO.EyGiUlE5UaRonyD.vlpY0X14byq/1NG",
+    "createdAt": "2026-01-03T14:54:25.984Z"
+  }
+]

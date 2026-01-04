@@ -1,11 +1,14 @@
-import e, { Request, Response } from "express";
+import { Response } from "express";
 import fs from "fs";
 import path from "path";
 import { nextNumber } from "../middlewares/levelIdMiddleware";
 import * as mm from "music-metadata";
+import { AuthRequest } from "../middlewares/authMiddleware";
 
-export const processOsab = async (req: Request, res: Response) => {
+export const processOsab = async (req: AuthRequest, res: Response) => {
   try {
+    const userId = req.user!.id;
+
     const osab = (req as any).osab;
     const levelDir: string = (req as any).levelDir;
     const dateUploaded = new Date().toISOString();
@@ -17,12 +20,12 @@ export const processOsab = async (req: Request, res: Response) => {
     }
 
     const meta = osab.meta;
-
     const files = fs.readdirSync(levelDir);
 
-    const audioFile = files.find((file) =>
-      file.toLowerCase().endsWith(".ogg") ||
-      file.toLowerCase().endsWith(".mp3")
+    const audioFile = files.find(
+      file =>
+        file.toLowerCase().endsWith(".ogg") ||
+        file.toLowerCase().endsWith(".mp3")
     );
 
     const normalizeArtist = (
@@ -37,10 +40,8 @@ export const processOsab = async (req: Request, res: Response) => {
 
     if (audioFile) {
       const audioPath = path.join(levelDir, audioFile);
-
       try {
         const metadata = await mm.parseFile(audioPath);
-
         musicAuthor =
           normalizeArtist(metadata.common.artist) ||
           normalizeArtist(metadata.common.albumartist) ||
@@ -53,7 +54,6 @@ export const processOsab = async (req: Request, res: Response) => {
 
     const dataDir = path.join(process.cwd(), "data");
     const filePath = path.join(dataDir, "levels.json");
-
     const id = nextNumber();
 
     const result = {
@@ -66,6 +66,7 @@ export const processOsab = async (req: Request, res: Response) => {
       imageUrl: `/beatmaps/${id}/image`,
       dateUploaded,
       musicAuthor,
+      creatorId: userId
     };
 
     if (!fs.existsSync(dataDir)) {
@@ -76,7 +77,7 @@ export const processOsab = async (req: Request, res: Response) => {
 
     if (fs.existsSync(filePath)) {
       const raw = fs.readFileSync(filePath, "utf-8");
-      if (raw.trim().length > 0) {
+      if (raw.trim()) {
         jsonData = JSON.parse(raw);
       }
     }
@@ -89,9 +90,7 @@ export const processOsab = async (req: Request, res: Response) => {
       "utf-8"
     );
 
-    res.json({
-      saved: result
-    });
+    res.json({ saved: result });
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
