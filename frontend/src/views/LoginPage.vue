@@ -5,21 +5,22 @@
         </RouterLink>
         <Article>
             <h1>Log in</h1>
-            <form>
+            <form @submit.prevent="handleClick">
                 <section>
                     <label>Enter your username or email</label>
-                    <Input :search="false" inputPlaceholder="Username or Email" type="text"></Input>
+                    <Input :search="false" inputPlaceholder="Username or Email" type="text" v-model="email"></Input>
                 </section>
                 <section>
                     <label>Enter your password</label>
-                    <Input :search="false" inputPlaceholder="Password" type="password"></Input>
+                    <Input :search="false" inputPlaceholder="Password" type="password" v-model="password"></Input>
                 </section>
                 <Button
                     title="Log in"
                     :fontSize="22"
                     :paddingHorizontal="35"
                     :paddingVertical="10"
-                    buttonType="primary"    
+                    buttonType="primary"
+                    type="submit"  
                 ></Button>
             </form>
             <p>Don't have an account? <a @click="router.push('/register')">Register</a> instead</p>
@@ -29,6 +30,15 @@
 
 <script setup lang="ts">
 import router from '@/router';
+import  { ref } from "vue";
+import { login } from '@/composables/api';
+
+const password = ref('');
+const email = ref('');
+
+const handleClick = () => {
+    login(email.value, password.value);
+}
 
 </script>
 

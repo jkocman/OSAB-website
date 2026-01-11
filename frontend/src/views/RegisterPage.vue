@@ -5,29 +5,30 @@
         </RouterLink>
         <Article>
             <h1>Register</h1>
-            <form>
+            <form @submit.prevent="handleClick">
                 <section>
                     <label>Enter your username</label>
-                    <Input :search="false" inputPlaceholder="Username" type="text"></Input>
+                    <Input :search="false" inputPlaceholder="Username" type="text" v-model="username"></Input>
                 </section>
                 <section>
                     <label>Enter your email</label>
-                    <Input :search="false" inputPlaceholder="Email" type="email"></Input>
+                    <Input :search="false" inputPlaceholder="Email" type="email" v-model="email"></Input>
                 </section>
                 <section>
                     <label>Enter your password</label>
-                    <Input :search="false" inputPlaceholder="Password" type="password"></Input>
+                    <Input :search="false" inputPlaceholder="Password" type="password" v-model="password"></Input>
                 </section>
                 <section>
                     <label>Confirm your password</label>
-                    <Input :search="false" inputPlaceholder="Confirm Password" type="password"></Input>
+                    <Input :search="false" inputPlaceholder="Confirm Password" type="password" v-model="passwordAgain"></Input>
                 </section>
                 <Button
                     title="Register"
                     :fontSize="22"
                     :paddingHorizontal="35"
                     :paddingVertical="10"
-                    buttonType="primary"    
+                    buttonType="primary"
+                    type="submit"    
                 ></Button>
             </form>
             <p>Already have an account? <a @click="router.push('/login')">Log in</a> instead</p>
@@ -37,6 +38,22 @@
 
 <script setup lang="ts">
 import router from '@/router';
+import { ref } from 'vue';
+import { register } from '@/composables/api';
+
+const password = ref(''), passwordAgain = ref(''), email = ref(''), username = ref('');
+
+const handleClick = () => {
+    if(passwordAgain.value !== password.value){
+        return;
+    }
+    if(password.value === '' || username.value === '' || email.value === ''){
+        return;
+    }
+
+    register(email.value, username.value, password.value);
+} 
+
 </script>
 
 <style lang="scss" scoped>

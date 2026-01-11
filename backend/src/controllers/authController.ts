@@ -128,6 +128,9 @@ export const LoginUser = async (req: Request, res: Response) => {
       { expiresIn: "7d" }
     );
 
+    
+    console.log("LOGIN OK, SENDING RESPONSE");
+
     res.json({
       token,
       user: {

@@ -12,7 +12,16 @@ router.get("/beatmaps/", (req, res) => {
       return res.status(500).json({ err });
     }
 
-    res.json(JSON.parse(data));
+    const beatmaps = JSON.parse(data);
+    const userId = req.query.userId;
+
+    if (userId) {
+
+      const filtered = beatmaps.filter((b: any) => b.creatorId === userId);
+      return res.json(filtered);
+    }
+
+    res.json(beatmaps);
   });
 });
 

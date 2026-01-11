@@ -12,5 +12,12 @@
     "email": "krooby@test.csadz",
     "passwordHash": "$2b$10$88bqwkMI/4wSw1XB5YrdO.EyGiUlE5UaRonyD.vlpY0X14byq/1NG",
     "createdAt": "2026-01-03T14:54:25.984Z"
+  },
+  {
+    "id": 3,
+    "username": "aaa",
+    "email": "heslo@heslo.cz",
+    "passwordHash": "$2b$10$9ECxCRWb1NAzomIcHQX1x.4P1DbuLrY83a2iXVm5SaZgfCKxPrs2y",
+    "createdAt": "2026-01-10T13:21:00.864Z"
   }
 ]
