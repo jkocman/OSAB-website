@@ -49,16 +49,5 @@
     "imageUrl": "/beatmaps/5/image",
     "dateUploaded": "2025-12-21T18:24:47.307Z",
     "musicAuthor": null
-  },
-  {
-    "id": 6,
-    "idGame": 0,
-    "name": "Disorder",
-    "description": "First story level",
-    "diff": 3,
-    "imageUrl": "/beatmaps/6/image",
-    "dateUploaded": "2026-01-04T21:48:47.715Z",
-    "musicAuthor": null,
-    "creatorId": 1
   }
 ]

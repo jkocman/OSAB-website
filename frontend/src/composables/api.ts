@@ -40,24 +40,27 @@ export const getBeatmapImage = async (id: number) => {
 };
 
 export const login = async (email: string, password: string) => {
-const res = await fetch("http://localhost:3000/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ email, password })
-  });
 
-  if (!res.ok) {
-    throw new Error("Login failed");
-  }
 
-  const data = await res.json();
+    const res = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+    });
 
-  localStorage.setItem("token", data.token);
-  localStorage.setItem("user", JSON.stringify(data.user));
+    if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Wrong email or password.");
+    }
 
-  router.push("/dashboard")
+    const data = await res.json();
+
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+
+    router.push("/dashboard")
 }
 
 export const register = async (email: string, username: string, password: string) => {
@@ -68,11 +71,13 @@ export const register = async (email: string, username: string, password: string
         },
         body: JSON.stringify({ username, email, password })
     })
-    if (!res.ok) {
-        throw new Error("Login failed");
-    }
 
     const data = await res.json();
+
+    if (!res.ok) {
+        throw new Error(data.error);
+    }
+
 
     localStorage.setItem("token", data.token);
     localStorage.setItem("user", JSON.stringify(data.user));

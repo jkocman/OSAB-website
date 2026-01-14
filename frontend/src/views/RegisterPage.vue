@@ -8,19 +8,19 @@
             <form @submit.prevent="handleClick">
                 <section>
                     <label>Enter your username</label>
-                    <Input :search="false" inputPlaceholder="Username" type="text" v-model="username"></Input>
+                    <Input :search="false" inputPlaceholder="Username" inputType="text" v-model="username"></Input>
                 </section>
                 <section>
                     <label>Enter your email</label>
-                    <Input :search="false" inputPlaceholder="Email" type="email" v-model="email"></Input>
+                    <Input :search="false" inputPlaceholder="Email" inputType="email" v-model="email"></Input>
                 </section>
                 <section>
                     <label>Enter your password</label>
-                    <Input :search="false" inputPlaceholder="Password" type="password" v-model="password"></Input>
+                    <Input :search="false" inputPlaceholder="Password" inputType="password" v-model="password"></Input>
                 </section>
                 <section>
                     <label>Confirm your password</label>
-                    <Input :search="false" inputPlaceholder="Confirm Password" type="password" v-model="passwordAgain"></Input>
+                    <Input :search="false" inputPlaceholder="Confirm Password" inputType="password" v-model="passwordAgain"></Input>
                 </section>
                 <Button
                     title="Register"
@@ -31,6 +31,7 @@
                     type="submit"    
                 ></Button>
             </form>
+            <p v-if="error" style="color:red">{{ error }}</p>
             <p>Already have an account? <a @click="router.push('/login')">Log in</a> instead</p>
         </Article>
     </main>
@@ -42,16 +43,25 @@ import { ref } from 'vue';
 import { register } from '@/composables/api';
 
 const password = ref(''), passwordAgain = ref(''), email = ref(''), username = ref('');
+const error = ref<string | null>(null);
 
-const handleClick = () => {
+const handleClick = async () => {
+
+
     if(passwordAgain.value !== password.value){
+        error.value = "Passwords do not match";
         return;
     }
     if(password.value === '' || username.value === '' || email.value === ''){
+        error.value = "Not filled in";
         return;
     }
-
-    register(email.value, username.value, password.value);
+    try{
+        await register(email.value, username.value, password.value);
+    }
+    catch (err: any){
+        error.value = err.message || "Login failed";
+    }
 } 
 
 </script>

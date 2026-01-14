@@ -7,7 +7,7 @@ exports.unzipAndParseOsab = void 0;
 const unzipper_1 = __importDefault(require("unzipper"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const levelIdMiddleware_1 = require("../middlewares/levelIdMiddleware");
+const levelIdMiddleware_1 = require("./levelIdMiddleware");
 const unzipAndParseOsab = async (req, res, next) => {
     try {
         if (!req.file) {

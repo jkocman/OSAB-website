@@ -8,11 +8,11 @@
             <form @submit.prevent="handleClick">
                 <section>
                     <label>Enter your username or email</label>
-                    <Input :search="false" inputPlaceholder="Username or Email" type="text" v-model="email"></Input>
+                    <Input :search="false" inputPlaceholder="Username or Email" inputType="text" v-model="email"></Input>
                 </section>
                 <section>
                     <label>Enter your password</label>
-                    <Input :search="false" inputPlaceholder="Password" type="password" v-model="password"></Input>
+                    <Input :search="false" inputPlaceholder="Password" inputType="password" v-model="password"></Input>
                 </section>
                 <Button
                     title="Log in"
@@ -23,6 +23,7 @@
                     type="submit"  
                 ></Button>
             </form>
+            <p v-if="error" style="color:red">{{ error }}</p>
             <p>Don't have an account? <a @click="router.push('/register')">Register</a> instead</p>
         </Article>
     </main>
@@ -35,10 +36,22 @@ import { login } from '@/composables/api';
 
 const password = ref('');
 const email = ref('');
+const error = ref<string | null>(null);
 
-const handleClick = () => {
-    login(email.value, password.value);
-}
+const handleClick = async () => {
+    error.value = null;
+    if(email.value !== "" && password.value !== ""){
+        try {
+            await login(email.value, password.value);
+            router.push('/');
+        } catch (err: any) {
+            error.value = err.message || "Login failed";
+        }
+    }
+    else{
+        error.value = "Not filled in"
+    }
+};
 
 </script>
 

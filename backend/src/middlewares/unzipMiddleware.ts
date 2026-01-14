@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import unzipper from "unzipper";
 import fs from "fs";
 import path from "path";
-import { nextNumber } from "../middlewares/levelIdMiddleware";
+import { nextNumber } from "./levelIdMiddleware";
 
 export const unzipAndParseOsab = async (
   req: Request,
