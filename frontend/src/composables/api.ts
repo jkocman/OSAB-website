@@ -4,16 +4,18 @@ export const postFile = async (file: File) => {
     const formData = new FormData();
     formData.append("file", file);
 
-    try {
-        await fetch("http://localhost:3000/upload", {
-        method: "POST",
-        body: formData
-        });
-    } catch (err) {
-        console.error(err);
-    }
-}
+    const token = localStorage.getItem("token");
+    if (!token) throw new Error("Token není v localStorage");
+    console.log(token);
 
+    await fetch("http://localhost:3000/upload", {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+    });
+};
 
 export const getData = async () => {
     const user = localStorage.getItem("user");

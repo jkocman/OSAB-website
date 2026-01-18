@@ -16,3 +16,12 @@ Content-Type: application/json
     "email": "krooby@test.cz",
     "password": "123456"
 }
+
+###
+
+POST http://localhost:3000/
+Content-Type: application/json
+
+{
+    
+}

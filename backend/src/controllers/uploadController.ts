@@ -66,7 +66,8 @@ export const processOsab = async (req: AuthRequest, res: Response) => {
       imageUrl: `/beatmaps/${id}/image`,
       dateUploaded,
       musicAuthor,
-      creatorId: userId
+      creatorId: userId,
+      levelDir
     };
 
     if (!fs.existsSync(dataDir)) {

@@ -91,7 +91,8 @@ const processOsab = async (req, res) => {
             imageUrl: `/beatmaps/${id}/image`,
             dateUploaded,
             musicAuthor,
-            creatorId: userId
+            creatorId: userId,
+            levelDir
         };
         if (!fs_1.default.existsSync(dataDir)) {
             fs_1.default.mkdirSync(dataDir, { recursive: true });
