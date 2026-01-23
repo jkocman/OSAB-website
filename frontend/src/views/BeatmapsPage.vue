@@ -7,7 +7,6 @@
         <section class="icons">
           <i class="fa-solid fa-filter" @click="openFilter = true"></i>
           <i class="fa-solid fa-sort" @click="openSort = true"></i>
-          <i class="fa-solid fa-plus" @click="openAddBeatmap = true"></i>
         </section>
         <SelectionDialog
           v-if="openFilter"
@@ -25,35 +24,6 @@
           :listItems="selectionStore.sortItems"
           :multiple="false"
         />
-        <Dialog v-if="openAddBeatmap" @close="openAddBeatmap = false" class="add-beatmap">
-          <form @submit.prevent="submit">
-            <h3>Upload your own Beatmap</h3>
-            <label for="title">Upload the file</label>
-            <FileUpload @fileSelected="onFileSelected"></FileUpload>
-            <label for="title">Username</label>
-            <Input inputPlaceholder="Add your username" :search="false" class="title"></Input>
-            <label for="description">Description</label>
-            <TextArea inputPlaceholder="Add your description" class="description"></TextArea>
-            <section class="button-section">
-              <Button
-                title="Submit"
-                :fontSize="18"
-                :paddingHorizontal="25"
-                :paddingVertical="10"
-                buttonType="primary"
-                type="submit"
-              ></Button>
-              <Button
-                title="Exit"
-                :fontSize="18"
-                :paddingHorizontal="25"
-                :paddingVertical="10"
-                buttonType="secondary"
-                @click="openAddBeatmap = false"
-              ></Button>
-            </section>
-          </form>
-        </Dialog>
       </section>
       <section class="beatmap-section">
         <BeatmapPreview
@@ -89,7 +59,6 @@ const router = useRouter()
 const selectionStore = useSelectionStore()
 
 const visibleCount = ref(12)
-const openAddBeatmap = ref(false)
 const openSort = ref(false)
 const openFilter = ref(false)
 
@@ -97,18 +66,6 @@ const searchText = ref('')
 
 const beatmaps = ref<any[]>([])
 const isLoading = ref(true)
-
-let selectedFile: File | null = null;
-
-const onFileSelected = (file: File) => {
-  selectedFile = file;
-};
-
-const submit = async () => {
-  if (!selectedFile) return;
-  postFile(selectedFile);
-  openAddBeatmap.value = false
-};
 
 const visibleBeatmaps = computed(() => {
   let filtered = [...beatmaps.value]
