@@ -8,6 +8,7 @@ import { AuthRequest } from "../middlewares/authMiddleware";
 export const processOsab = async (req: AuthRequest, res: Response) => {
   try {
     const userId = req.user!.id;
+    const username = req.user!.username;
 
     const osab = (req as any).osab;
     const levelDir: string = (req as any).levelDir;
@@ -67,7 +68,8 @@ export const processOsab = async (req: AuthRequest, res: Response) => {
       dateUploaded,
       musicAuthor,
       creatorId: userId,
-      levelDir
+      creatorName: username,
+      downlads: 0,
     };
 
     if (!fs.existsSync(dataDir)) {

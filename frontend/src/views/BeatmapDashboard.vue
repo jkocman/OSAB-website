@@ -1,10 +1,20 @@
 <template>
-  <main>
+  <main class="main-container">
     <h1>Your uploaded beatmaps</h1>
     <Article>
       <section>
-        <h2>Add New Beatmap</h2>
-        <i class="fa-solid fa-plus" @click="openAddBeatmap = true"></i>
+        <section @click="openAddBeatmap = true">
+          <i class="fa-solid fa-plus"></i>
+          <p>Add Beatmap</p>
+        </section>
+        <Button
+          title="Log out"
+          :fontSize="20"
+          :paddingHorizontal="25"
+          :paddingVertical="10"
+          buttonType="primary"
+          @click="logout()"
+        ></Button>
       </section>
       <Dialog v-if="openAddBeatmap" @close="openAddBeatmap = false" class="add-beatmap">
         <form @submit.prevent="submit">
@@ -33,15 +43,19 @@
       </Dialog>
       <section>
         <h2>Manage your beatmaps</h2>
-        <BeatmapPreview
-          v-for="beatmap in beatmaps"
-          :key="beatmap"
-          :img="beatmap.img"
-          :title="beatmap.name"
-          :artist="beatmap.musicAuthor || 'Unknown'"
-          :creator="beatmap.creator"
-          @click="router.push({ name: 'beatmap-detail', params: { id: beatmap.id } })"
-        ></BeatmapPreview>
+        <section>
+          <BeatmapPreview
+            v-for="beatmap in beatmaps"
+            :key="beatmap"
+            :id="beatmap.id"
+            :img="beatmap.img"
+            :title="beatmap.name"
+            :artist="beatmap.musicAuthor || 'Unknown'"
+            :creator="beatmap.creatorName"
+            :dashboard="false"
+            @delete="manageDeleteBeatmap"
+          ></BeatmapPreview>
+        </section>
       </section>
     </Article>
   </main>
@@ -49,13 +63,23 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
-import { postFile } from '@/composables/api'
-import { loadBeatmaps } from '@/composables/beatmapArray'
+import { postFile, deleteBeatmap } from '@/composables/api'
+import { loadUserBeatmaps } from '@/composables/beatmapArray'
 import router from '@/router'
 
 const openAddBeatmap = ref(false)
 const beatmaps = ref<any[]>([])
 let selectedFile: File | null = null
+
+const logout = () => {
+  localStorage.clear();
+  router.push('/')
+}
+
+const manageDeleteBeatmap = async(id: number) => {
+  await deleteBeatmap(id);
+  beatmaps.value = beatmaps.value.filter(b => b.id !== id)
+}
 
 
 const onFileSelected = (file: File) => {
@@ -64,21 +88,32 @@ const onFileSelected = (file: File) => {
 
 const submit = async () => {
   if (!selectedFile) return
-  postFile(selectedFile)
+  await postFile(selectedFile).then(() => {
+    window.location.reload();
+  })
   openAddBeatmap.value = false
 }
 
 onMounted(async () => {
-  beatmaps.value = await loadBeatmaps()
+  const user = localStorage.getItem("user");
+
+  if(!user) return;
+
+  const obj = JSON.parse(user) as any;
+  console.log(obj)
+  const data = await loadUserBeatmaps(obj.id);
+
+  console.log("USER BEATMAPS:", data);
+  beatmaps.value = data;
 })
 </script>
 
 <style lang="scss" scoped>
-main {
+.main-container {
   padding-top: 150px;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display: flex;
+  flex-direction: column;
   gap: 30px;
   margin: 0 var(--global-padding);
   margin-bottom: 100px;
@@ -95,6 +130,50 @@ main {
     text-align: center;
   }
 
+  Article {
+    display: flex;
+    flex-direction: column;
+
+    & > section:first-child{
+      align-self: flex-end;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+
+      section{
+        display: flex;
+        color: var(--terciary-foreground-color);
+        font-size: var(--medium-text-size);
+        gap: 10px;
+        align-items: center;
+        cursor: pointer;
+        i {
+          font-size: 30px;
+        }
+        &:hover {
+          color: var(--primary-foreground-color);
+          transition: 0.3s ease;
+        }
+      }
+    }
+
+    & > section:nth-child(2){
+      width: 100%;
+      h2{
+        font-weight: 600;
+        font-size: var(--larger-text-size);
+        color: var(--primary-foreground-color);
+        margin-bottom: 30px;
+      }
+      section{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        width: 100%;
+        margin-bottom: 30px;
+      }
+    }
+  }
   .add-beatmap {
         form {
             display: flex;

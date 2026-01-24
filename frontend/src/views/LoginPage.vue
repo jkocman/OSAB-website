@@ -43,7 +43,7 @@ const handleClick = async () => {
     if(email.value !== "" && password.value !== ""){
         try {
             await login(email.value, password.value);
-            router.push('/');
+            router.push('/dashboard');
         } catch (err: any) {
             error.value = err.message || "Login failed";
         }

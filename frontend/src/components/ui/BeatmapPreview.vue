@@ -1,5 +1,5 @@
 <template>
-  <main @click="handleClick()">
+  <main @click="handleClick()" :style="{ alignItems: dashboard ? 'top' : 'center', cursor: dashboard ? 'pointer': 'default'}" :class="dashboard ? 'hover' : ''">
     <section class="img-section">
       <img :src="img" alt="Beatmap image" />
     </section>
@@ -8,23 +8,35 @@
         <h3>{{ title }}</h3>
         <p>{{ artist }}</p>
       </section>
-      <p class="creator">Created by: {{ creator }}</p>
+      <p v-if="dashboard" class="creator">Created by: {{ creator }}</p>
+    </section>
+    <section v-if="!dashboard" style="color: darkred; font-size: 30px; margin-right: 20px; cursor: pointer;" @click.stop="emitDelete">
+      <i class="fa-solid fa-trash-can"></i>
     </section>
   </main>
 </template>
 
 <script lang="ts" setup>
 const props = defineProps({
+  id: { type: Number, required: true },
   title: String,
   img: String,
   artist: String,
   creator: String,
+  dashboard: {type: Boolean, default: true },
 })
 
-const emit = defineEmits(['click'])
+const emit = defineEmits<{
+  (e: 'click'): void
+  (e: 'delete', id: number): void
+}>()
 
 const handleClick = () => {
   emit('click')
+}
+
+const emitDelete = () => {
+  emit('delete', props.id)
 }
 </script>
 
@@ -42,7 +54,7 @@ main {
     height: auto;
   }
 
-  &:hover {
+  .hover:hover {
     transform: translateY(-10px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
   }

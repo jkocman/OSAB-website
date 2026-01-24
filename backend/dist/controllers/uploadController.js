@@ -44,6 +44,7 @@ const mm = __importStar(require("music-metadata"));
 const processOsab = async (req, res) => {
     try {
         const userId = req.user.id;
+        const username = req.user.username;
         const osab = req.osab;
         const levelDir = req.levelDir;
         const dateUploaded = new Date().toISOString();
@@ -92,7 +93,8 @@ const processOsab = async (req, res) => {
             dateUploaded,
             musicAuthor,
             creatorId: userId,
-            levelDir
+            creatorName: username,
+            downlads: 0,
         };
         if (!fs_1.default.existsSync(dataDir)) {
             fs_1.default.mkdirSync(dataDir, { recursive: true });

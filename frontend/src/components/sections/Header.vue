@@ -166,7 +166,7 @@ const updatePageFromRoute = () => {
     case '/beatmaps':
       page.value = 3
       break
-    case '/download':
+    default:
       page.value = 0
       break
   }

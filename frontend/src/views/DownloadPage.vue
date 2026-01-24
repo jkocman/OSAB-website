@@ -20,7 +20,7 @@
               :paddingHorizontal="25"
               :paddingVertical="10"
               buttonType="primary"
-              @click="downloadGame('osab_finalbuildv3.zip')"
+              @click="downloadGame('osab_stable')"
             ></Button>
           </li>
           <li>
@@ -35,7 +35,7 @@
               :paddingHorizontal="25"
               :paddingVertical="10"
               buttonType="primary"
-              @click="downloadGame('osab_experimental.zip')"
+              @click="downloadGame('osab_experimental')"
             ></Button>
           </li>
         </ul>
@@ -57,16 +57,7 @@
 </template>
 
 <script lang="ts" setup>
-// for now only local. Later it will be on a server. I am not pushing the files to github.
-function downloadGame(file: string) {
-  const url = `/files/${file}`
-  const link = document.createElement('a')
-  link.href = url
-  link.download = file
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
-}
+import { downloadGame } from '@/composables/api';
 </script>
 
 <style lang="scss" scoped>

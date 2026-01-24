@@ -6,18 +6,19 @@ import { getBeatmapImage } from "../middlewares/beatmapImageMiddleware";
 const router = Router();
 const filePath = path.join(process.cwd(), "data", "levels.json");
 
-router.get("/beatmaps/", (req, res) => {
+router.get("/beatmaps", (req, res) => {
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
-      return res.status(500).json({ err });
+      return res.status(500).json({ error: "Failed to read file" });
     }
 
     const beatmaps = JSON.parse(data);
-    const userId = req.query.userId;
+    const userId = Number(req.query.userId);
 
-    if (userId) {
-
-      const filtered = beatmaps.filter((b: any) => b.creatorId === userId);
+    if (!isNaN(userId)) {
+      const filtered = beatmaps.filter(
+        (b: any) => b.creatorId === userId
+      );
       return res.json(filtered);
     }
 

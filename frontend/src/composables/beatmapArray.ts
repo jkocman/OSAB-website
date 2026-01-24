@@ -1,14 +1,8 @@
 import osab from '../assets/img/osab.jpeg'
-import { getData, getBeatmapImage } from './api'
-
-// for now static, later it will be from loging in.
-const STATIC_BEATMAP = {
-  creator: 'Krooby',
-  downloads: 0,
-}
+import { getAllBeatmaps, getUserBeatmaps, getBeatmapImage } from './api'
 
 export async function loadBeatmaps() {
-  const serverData = await getData();
+  const serverData = await getAllBeatmaps();
 
   const beatmaps = await Promise.all(
     serverData.map(async (item: any) => {
@@ -38,10 +32,32 @@ export async function loadBeatmaps() {
       }
 
       return {
-        ...STATIC_BEATMAP,
         ...item,
         img,
         tags: dynamicTags
+      };
+    })
+  );
+
+  return beatmaps;
+}
+
+export async function loadUserBeatmaps(userId: number) {
+  const serverData = await getUserBeatmaps(userId);
+
+  const beatmaps = await Promise.all(
+    serverData.map(async (item: any) => {
+      let img;
+
+      try {
+        img = await getBeatmapImage(item.id);
+      } catch {
+        img = osab;
+      }
+
+      return {
+        ...item,
+        img,
       };
     })
   );

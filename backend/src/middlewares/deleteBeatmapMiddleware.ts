@@ -1,7 +1,7 @@
 import { Response } from "express";
 import fs from "fs";
 import path from "path";
-import { AuthRequest } from "../middlewares/authMiddleware";
+import { AuthRequest } from "./authMiddleware";
 
 export const deleteMap = (req: AuthRequest, res: Response) => {
   try {
@@ -13,11 +13,6 @@ export const deleteMap = (req: AuthRequest, res: Response) => {
     }
 
     const dataPath = path.join(process.cwd(), "data", "levels.json");
-
-    if (!fs.existsSync(dataPath)) {
-      return res.status(404).json({ error: "Levels file not found" });
-    }
-
     const levels = JSON.parse(fs.readFileSync(dataPath, "utf-8"));
     const index = levels.findIndex((l: any) => l.id === mapId);
 
@@ -27,28 +22,19 @@ export const deleteMap = (req: AuthRequest, res: Response) => {
 
     const map = levels[index];
 
-    // 🔒 pouze autor
     if (map.creatorId !== userId) {
-      return res.status(403).json({
-        error: "You are not allowed to delete this map"
-      });
+      return res.status(403).json({ error: "Forbidden" });
     }
 
-    // 🗑️ smazání složky z uploads
-    if (map.levelDir && fs.existsSync(map.levelDir)) {
-      fs.rmSync(map.levelDir, {
-        recursive: true,
-        force: true
-      });
+    const uploadDir = path.join(process.cwd(), "uploads", `${map.name}-${map.id}`);
+
+    if (fs.existsSync(uploadDir)) {
+      fs.rmSync(uploadDir, { recursive: true, force: true });
+      console.log(`Deleted folder: ${uploadDir}`);
     }
-    
+
     levels.splice(index, 1);
-
-    fs.writeFileSync(
-      dataPath,
-      JSON.stringify(levels, null, 2),
-      "utf-8"
-    );
+    fs.writeFileSync(dataPath, JSON.stringify(levels, null, 2));
 
     res.json({ success: true, deleted: mapId });
   } catch (err) {

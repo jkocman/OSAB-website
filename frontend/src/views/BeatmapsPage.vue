@@ -32,7 +32,8 @@
           :img="beatmap.img"
           :title="beatmap.name"
           :artist="beatmap.musicAuthor || 'Unknown'"
-          :creator="beatmap.creator"
+          :creator="beatmap.creatorName || 'Unknown'"
+          :id="beatmap.id"
           @click="router.push({ name: 'beatmap-detail', params: { id: beatmap.id } })"
         ></BeatmapPreview>
       </section>

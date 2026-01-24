@@ -24,12 +24,13 @@
               :paddingHorizontal="buttonStyle().paddingHorizontal"
               :paddingVertical="buttonStyle().paddingVertical"
               buttonType="primary"
+              @click="handleDownload(beatmap.id, beatmap.name)"
             ></Button>
             <section class="beatmap-info-container">
               <h3>Beatmap info</h3>
-              <p>Creator: {{ beatmap.creator || 'No creator provided' }}</p>
+              <p>Creator: {{ beatmap.creatorName || 'No creator provided' }}</p>
               <p>Difficulty: {{ beatmap.diff|| 'No difficulty provided' }}</p>
-              <p>Downloaded: {{ beatmap.downloads }}x</p>
+              <p>Downloaded: {{ beatmap.downloads || '0' }}x</p>
               <p>Uploaded: {{ formatedDate }}</p>
             </section>
           </section>
@@ -46,6 +47,7 @@
 import { useRoute } from 'vue-router'
 import { computed, onMounted, ref } from 'vue'
 import { loadBeatmaps } from '@/composables/beatmapArray'
+import { downloadBeatmap, updateDownloads } from '@/composables/api'
 
 const route = useRoute()
 
@@ -57,6 +59,11 @@ const beatmaps = ref<any[]>([])
 const isLoading = ref(true)
 
 const beatmap = computed(() => beatmaps.value.find((b) => b.id === beatmapId.value))
+
+const handleDownload = async(id: number, name: string) => {
+  await updateDownloads(id);
+  await downloadBeatmap(id, name);
+}
 
 const formatedDate = computed(() => {
   if (!beatmap.value?.dateUploaded) return 'Unknown';
