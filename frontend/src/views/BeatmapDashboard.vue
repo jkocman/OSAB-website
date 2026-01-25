@@ -16,37 +16,51 @@
           @click="logout()"
         ></Button>
       </section>
-      <Dialog v-if="openAddBeatmap" @close="openAddBeatmap = false" class="add-beatmap">
+
+      <Dialog
+        v-if="openAddBeatmap"
+        @close="!isSubmitting && (openAddBeatmap = false)"
+        class="add-beatmap"
+      >
         <form @submit.prevent="submit">
           <h3>Upload your own Beatmap</h3>
           <label for="title">Upload the file</label>
           <FileUpload @fileSelected="onFileSelected"></FileUpload>
+
           <section class="button-section">
-            <Button
-              title="Submit"
-              :fontSize="18"
-              :paddingHorizontal="25"
-              :paddingVertical="10"
-              buttonType="primary"
-              type="submit"
-            ></Button>
-            <Button
-              title="Exit"
-              :fontSize="18"
-              :paddingHorizontal="25"
-              :paddingVertical="10"
-              buttonType="secondary"
-              @click="openAddBeatmap = false"
-            ></Button>
+            <div v-if="isSubmitting" class="loader-wrap">
+              <i class="fa-solid fa-circle-notch fa-spin"></i>
+              <span>Uploading to server...</span>
+            </div>
+
+            <template v-else>
+              <Button
+                title="Submit"
+                :fontSize="18"
+                :paddingHorizontal="25"
+                :paddingVertical="10"
+                buttonType="primary"
+                type="submit"
+              ></Button>
+              <Button
+                title="Exit"
+                :fontSize="18"
+                :paddingHorizontal="25"
+                :paddingVertical="10"
+                buttonType="secondary"
+                @click="openAddBeatmap = false"
+              ></Button>
+            </template>
           </section>
         </form>
       </Dialog>
+
       <section>
         <h2>Manage your beatmaps</h2>
         <section>
           <BeatmapPreview
             v-for="beatmap in beatmaps"
-            :key="beatmap"
+            :key="beatmap.id"
             :id="beatmap.id"
             :img="beatmap.img"
             :title="beatmap.name"
@@ -68,6 +82,7 @@ import { loadUserBeatmaps } from '@/composables/beatmapArray'
 import router from '@/router'
 
 const openAddBeatmap = ref(false)
+const isSubmitting = ref(false)
 const beatmaps = ref<any[]>([])
 let selectedFile: File | null = null
 
@@ -86,21 +101,26 @@ const onFileSelected = (file: File) => {
 }
 
 const submit = async () => {
-  if (!selectedFile) return
-  await postFile(selectedFile).then(() => {
+  if (!selectedFile || isSubmitting.value) return
+
+  isSubmitting.value = true
+
+  try {
+    await postFile(selectedFile)
     window.location.reload()
-  })
-  openAddBeatmap.value = false
+  } catch (error) {
+    console.error('Upload failed:', error)
+    alert('Upload failed. Please check the file and try again.')
+    isSubmitting.value = false
+  }
 }
 
 onMounted(async () => {
   const user = localStorage.getItem('user')
-
   if (!user) return
 
   const obj = JSON.parse(user) as any
   const data = await loadUserBeatmaps(obj.id)
-
   beatmaps.value = data
 })
 </script>
@@ -108,7 +128,6 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .main-container {
   padding-top: 150px;
-  flex-direction: column;
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -171,6 +190,7 @@ onMounted(async () => {
       }
     }
   }
+
   .add-beatmap {
     form {
       display: flex;
@@ -196,8 +216,39 @@ onMounted(async () => {
         align-items: center;
         justify-content: center;
         gap: 30px;
+        min-height: 50px;
+      }
+
+      .loader-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        color: var(--primary-foreground-color);
+
+        i {
+          font-size: 32px;
+        }
+
+        span {
+          font-size: 14px;
+          font-weight: 500;
+        }
       }
     }
+  }
+}
+
+.fa-spin {
+  animation: fa-spin 1s infinite linear;
+}
+
+@keyframes fa-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
   }
 }
 </style>
