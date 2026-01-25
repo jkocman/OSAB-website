@@ -13,6 +13,7 @@ const downloadRouter_1 = __importDefault(require("./routes/downloadRouter"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
 const client_s3_1 = require("@aws-sdk/client-s3");
+const dbSync_1 = require("./utils/dbSync");
 dotenv_1.default.config();
 exports.r2 = new client_s3_1.S3Client({
     region: "auto",
@@ -30,7 +31,11 @@ app.use("/", getDataRouter_1.default);
 app.use("/", authRouter_1.default);
 app.use("/", editBeatmapsRouter_1.default);
 app.use("/download", downloadRouter_1.default);
-app.listen(3000, () => {
-    console.log("running on port 3000");
-});
+const startServer = async () => {
+    await (0, dbSync_1.loadDbFromR2)();
+    app.listen(3000, () => {
+        console.log("running on port 3000");
+    });
+};
+startServer();
 //# sourceMappingURL=app.js.map

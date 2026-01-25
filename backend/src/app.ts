@@ -7,6 +7,7 @@ import downloadRouter from "./routes/downloadRouter";
 import dotenv from "dotenv";
 import cors from "cors";
 import { S3Client } from "@aws-sdk/client-s3";
+import { loadDbFromR2 } from "./utils/dbSync";
 
 dotenv.config();
 
@@ -30,6 +31,12 @@ app.use("/", authRoutes);
 app.use("/", editBeatmapRouter);
 app.use("/download", downloadRouter);
 
-app.listen(3000, () => {
-  console.log("running on port 3000");
-});
+const startServer = async () => {
+  await loadDbFromR2();
+
+  app.listen(3000, () => {
+    console.log("running on port 3000");
+  });
+};
+
+startServer();

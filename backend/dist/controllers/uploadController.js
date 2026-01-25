@@ -45,6 +45,7 @@ const lib_storage_1 = require("@aws-sdk/lib-storage");
 const client_s3_1 = require("@aws-sdk/client-s3");
 const stream_1 = require("stream");
 const app_1 = require("../app");
+const dbSync_1 = require("../utils/dbSync");
 const processOsab = async (req, res) => {
     const levelDir = req.levelDir;
     const id = req.assignedId;
@@ -107,6 +108,9 @@ const processOsab = async (req, res) => {
         }
         jsonData.push(result);
         fs_1.default.writeFileSync(filePath, JSON.stringify(jsonData, null, 2));
+        console.log("Saving to JSON done, now uploading to R2...");
+        await (0, dbSync_1.saveDbToR2)(); // MUSÍ zde být await!
+        console.log("Sync to R2 finished.");
         fs_1.default.rmSync(levelDir, { recursive: true, force: true });
         res.json({ saved: result });
     }

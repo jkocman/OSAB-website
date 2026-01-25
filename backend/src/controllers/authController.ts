@@ -3,6 +3,7 @@ import path from "path";
 import fs from "fs";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { saveDbToR2 } from "../utils/dbSync";
 
 type User = {
   id: number;
@@ -58,6 +59,7 @@ export const CreateUser = async (req: Request, res: Response) => {
 
     users.push(user);
     fs.writeFileSync(filePath, JSON.stringify(users, null, 2));
+    await saveDbToR2();
 
     const token = jwt.sign(
       {

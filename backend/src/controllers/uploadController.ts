@@ -8,6 +8,7 @@ import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { PassThrough } from "stream";
 import { r2 } from "../app";
 import { AuthRequest } from "../middlewares/authMiddleware";
+import { saveDbToR2 } from "../utils/dbSync";
 
 export const processOsab = async (req: AuthRequest, res: Response) => {
   const levelDir: string = (req as any).levelDir;
@@ -81,6 +82,9 @@ export const processOsab = async (req: AuthRequest, res: Response) => {
     }
     jsonData.push(result);
     fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2));
+    console.log("Saving to JSON done, now uploading to R2...");
+    await saveDbToR2(); // MUSÍ zde být await!
+    console.log("Sync to R2 finished.");
 
     fs.rmSync(levelDir, { recursive: true, force: true });
 
