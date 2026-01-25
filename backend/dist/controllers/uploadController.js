@@ -55,19 +55,20 @@ const processOsab = async (req, res) => {
         const meta = osab.meta;
         const dateUploaded = new Date().toISOString();
         const files = fs_1.default.readdirSync(levelDir);
-        const audioFile = files.find(f => /\.(ogg|mp3)$/i.test(f));
+        const audioFile = files.find((f) => /\.(ogg|mp3)$/i.test(f));
         let musicAuthor = null;
         if (audioFile) {
             const metadata = await mm.parseFile(path_1.default.join(levelDir, audioFile));
-            musicAuthor = metadata.common.artist || metadata.common.albumartist || null;
+            musicAuthor =
+                metadata.common.artist || metadata.common.albumartist || null;
         }
-        const imageFile = files.find(f => /\.(png|jpg|jpeg)$/i.test(f));
+        const imageFile = files.find((f) => /\.(png|jpg|jpeg)$/i.test(f));
         if (imageFile) {
             await app_1.r2.send(new client_s3_1.PutObjectCommand({
                 Bucket: process.env.R2_BUCKET,
                 Key: `beatmaps/${id}/cover.png`,
                 Body: fs_1.default.readFileSync(path_1.default.join(levelDir, imageFile)),
-                ContentType: "image/png"
+                ContentType: "image/png",
             }));
         }
         const passThrough = new stream_1.PassThrough();
