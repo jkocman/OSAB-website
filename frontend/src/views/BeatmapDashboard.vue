@@ -99,10 +99,8 @@ onMounted(async () => {
   if (!user) return
 
   const obj = JSON.parse(user) as any
-  console.log(obj)
   const data = await loadUserBeatmaps(obj.id)
 
-  console.log('USER BEATMAPS:', data)
   beatmaps.value = data
 })
 </script>

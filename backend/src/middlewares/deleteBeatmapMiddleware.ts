@@ -33,8 +33,7 @@ export const deleteMap = async (req: AuthRequest, res: Response) => {
         Bucket: process.env.R2_BUCKET!,
         Delete: { Objects: objectsToDelete }
       }));
-      
-      console.log(`Deleted ${objectsToDelete.length} objects from R2 for map ${mapId}`);
+  
     }
 
     levels.splice(index, 1);

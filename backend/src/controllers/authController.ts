@@ -86,7 +86,6 @@ export const CreateUser = async (req: Request, res: Response) => {
 
 export const LoginUser = async (req: Request, res: Response) => {
   try {
-    console.log("BODY:", req.body);
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -123,7 +122,6 @@ export const LoginUser = async (req: Request, res: Response) => {
       { expiresIn: "7d" },
     );
 
-    console.log("LOGIN OK, SENDING RESPONSE");
 
     res.json({
       token,
