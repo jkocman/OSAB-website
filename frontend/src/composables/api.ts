@@ -1,6 +1,6 @@
 import router from "@/router";
 
-const URL = "http://localhost:3000";
+const URL = "https://osab-website.onrender.com";
 
 export const postFile = async (file: File) => {
     const formData = new FormData();
