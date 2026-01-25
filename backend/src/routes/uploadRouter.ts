@@ -8,6 +8,12 @@ import { authMiddleware } from "../middlewares/authMiddleware";
 const router = Router();
 const upload = multer({ dest: "uploads/" });
 
-router.post("/", authMiddleware, upload.single("file"), unzipAndParseOsab, processOsab);
+router.post(
+  "/",
+  authMiddleware,
+  upload.single("file"),
+  unzipAndParseOsab,
+  processOsab,
+);
 
 export default router;

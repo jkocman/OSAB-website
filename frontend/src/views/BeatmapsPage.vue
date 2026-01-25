@@ -74,9 +74,7 @@ const visibleBeatmaps = computed(() => {
 
   if (selectionStore.filterSelected.length > 0) {
     filtered = filtered.filter((beatmap) =>
-      beatmap.tags?.some((tag: string) =>
-        selectionStore.filterSelected.includes(tag),
-      ),
+      beatmap.tags?.some((tag: string) => selectionStore.filterSelected.includes(tag)),
     )
   }
 
@@ -89,14 +87,11 @@ const visibleBeatmaps = computed(() => {
       break
     case 'Newest':
       filtered.sort(
-        (a, b) =>
-          new Date(b.dateUploaded).getTime() - new Date(a.dateUploaded).getTime(),
+        (a, b) => new Date(b.dateUploaded).getTime() - new Date(a.dateUploaded).getTime(),
       )
       break
     case 'Most Downloaded':
-      filtered.sort(
-        (a, b) => (b.downloads || 0) - (a.downloads || 0),
-      )
+      filtered.sort((a, b) => (b.downloads || 0) - (a.downloads || 0))
       break
   }
 
@@ -109,7 +104,6 @@ const visibleBeatmaps = computed(() => {
 
   return filtered.slice(0, visibleCount.value)
 })
-
 
 onMounted(async () => {
   beatmaps.value = await loadBeatmaps()

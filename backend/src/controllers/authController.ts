@@ -12,7 +12,6 @@ type User = {
   createdAt: string;
 };
 
-
 export const CreateUser = async (req: Request, res: Response) => {
   try {
     const { username, email, password } = req.body;
@@ -37,27 +36,24 @@ export const CreateUser = async (req: Request, res: Response) => {
       }
     }
 
-    if (users.some(u => u.email === email)) {
+    if (users.some((u) => u.email === email)) {
       return res.status(409).json({ error: "Email already exists" });
     }
 
-    if (users.some(u => u.username === username)) {
+    if (users.some((u) => u.username === username)) {
       return res.status(409).json({ error: "Username already exists" });
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
 
-    const id =
-      users.length > 0
-        ? Math.max(...users.map(u => u.id)) + 1
-        : 1;
+    const id = users.length > 0 ? Math.max(...users.map((u) => u.id)) + 1 : 1;
 
     const user: User = {
       id,
       username,
       email,
       passwordHash,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
     };
 
     users.push(user);
@@ -67,10 +63,10 @@ export const CreateUser = async (req: Request, res: Response) => {
       {
         id: user.id,
         email: user.email,
-        username: user.username
+        username: user.username,
       },
       process.env.JWT_SECRET as string,
-      { expiresIn: "7d" }
+      { expiresIn: "7d" },
     );
 
     res.status(201).json({
@@ -79,10 +75,9 @@ export const CreateUser = async (req: Request, res: Response) => {
         id: user.id,
         username: user.username,
         email: user.email,
-        createdAt: user.createdAt
-      }
+        createdAt: user.createdAt,
+      },
     });
-
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal error" });
@@ -108,7 +103,7 @@ export const LoginUser = async (req: Request, res: Response) => {
     const raw = fs.readFileSync(filePath, "utf-8");
     const users: User[] = raw.trim() ? JSON.parse(raw) : [];
 
-    const user = users.find(u => u.email === email);
+    const user = users.find((u) => u.email === email);
     if (!user) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
@@ -122,13 +117,12 @@ export const LoginUser = async (req: Request, res: Response) => {
       {
         id: user.id,
         email: user.email,
-        username: user.username
+        username: user.username,
       },
       process.env.JWT_SECRET as string,
-      { expiresIn: "7d" }
+      { expiresIn: "7d" },
     );
 
-    
     console.log("LOGIN OK, SENDING RESPONSE");
 
     res.json({
@@ -136,8 +130,8 @@ export const LoginUser = async (req: Request, res: Response) => {
       user: {
         id: user.id,
         username: user.username,
-        email: user.email
-      }
+        email: user.email,
+      },
     });
   } catch (err) {
     console.error(err);

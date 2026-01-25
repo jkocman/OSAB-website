@@ -31,11 +31,10 @@ const articleStyle = computed(() => {
 
   if (props.width || windowWidth.value <= 1300) {
     style.width = '100%'
-  } else if(windowWidth.value > 2000) {
+  } else if (windowWidth.value > 2000) {
     style.width = '1200px'
     style.marginLeft = 'auto'
     style.marginRight = 'auto'
-
   } else {
     style.marginLeft = `${props.margin}px`
     style.marginRight = `${props.margin}px`

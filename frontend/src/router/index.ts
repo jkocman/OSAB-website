@@ -54,8 +54,8 @@ const router = createRouter({
       name: 'dashboard',
       component: BeatmapDashboard,
       meta: {
-        requiresAuth: true
-      }
+        requiresAuth: true,
+      },
     },
   ],
   scrollBehavior() {
@@ -65,26 +65,25 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !isAuth()) {
-    next("/login");
+    next('/login')
   } else {
-    next();
+    next()
   }
-});
+})
 
 router.beforeEach((to, from, next) => {
   if (to.meta.layout == 'auth' && isAuth()) {
-    next("/dashboard");
+    next('/dashboard')
   } else {
-    next();
+    next()
   }
-});
+})
 
 const isAuth = () => {
-  if(localStorage.getItem("token")){
-    return true;
-  }
-  else {
-    return false;
+  if (localStorage.getItem('token')) {
+    return true
+  } else {
+    return false
   }
 }
 

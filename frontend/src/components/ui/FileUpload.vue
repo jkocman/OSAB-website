@@ -5,15 +5,15 @@
 <script setup lang="ts">
 const emit = defineEmits<{
   (e: 'fileSelected', file: File | null): void
-}>();
+}>()
 
-let file: File | null = null;
+let file: File | null = null
 
 const onFileChange = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  file = target.files?.[0] || null;
-  emit("fileSelected", file);
-};
+  const target = event.target as HTMLInputElement
+  file = target.files?.[0] || null
+  emit('fileSelected', file)
+}
 </script>
 
 <style lang="scss" scoped>

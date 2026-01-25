@@ -72,15 +72,14 @@ const beatmaps = ref<any[]>([])
 let selectedFile: File | null = null
 
 const logout = () => {
-  localStorage.clear();
+  localStorage.clear()
   router.push('/')
 }
 
-const manageDeleteBeatmap = async(id: number) => {
-  await deleteBeatmap(id);
-  beatmaps.value = beatmaps.value.filter(b => b.id !== id)
+const manageDeleteBeatmap = async (id: number) => {
+  await deleteBeatmap(id)
+  beatmaps.value = beatmaps.value.filter((b) => b.id !== id)
 }
-
 
 const onFileSelected = (file: File) => {
   selectedFile = file
@@ -89,22 +88,22 @@ const onFileSelected = (file: File) => {
 const submit = async () => {
   if (!selectedFile) return
   await postFile(selectedFile).then(() => {
-    window.location.reload();
+    window.location.reload()
   })
   openAddBeatmap.value = false
 }
 
 onMounted(async () => {
-  const user = localStorage.getItem("user");
+  const user = localStorage.getItem('user')
 
-  if(!user) return;
+  if (!user) return
 
-  const obj = JSON.parse(user) as any;
+  const obj = JSON.parse(user) as any
   console.log(obj)
-  const data = await loadUserBeatmaps(obj.id);
+  const data = await loadUserBeatmaps(obj.id)
 
-  console.log("USER BEATMAPS:", data);
-  beatmaps.value = data;
+  console.log('USER BEATMAPS:', data)
+  beatmaps.value = data
 })
 </script>
 
@@ -134,13 +133,13 @@ onMounted(async () => {
     display: flex;
     flex-direction: column;
 
-    & > section:first-child{
+    & > section:first-child {
       align-self: flex-end;
       display: flex;
       align-items: center;
       gap: 40px;
 
-      section{
+      section {
         display: flex;
         color: var(--terciary-foreground-color);
         font-size: var(--medium-text-size);
@@ -157,15 +156,15 @@ onMounted(async () => {
       }
     }
 
-    & > section:nth-child(2){
+    & > section:nth-child(2) {
       width: 100%;
-      h2{
+      h2 {
         font-weight: 600;
         font-size: var(--larger-text-size);
         color: var(--primary-foreground-color);
         margin-bottom: 30px;
       }
-      section{
+      section {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 50px;
@@ -175,32 +174,32 @@ onMounted(async () => {
     }
   }
   .add-beatmap {
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
 
-            h3 {
-                color: white;
-                font-size: var(--medium-text-size);
-                font-weight: 600;
-                margin-bottom: 10px;
-            }
+      h3 {
+        color: white;
+        font-size: var(--medium-text-size);
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
 
-            label {
-                color: var(--terciary-foreground-color);
-                font-size: 16px;
-                margin-top: 5px;
-                text-align: left;
-            }
+      label {
+        color: var(--terciary-foreground-color);
+        font-size: 16px;
+        margin-top: 5px;
+        text-align: left;
+      }
 
-            .button-section {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 30px;
-            }
-        }
+      .button-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+      }
     }
+  }
 }
 </style>

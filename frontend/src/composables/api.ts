@@ -53,18 +53,12 @@ export const updateDownloads = async (id: number) => {
     })
 }
 
-export const getBeatmapImage = async (id: number) => {
-  const res = await fetch(`http://localhost:3000/beatmaps/${id}/image?v=${Date.now()}`);
-  
-  if (!res.ok) throw new Error("Image not found");
-  
-  const blob = await res.blob();
-  return URL.createObjectURL(blob);
+export const getBeatmapImage = (id: number) => {
+
+  return `http://localhost:3000/beatmaps/${id}/image?v=${Date.now()}`;
 };
 
 export const login = async (email: string, password: string) => {
-
-
     const res = await fetch("http://localhost:3000/login", {
         method: "POST",
         headers: {
@@ -109,36 +103,32 @@ export const register = async (email: string, username: string, password: string
 }
 
 export const downloadGame = async(variant: "osab_stable" | "osab_experimental") => {
-    const res = await fetch(`http://localhost:3000/download/game/${variant}`)
+    const res = await fetch(`http://localhost:3000/download/game/${variant}`);
 
     if (!res.ok) {
-        alert("Chyba při stahování hry");
+        alert("Chyba při získávání odkazu");
         return;
     }
 
-    const blob = await res.blob();
-    const url = window.URL.createObjectURL(blob);
+    const data = await res.json();
+    const downloadUrl = data.url;
 
     const a = document.createElement("a");
-    a.href = url;
-    a.download = `${variant}.zip`;
+    a.href = downloadUrl;
+    a.download = `${variant}.zip`; 
     document.body.appendChild(a);
     a.click();
     a.remove();
-    window.URL.revokeObjectURL(url);
 }
 
-export const downloadBeatmap = async(id: number, name: string) => {
-    const res = await fetch(`http://localhost:3000/download/beatmap/${id}`)
-
-    const blob = await res.blob();
-    const url = window.URL.createObjectURL(blob);
-
+export const downloadBeatmap = (id: number, name: string) => {
+    const url = `http://localhost:3000/download/beatmap/${id}`;
+    
     const a = document.createElement("a");
     a.href = url;
-    a.download = `${name}-${id}.zip`;
+    a.download = `${name}-${id}.zip`; 
+    
     document.body.appendChild(a);
     a.click();
     a.remove();
-    window.URL.revokeObjectURL(url);
-}
+};

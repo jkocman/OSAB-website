@@ -57,7 +57,7 @@
 </template>
 
 <script lang="ts" setup>
-import { downloadGame } from '@/composables/api';
+import { downloadGame } from '@/composables/api'
 </script>
 
 <style lang="scss" scoped>
@@ -83,7 +83,7 @@ main {
     border-radius: 20px;
     overflow: hidden;
     line-height: 0;
-    @media(max-width: 1200px){
+    @media (max-width: 1200px) {
       width: 100%;
     }
     img {
@@ -99,7 +99,7 @@ main {
     justify-content: center;
     gap: 40px;
     max-width: 1600px;
-    @media(max-width: 1200px){
+    @media (max-width: 1200px) {
       flex-direction: column;
       align-items: center;
     }
@@ -128,15 +128,15 @@ main {
           align-items: center;
           justify-content: space-between;
 
-          @media(max-width: 1527px){
+          @media (max-width: 1527px) {
             flex-direction: column;
             gap: 10px;
           }
-          @media(max-width: 1200px){
+          @media (max-width: 1200px) {
             flex-direction: row;
             align-items: center;
           }
-          @media(max-width: 700px){
+          @media (max-width: 700px) {
             flex-direction: column;
             gap: 10px;
           }

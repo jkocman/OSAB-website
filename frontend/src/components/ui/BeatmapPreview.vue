@@ -1,5 +1,9 @@
 <template>
-  <main @click="handleClick()" :style="{ alignItems: dashboard ? 'top' : 'center', cursor: dashboard ? 'pointer': 'default'}" :class="dashboard ? 'hover' : ''">
+  <main
+    @click="handleClick()"
+    :style="{ alignItems: dashboard ? 'top' : 'center', cursor: dashboard ? 'pointer' : 'default' }"
+    :class="dashboard ? 'hover' : ''"
+  >
     <section class="img-section">
       <img :src="img" alt="Beatmap image" />
     </section>
@@ -10,7 +14,11 @@
       </section>
       <p v-if="dashboard" class="creator">Created by: {{ creator }}</p>
     </section>
-    <section v-if="!dashboard" style="color: darkred; font-size: 30px; margin-right: 20px; cursor: pointer;" @click.stop="emitDelete">
+    <section
+      v-if="!dashboard"
+      style="color: darkred; font-size: 30px; margin-right: 20px; cursor: pointer"
+      @click.stop="emitDelete"
+    >
       <i class="fa-solid fa-trash-can"></i>
     </section>
   </main>
@@ -23,7 +31,7 @@ const props = defineProps({
   img: String,
   artist: String,
   creator: String,
-  dashboard: {type: Boolean, default: true },
+  dashboard: { type: Boolean, default: true },
 })
 
 const emit = defineEmits<{

@@ -1,61 +1,63 @@
 import { Response } from "express";
 import fs from "fs";
 import path from "path";
-import { nextNumber } from "../middlewares/levelIdMiddleware";
 import * as mm from "music-metadata";
+import archiver from "archiver";
+import { Upload } from "@aws-sdk/lib-storage";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { PassThrough } from "stream";
+import { r2 } from "../app";
 import { AuthRequest } from "../middlewares/authMiddleware";
 
 export const processOsab = async (req: AuthRequest, res: Response) => {
+  const levelDir: string = (req as any).levelDir;
+  const id = (req as any).assignedId;
+
   try {
     const userId = req.user!.id;
     const username = req.user!.username;
-
     const osab = (req as any).osab;
-    const levelDir: string = (req as any).levelDir;
+    const meta = osab.meta;
     const dateUploaded = new Date().toISOString();
 
-    if (!osab || !osab.meta) {
-      return res.status(400).json({
-        error: "no metadata in osab file",
-      });
-    }
-
-    const meta = osab.meta;
     const files = fs.readdirSync(levelDir);
 
-    const audioFile = files.find(
-      file =>
-        file.toLowerCase().endsWith(".ogg") ||
-        file.toLowerCase().endsWith(".mp3")
-    );
-
-    const normalizeArtist = (
-      artist?: string | string[] | null
-    ): string | null => {
-      if (!artist) return null;
-      if (Array.isArray(artist)) return artist.join(", ");
-      return artist;
-    };
-
+    const audioFile = files.find((f) => /\.(ogg|mp3)$/i.test(f));
     let musicAuthor: string | null = null;
-
     if (audioFile) {
-      const audioPath = path.join(levelDir, audioFile);
-      try {
-        const metadata = await mm.parseFile(audioPath);
-        musicAuthor =
-          normalizeArtist(metadata.common.artist) ||
-          normalizeArtist(metadata.common.albumartist) ||
-          normalizeArtist(metadata.common.composer) ||
-          null;
-      } catch (err) {
-        console.warn(err);
-      }
+      const metadata = await mm.parseFile(path.join(levelDir, audioFile));
+      musicAuthor =
+        metadata.common.artist || metadata.common.albumartist || null;
     }
 
-    const dataDir = path.join(process.cwd(), "data");
-    const filePath = path.join(dataDir, "levels.json");
-    const id = nextNumber();
+    const imageFile = files.find((f) => /\.(png|jpg|jpeg)$/i.test(f));
+    if (imageFile) {
+      await r2.send(
+        new PutObjectCommand({
+          Bucket: process.env.R2_BUCKET!,
+          Key: `beatmaps/${id}/cover.png`,
+          Body: fs.readFileSync(path.join(levelDir, imageFile)),
+          ContentType: "image/png",
+        }),
+      );
+    }
+
+    const passThrough = new PassThrough();
+    const archive = archiver("zip", { zlib: { level: 9 } });
+    archive.pipe(passThrough);
+    archive.directory(levelDir, false);
+    archive.finalize();
+
+    const upload = new Upload({
+      client: r2,
+      params: {
+        Bucket: process.env.R2_BUCKET!,
+        Key: `beatmaps/${id}/${id}.zip`,
+        Body: passThrough,
+        ContentType: "application/zip",
+      },
+    });
+    await upload.done();
 
     const result = {
       id,
@@ -69,33 +71,24 @@ export const processOsab = async (req: AuthRequest, res: Response) => {
       musicAuthor,
       creatorId: userId,
       creatorName: username,
-      downlads: 0,
+      downloads: 0,
     };
 
-    if (!fs.existsSync(dataDir)) {
-      fs.mkdirSync(dataDir, { recursive: true });
-    }
-
-    let jsonData: any[] = [];
-
+    const filePath = path.join(process.cwd(), "data", "levels.json");
+    let jsonData = [];
     if (fs.existsSync(filePath)) {
-      const raw = fs.readFileSync(filePath, "utf-8");
-      if (raw.trim()) {
-        jsonData = JSON.parse(raw);
-      }
+      jsonData = JSON.parse(fs.readFileSync(filePath, "utf-8") || "[]");
     }
-
     jsonData.push(result);
+    fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2));
 
-    fs.writeFileSync(
-      filePath,
-      JSON.stringify(jsonData, null, 2),
-      "utf-8"
-    );
+    fs.rmSync(levelDir, { recursive: true, force: true });
 
     res.json({ saved: result });
   } catch (err) {
-    console.error(err);
-    res.status(500).json(err);
+    console.error("R2 Upload Error:", err);
+    if (fs.existsSync(levelDir))
+      fs.rmSync(levelDir, { recursive: true, force: true });
+    res.status(500).json({ error: "Internal server error during upload" });
   }
 };

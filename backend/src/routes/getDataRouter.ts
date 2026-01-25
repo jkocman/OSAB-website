@@ -16,9 +16,7 @@ router.get("/beatmaps", (req, res) => {
     const userId = Number(req.query.userId);
 
     if (!isNaN(userId)) {
-      const filtered = beatmaps.filter(
-        (b: any) => b.creatorId === userId
-      );
+      const filtered = beatmaps.filter((b: any) => b.creatorId === userId);
       return res.json(filtered);
     }
 

@@ -1,48 +1,27 @@
 import { Request, Response } from "express";
-import fs from "fs";
-import path from "path";
+import { GetObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { r2 } from "../app";
 
-export const getBeatmapImage = (req: Request, res: Response) => {
-  const beatmapId = req.params.id; 
+export const getBeatmapImage = async (req: Request, res: Response) => {
+  const { id } = req.params; 
 
-  const uploadsDir = path.join(process.cwd(), "uploads");
-
-  if (!fs.existsSync(uploadsDir)) {
-    return res.status(404).send("uploads directory not found");
-  }
-
-  const folders = fs.readdirSync(uploadsDir)
-    .filter(dir => dir.split("-").pop() === beatmapId)
-    .map(dir => ({
-      name: dir,
-      time: fs.statSync(path.join(uploadsDir, dir)).mtime.getTime()
-    }));
-
-  if (folders.length === 0) {
-    return res.status(404).send("assets folder not found");
-  }
-
-  folders.sort((a, b) => b.time - a.time);
-  const latestFolder = folders[0]?.name;
-  if (!latestFolder) return res.status(404).send("Folder error");
-
-  const assetsDir = path.join(uploadsDir, latestFolder);
-  
   try {
-    const files = fs.readdirSync(assetsDir);
-    
-    const imageFile = files.find((f) => {
-      const ext = f.toLowerCase();
-      return ext.endsWith(".png") || ext.endsWith(".jpg") || ext.endsWith(".jpeg");
+    const fileKey = `beatmaps/${id}/cover.png`;
+
+    const command = new GetObjectCommand({
+      Bucket: process.env.R2_BUCKET!,
+      Key: fileKey,
     });
 
-    if (!imageFile) {
-      return res.status(404).send("image not found");
-    }
+    const signedUrl = await getSignedUrl(r2, command, { expiresIn: 3600 });
 
-    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-    res.sendFile(path.join(assetsDir, imageFile));
+    res.setHeader("Cache-Control", "public, max-age=3600");
+
+    return res.redirect(signedUrl);
+
   } catch (err) {
-    return res.status(500).send("Error reading assets directory");
+    console.error(err);
+    return res.status(404).send("Image not found on R2");
   }
 };

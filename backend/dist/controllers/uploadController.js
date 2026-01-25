@@ -39,49 +39,52 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.processOsab = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const levelIdMiddleware_1 = require("../middlewares/levelIdMiddleware");
 const mm = __importStar(require("music-metadata"));
+const archiver_1 = __importDefault(require("archiver"));
+const lib_storage_1 = require("@aws-sdk/lib-storage");
+const client_s3_1 = require("@aws-sdk/client-s3");
+const stream_1 = require("stream");
+const app_1 = require("../app");
 const processOsab = async (req, res) => {
+    const levelDir = req.levelDir;
+    const id = req.assignedId;
     try {
         const userId = req.user.id;
         const username = req.user.username;
         const osab = req.osab;
-        const levelDir = req.levelDir;
-        const dateUploaded = new Date().toISOString();
-        if (!osab || !osab.meta) {
-            return res.status(400).json({
-                error: "no metadata in osab file",
-            });
-        }
         const meta = osab.meta;
+        const dateUploaded = new Date().toISOString();
         const files = fs_1.default.readdirSync(levelDir);
-        const audioFile = files.find(file => file.toLowerCase().endsWith(".ogg") ||
-            file.toLowerCase().endsWith(".mp3"));
-        const normalizeArtist = (artist) => {
-            if (!artist)
-                return null;
-            if (Array.isArray(artist))
-                return artist.join(", ");
-            return artist;
-        };
+        const audioFile = files.find(f => /\.(ogg|mp3)$/i.test(f));
         let musicAuthor = null;
         if (audioFile) {
-            const audioPath = path_1.default.join(levelDir, audioFile);
-            try {
-                const metadata = await mm.parseFile(audioPath);
-                musicAuthor =
-                    normalizeArtist(metadata.common.artist) ||
-                        normalizeArtist(metadata.common.albumartist) ||
-                        normalizeArtist(metadata.common.composer) ||
-                        null;
-            }
-            catch (err) {
-                console.warn(err);
-            }
+            const metadata = await mm.parseFile(path_1.default.join(levelDir, audioFile));
+            musicAuthor = metadata.common.artist || metadata.common.albumartist || null;
         }
-        const dataDir = path_1.default.join(process.cwd(), "data");
-        const filePath = path_1.default.join(dataDir, "levels.json");
-        const id = (0, levelIdMiddleware_1.nextNumber)();
+        const imageFile = files.find(f => /\.(png|jpg|jpeg)$/i.test(f));
+        if (imageFile) {
+            await app_1.r2.send(new client_s3_1.PutObjectCommand({
+                Bucket: process.env.R2_BUCKET,
+                Key: `beatmaps/${id}/cover.png`,
+                Body: fs_1.default.readFileSync(path_1.default.join(levelDir, imageFile)),
+                ContentType: "image/png"
+            }));
+        }
+        const passThrough = new stream_1.PassThrough();
+        const archive = (0, archiver_1.default)("zip", { zlib: { level: 9 } });
+        archive.pipe(passThrough);
+        archive.directory(levelDir, false);
+        archive.finalize();
+        const upload = new lib_storage_1.Upload({
+            client: app_1.r2,
+            params: {
+                Bucket: process.env.R2_BUCKET,
+                Key: `beatmaps/${id}/${id}.zip`,
+                Body: passThrough,
+                ContentType: "application/zip",
+            },
+        });
+        await upload.done();
         const result = {
             id,
             idGame: meta.id,
@@ -94,25 +97,23 @@ const processOsab = async (req, res) => {
             musicAuthor,
             creatorId: userId,
             creatorName: username,
-            downlads: 0,
+            downloads: 0,
         };
-        if (!fs_1.default.existsSync(dataDir)) {
-            fs_1.default.mkdirSync(dataDir, { recursive: true });
-        }
+        const filePath = path_1.default.join(process.cwd(), "data", "levels.json");
         let jsonData = [];
         if (fs_1.default.existsSync(filePath)) {
-            const raw = fs_1.default.readFileSync(filePath, "utf-8");
-            if (raw.trim()) {
-                jsonData = JSON.parse(raw);
-            }
+            jsonData = JSON.parse(fs_1.default.readFileSync(filePath, "utf-8") || "[]");
         }
         jsonData.push(result);
-        fs_1.default.writeFileSync(filePath, JSON.stringify(jsonData, null, 2), "utf-8");
+        fs_1.default.writeFileSync(filePath, JSON.stringify(jsonData, null, 2));
+        fs_1.default.rmSync(levelDir, { recursive: true, force: true });
         res.json({ saved: result });
     }
     catch (err) {
-        console.error(err);
-        res.status(500).json(err);
+        console.error("R2 Upload Error:", err);
+        if (fs_1.default.existsSync(levelDir))
+            fs_1.default.rmSync(levelDir, { recursive: true, force: true });
+        res.status(500).json({ error: "Internal server error during upload" });
     }
 };
 exports.processOsab = processOsab;

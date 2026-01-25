@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-
     <Header v-if="route.meta.layout !== 'auth'"></Header>
     <main>
       <RouterView />

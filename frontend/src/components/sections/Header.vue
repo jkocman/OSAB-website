@@ -30,7 +30,7 @@
           :paddingVertical="10"
           :buttonType="buttonType"
           @click="router.push('/download')"
-        ></Button>   
+        ></Button>
       </section>
     </section>
 
@@ -237,7 +237,7 @@ header {
         border-radius: 2px;
       }
     }
-    section{
+    section {
       display: flex;
       align-items: center;
       gap: 20px;

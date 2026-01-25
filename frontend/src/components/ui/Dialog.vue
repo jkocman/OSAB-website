@@ -7,7 +7,6 @@
 </template>
 
 <script setup lang="ts">
-
 const emit = defineEmits(['close'])
 
 const close = () => emit('close')

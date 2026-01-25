@@ -8,33 +8,33 @@
           <h2>{{ beatmap.name }}</h2>
           <p class="artist">{{ beatmap.musicAuthor || 'Unknown' }}</p>
         </section>
-          <section class="info-container">
-            <section class="description-container">
-              <h3>Description</h3>
-              <section v-if="beatmap.description !== ''">
-                <p>{{ beatmap.description }}</p>
-              </section>
-              <section v-else>
-                <p>No description provided</p>
-              </section>
+        <section class="info-container">
+          <section class="description-container">
+            <h3>Description</h3>
+            <section v-if="beatmap.description !== ''">
+              <p>{{ beatmap.description }}</p>
             </section>
-            <Button
-              title="Download Beatmap"
-              :fontSize="buttonStyle().fontSize"
-              :paddingHorizontal="buttonStyle().paddingHorizontal"
-              :paddingVertical="buttonStyle().paddingVertical"
-              buttonType="primary"
-              @click="handleDownload(beatmap.id, beatmap.name)"
-            ></Button>
-            <section class="beatmap-info-container">
-              <h3>Beatmap info</h3>
-              <p>Creator: {{ beatmap.creatorName || 'No creator provided' }}</p>
-              <p>Difficulty: {{ beatmap.diff|| 'No difficulty provided' }}</p>
-              <p>Downloaded: {{ beatmap.downloads || '0' }}x</p>
-              <p>Uploaded: {{ formatedDate }}</p>
+            <section v-else>
+              <p>No description provided</p>
             </section>
           </section>
+          <Button
+            title="Download Beatmap"
+            :fontSize="buttonStyle().fontSize"
+            :paddingHorizontal="buttonStyle().paddingHorizontal"
+            :paddingVertical="buttonStyle().paddingVertical"
+            buttonType="primary"
+            @click="handleDownload(beatmap.id, beatmap.name)"
+          ></Button>
+          <section class="beatmap-info-container">
+            <h3>Beatmap info</h3>
+            <p>Creator: {{ beatmap.creatorName || 'No creator provided' }}</p>
+            <p>Difficulty: {{ beatmap.diff || 'No difficulty provided' }}</p>
+            <p>Downloaded: {{ beatmap.downloads || '0' }}x</p>
+            <p>Uploaded: {{ formatedDate }}</p>
+          </section>
         </section>
+      </section>
 
       <section v-else>
         <h2>Beatmap not found</h2>
@@ -60,25 +60,25 @@ const isLoading = ref(true)
 
 const beatmap = computed(() => beatmaps.value.find((b) => b.id === beatmapId.value))
 
-const handleDownload = async(id: number, name: string) => {
-  await updateDownloads(id);
-  await downloadBeatmap(id, name);
+const handleDownload = async (id: number, name: string) => {
+  await updateDownloads(id)
+  await downloadBeatmap(id, name)
 }
 
 const formatedDate = computed(() => {
-  if (!beatmap.value?.dateUploaded) return 'Unknown';
+  if (!beatmap.value?.dateUploaded) return 'Unknown'
 
-  return new Date(beatmap.value.dateUploaded).toLocaleDateString('cs-CZ');
-});
+  return new Date(beatmap.value.dateUploaded).toLocaleDateString('cs-CZ')
+})
 
 const buttonStyle = () => {
-  if(windowWidth.value > 1757){
+  if (windowWidth.value > 1757) {
     return {
       fontSize: 26,
       paddingHorizontal: 35,
       paddingVertical: 40,
     }
-  } else if(windowWidth.value > 1470){
+  } else if (windowWidth.value > 1470) {
     return {
       fontSize: 22,
       paddingHorizontal: 30,
@@ -155,19 +155,19 @@ main {
         width: 100%;
         padding: 0 50px;
 
-        @media(max-width: 1183px) {
+        @media (max-width: 1183px) {
           display: flex;
           flex-direction: column;
           align-items: stretch;
         }
 
-        Button{
+        Button {
           grid-row: span 2;
           align-self: center;
           justify-self: center;
-          @media(max-width: 1183px) {
-              align-self: stretch;
-              order: 999;
+          @media (max-width: 1183px) {
+            align-self: stretch;
+            order: 999;
           }
         }
 

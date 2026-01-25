@@ -1,73 +1,60 @@
 import { Router } from "express";
-import path from "path";
-import archiver from "archiver";
-import fs from "fs";
+import { GetObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { r2 } from "../app";
 
 const router = Router();
 
-router.get("/game/:variant", (req, res) => {
+router.get("/game/:variant", async (req, res) => {
   const { variant } = req.params;
 
   if (!["osab_experimental", "osab_stable"].includes(variant)) {
-    return res.status(400).json({ error: "Neplatná verze hry" });
+    return res.status(400);
   }
 
-  const fileName = `${variant}.zip`;
+  const fileKey = `game/${variant}.zip`;
 
-  const filePath = path.join(process.cwd(), "files", fileName);
+  try {
+    const command = new GetObjectCommand({
+      Bucket: process.env.R2_BUCKET!,
+      Key: fileKey,
+    });
 
-  res.download(filePath, fileName, (err) => {
-    if (err) {
-      console.error(err);
-      res.status(404).json({ error: "Soubor nenalezen" });
-    }
-  });
+    const downloadUrl = await getSignedUrl(r2, command, { expiresIn: 60 });
+
+    res.json({ url: downloadUrl });
+  } catch (err) {
+    console.error("R2 download error:", err);
+    res.status(404);
+  }
 });
 
 router.get("/beatmap/:id", async (req, res) => {
+  const { id } = req.params;
+  const prefix = `beatmaps/${id}/`;
+
   try {
-    const { id } = req.params;
-    const uploadsDir = path.join(process.cwd(), "uploads");
+    const listCmd = new ListObjectsV2Command({
+      Bucket: process.env.R2_BUCKET,
+      Prefix: prefix,
+    });
+    const listed = await r2.send(listCmd);
 
-    if (!fs.existsSync(uploadsDir)) {
-      return res.status(404).json({ error: "Složka uploads neexistuje" });
+    const zipFile = listed.Contents?.find((f) => f.Key?.endsWith(".zip"));
+
+    if (!zipFile || !zipFile.Key) {
+      return res.status(404);
     }
 
-    const items = fs.readdirSync(uploadsDir);
-    const targetFolder = items.find(item => {
-      const itemPath = path.join(uploadsDir, item);
-      return fs.lstatSync(itemPath).isDirectory() && item.endsWith(`-${id}`);
+    const downloadCmd = new GetObjectCommand({
+      Bucket: process.env.R2_BUCKET,
+      Key: zipFile.Key,
     });
 
-    if (!targetFolder) {
-      console.log(`Složka pro ID ${id} nebyla v ${uploadsDir} nalezena.`);
-      return res.status(404).json({ error: "Složka s beatmapou nenalezena" });
-    }
-
-    const fullPath = path.join(uploadsDir, targetFolder);
-
-    res.setHeader("Content-Type", "application/zip");
-    res.setHeader("Content-Disposition", `attachment; filename="${targetFolder}.zip"`);
-
-    const archive = archiver("zip", { zlib: { level: 9 } });
-
-    archive.on("error", (err) => {
-      console.error("Archiver error:", err);
-      if (!res.headersSent) {
-        res.status(500).send({ error: "Chyba při komprimaci" });
-      }
-    });
-
-    archive.pipe(res);
-    archive.directory(fullPath, false);
-    
-    await archive.finalize();
-
-  } catch (error) {
-    console.error("Server error:", error);
-    if (!res.headersSent) {
-      res.status(500).json({ error: "Interní chyba serveru" });
-    }
+    const url = await getSignedUrl(r2, downloadCmd, { expiresIn: 900 });
+    res.redirect(url);
+  } catch (err) {
+    res.status(500);
   }
 });
 
