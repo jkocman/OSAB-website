@@ -4,6 +4,7 @@ import path from "path";
 import { AuthRequest } from "./authMiddleware";
 import { ListObjectsV2Command, DeleteObjectsCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { r2 } from "../app"
+import { saveDbToR2 } from "../utils/dbSync";
 
 export const deleteMap = async (req: AuthRequest, res: Response) => {
   try {
@@ -38,6 +39,8 @@ export const deleteMap = async (req: AuthRequest, res: Response) => {
 
     levels.splice(index, 1);
     fs.writeFileSync(dataPath, JSON.stringify(levels, null, 2));
+    saveDbToR2();
+
 
     const oldUploadDir = path.join(process.cwd(), "uploads", `${map.name}-${map.id}`);
     if (fs.existsSync(oldUploadDir)) {
