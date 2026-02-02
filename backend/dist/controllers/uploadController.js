@@ -109,7 +109,7 @@ const processOsab = async (req, res) => {
         jsonData.push(result);
         fs_1.default.writeFileSync(filePath, JSON.stringify(jsonData, null, 2));
         console.log("Saving to JSON done, now uploading to R2...");
-        await (0, dbSync_1.saveDbToR2)(); // MUSÍ zde být await!
+        await (0, dbSync_1.saveDbToR2)();
         console.log("Sync to R2 finished.");
         fs_1.default.rmSync(levelDir, { recursive: true, force: true });
         res.json({ saved: result });

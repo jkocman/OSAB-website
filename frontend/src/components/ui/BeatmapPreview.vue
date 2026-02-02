@@ -16,7 +16,7 @@
     </section>
     <section
       v-if="!dashboard"
-      style="color: darkred; font-size: 30px; margin-right: 20px; cursor: pointer"
+      class="trash-can"
       @click.stop="emitDelete"
     >
       <i class="fa-solid fa-trash-can"></i>
@@ -68,8 +68,6 @@ main {
   }
 
   .img-section {
-    img {
-      object-fit: cover;
       height: 175px;
       width: 250px;
       @media (max-width: 1268px) {
@@ -87,6 +85,10 @@ main {
       @media (max-width: 506px) {
         width: 100%;
       }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 
@@ -117,6 +119,15 @@ main {
     p {
       color: white;
       font-size: var(--small-text-size);
+    }
+  }
+  .trash-can{
+    color: darkred;
+    font-size: 30px;
+    margin-left: 20px;
+    @media(max-width: 506px){
+      margin-bottom: 10px;
+      margin-left: 0;
     }
   }
 }

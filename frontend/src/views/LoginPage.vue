@@ -79,6 +79,9 @@ main {
     top: 10px;
     left: 50%;
     transform: translate(-50%);
+    @media (max-height: 695px){
+        display: none;
+    }
   }
 
   Article {

@@ -96,6 +96,9 @@ main {
     top: 10px;
     left: 50%;
     transform: translate(-50%);
+    @media (max-height: 900px){
+        display: none;
+    }
   }
 
   Article {

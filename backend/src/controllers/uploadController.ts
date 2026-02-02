@@ -83,7 +83,7 @@ export const processOsab = async (req: AuthRequest, res: Response) => {
     jsonData.push(result);
     fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2));
     console.log("Saving to JSON done, now uploading to R2...");
-    await saveDbToR2(); // MUSÍ zde být await!
+    await saveDbToR2();
     console.log("Sync to R2 finished.");
 
     fs.rmSync(levelDir, { recursive: true, force: true });

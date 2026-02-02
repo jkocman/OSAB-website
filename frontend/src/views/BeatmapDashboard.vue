@@ -156,6 +156,10 @@ onMounted(async () => {
       align-items: center;
       gap: 40px;
 
+      @media(max-width: 545px){
+        flex-direction: column;
+        align-self: center;
+      }
       section {
         display: flex;
         color: var(--terciary-foreground-color);
@@ -187,6 +191,9 @@ onMounted(async () => {
         gap: 50px;
         width: 100%;
         margin-bottom: 30px;
+        @media(max-width: 900px){
+          grid-template-columns: 1fr;
+        }
       }
     }
   }

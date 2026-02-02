@@ -75,6 +75,9 @@
           <i class="fa fa-search" @click="openSearch = true"></i>
         </li>
         <li>
+          <i class="fa-solid fa-user" @click="router.push('/login')"></i>
+        </li>
+        <li>
           <Button
             title="Download"
             :fontSize="18"
@@ -241,16 +244,17 @@ header {
       display: flex;
       align-items: center;
       gap: 20px;
-      i {
-        color: var(--terciary-foreground-color);
-        font-size: 24px;
-        cursor: pointer;
-        transition: 0.3s ease;
+    }
+  }
 
-        &:hover {
-          color: var(--primary-foreground-color);
-        }
-      }
+  .fa-user {
+    color: var(--terciary-foreground-color);
+    font-size: 24px;
+    cursor: pointer;
+    transition: 0.3s ease;
+
+    &:hover {
+      color: var(--primary-foreground-color);
     }
   }
 
