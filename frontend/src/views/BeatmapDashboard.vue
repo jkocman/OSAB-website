@@ -27,6 +27,7 @@
           <label for="title">Upload the file</label>
           <FileUpload @fileSelected="onFileSelected"></FileUpload>
 
+          <p v-if="err">{{ errValue }}</p>
           <section class="button-section">
             <div v-if="isSubmitting" class="loader-wrap">
               <i class="fa-solid fa-circle-notch fa-spin"></i>
@@ -84,6 +85,8 @@ import router from '@/router'
 const openAddBeatmap = ref(false)
 const isSubmitting = ref(false)
 const beatmaps = ref<any[]>([])
+const err = ref(false);
+const errValue = ref("");
 let selectedFile: File | null = null
 
 const logout = () => {
@@ -103,15 +106,20 @@ const onFileSelected = (file: File) => {
 const submit = async () => {
   if (!selectedFile || isSubmitting.value) return
 
-  isSubmitting.value = true
-
+  isSubmitting.value = true;
+  
   try {
-    await postFile(selectedFile)
-    window.location.reload()
-  } catch (error) {
-    console.error('Upload failed:', error)
-    alert('Upload failed. Please check the file and try again.')
-    isSubmitting.value = false
+    await postFile(selectedFile);
+    window.location.reload();
+  } 
+  catch (error: unknown) {
+    if (error instanceof Error) {
+      errValue.value = error.message
+    } 
+    else {
+      errValue.value = String(error ?? '')
+    }
+    isSubmitting.value = false;
   }
 }
 

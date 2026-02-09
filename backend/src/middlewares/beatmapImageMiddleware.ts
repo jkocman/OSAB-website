@@ -20,7 +20,13 @@ export const getBeatmapImage = async (req: Request, res: Response) => {
     );
 
     if (!imageFile) {
-      return res.status(404).send("Image not found");
+      const command = new GetObjectCommand({
+        Bucket: process.env.R2_BUCKET!,
+        Key: 'default-data/devushka-neko-sakura-veer.jpg',
+      })
+      const newImageUrl = await getSignedUrl(r2, command, {expiresIn: 3600});
+      console.log("Fallback image URL:", newImageUrl);
+      return res.redirect(newImageUrl);
     }
 
     const command = new GetObjectCommand({

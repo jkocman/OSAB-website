@@ -1,6 +1,6 @@
 import router from '@/router'
 
-const URL = 'https://osab-website.onrender.com'
+const URL = 'http://localhost:3000'
 
 export const postFile = async (file: File) => {
   const formData = new FormData()
@@ -53,7 +53,7 @@ export const updateDownloads = async (id: number) => {
 }
 
 export const getBeatmapImage = (id: number) => {
-  return `${URL}/beatmaps/${id}/image?v=${Date.now()}`
+  return `${URL}/beatmaps/${id}/image?v=${Date.now()}`;
 }
 
 export const login = async (email: string, password: string) => {

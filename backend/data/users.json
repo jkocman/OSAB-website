@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "id": 1,
+    "username": "heslo",
+    "email": "heslo@heslo.cz",
+    "passwordHash": "$2b$10$nl8lkwRV6e7T/5mgL1yqsuLOlhi5/E4cBCGCkl28xUi7xmEGbwjrS",
+    "createdAt": "2026-02-06T12:56:00.180Z"
+  }
+]
