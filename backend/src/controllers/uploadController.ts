@@ -9,10 +9,19 @@ import { PassThrough } from "stream";
 import { r2 } from "../app";
 import { AuthRequest } from "../middlewares/authMiddleware";
 import { saveDbToR2 } from "../utils/dbSync";
+import { getFolderSize } from "./checkSize";
 
 export const processOsab = async (req: AuthRequest, res: Response) => {
   const levelDir: string = (req as any).levelDir;
   const id = (req as any).assignedId;
+  const MAX_SIZE = 20 * 1024 * 1024;
+
+  const folderSize = getFolderSize(levelDir);
+
+  if (folderSize > MAX_SIZE) {
+    fs.rmSync(levelDir, { recursive: true, force: true });
+    return res.status(413).json({ error: "Map is too large (max 20MB)" });
+  }
 
   try {
     const userId = req.user!.id;
@@ -82,9 +91,7 @@ export const processOsab = async (req: AuthRequest, res: Response) => {
     }
     jsonData.push(result);
     fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2));
-    console.log("Saving to JSON done, now uploading to R2...");
     await saveDbToR2();
-    console.log("Sync to R2 finished.");
 
     fs.rmSync(levelDir, { recursive: true, force: true });
 

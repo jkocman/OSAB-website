@@ -1,6 +1,6 @@
 import router from '@/router'
 
-const URL = 'http://localhost:3000'
+const URL = 'https://osab-website.onrender.com'
 
 export const postFile = async (file: File) => {
   const formData = new FormData()
@@ -9,13 +9,28 @@ export const postFile = async (file: File) => {
   const token = localStorage.getItem('token')
   if (!token) throw new Error('Token není v localStorage')
 
-  await fetch(`${URL}/upload`, {
+  const res = await fetch(`${URL}/upload`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
     },
     body: formData,
   })
+
+  if (!res.ok) {
+    let message = 'Upload failed'
+
+    try {
+      const data = await res.json()
+      message = data.error || message
+    } catch {
+      message = res.statusText
+    }
+
+    throw new Error(message)
+  }
+
+  return await res.json()
 }
 
 export const getAllBeatmaps = async () => {
@@ -53,16 +68,16 @@ export const updateDownloads = async (id: number) => {
 }
 
 export const getBeatmapImage = (id: number) => {
-  return `${URL}/beatmaps/${id}/image?v=${Date.now()}`;
+  return `${URL}/beatmaps/${id}/image?v=${Date.now()}`
 }
 
-export const login = async (email: string, password: string) => {
+export const login = async (identifier: string, password: string) => {
   const res = await fetch(`${URL}/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ identifier, password }),
   })
 
   if (!res.ok) {

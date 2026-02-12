@@ -88,9 +88,9 @@ export const CreateUser = async (req: Request, res: Response) => {
 
 export const LoginUser = async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body;
+    const { identifier , password } = req.body;
 
-    if (!email || !password) {
+    if (!identifier || !password) {
       return res.status(400).json({ error: "Missing fields" });
     }
 
@@ -104,7 +104,7 @@ export const LoginUser = async (req: Request, res: Response) => {
     const raw = fs.readFileSync(filePath, "utf-8");
     const users: User[] = raw.trim() ? JSON.parse(raw) : [];
 
-    const user = users.find((u) => u.email === email);
+    const user = users.find((u) => u.email === identifier || u.username === identifier);
     if (!user) {
       return res.status(401).json({ error: "Invalid credentials" });
     }

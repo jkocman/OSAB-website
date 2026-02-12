@@ -1,9 +1,14 @@
 <template>
   <main class="main-container">
-    <h1>Your uploaded beatmaps</h1>
-    <Article>
+    <h1>Welcome back {{ username }}!</h1>
+    <Article class="article-content">
       <section>
-        <section @click="openAddBeatmap = true">
+        <section
+          @click="
+            openAddBeatmap = true
+            isError = false
+          "
+        >
           <i class="fa-solid fa-plus"></i>
           <p>Add Beatmap</p>
         </section>
@@ -27,7 +32,6 @@
           <label for="title">Upload the file</label>
           <FileUpload @fileSelected="onFileSelected"></FileUpload>
 
-          <p v-if="err">{{ errValue }}</p>
           <section class="button-section">
             <div v-if="isSubmitting" class="loader-wrap">
               <i class="fa-solid fa-circle-notch fa-spin"></i>
@@ -53,10 +57,11 @@
               ></Button>
             </template>
           </section>
+          <p v-if="isError" class="error">{{ errorMsg }}</p>
         </form>
       </Dialog>
 
-      <section>
+      <section class="manage-section">
         <h2>Manage your beatmaps</h2>
         <section>
           <BeatmapPreview
@@ -82,11 +87,12 @@ import { postFile, deleteBeatmap } from '@/composables/api'
 import { loadUserBeatmaps } from '@/composables/beatmapArray'
 import router from '@/router'
 
+const username = JSON.parse(localStorage.getItem('user')!).username || 'user'
 const openAddBeatmap = ref(false)
 const isSubmitting = ref(false)
 const beatmaps = ref<any[]>([])
-const err = ref(false);
-const errValue = ref("");
+const isError = ref(false)
+const errorMsg = ref('')
 let selectedFile: File | null = null
 
 const logout = () => {
@@ -106,20 +112,24 @@ const onFileSelected = (file: File) => {
 const submit = async () => {
   if (!selectedFile || isSubmitting.value) return
 
-  isSubmitting.value = true;
-  
+  isSubmitting.value = true
+  isError.value = false
+
   try {
-    await postFile(selectedFile);
-    window.location.reload();
-  } 
-  catch (error: unknown) {
+    await postFile(selectedFile)
+
+    const user = JSON.parse(localStorage.getItem('user')!)
+    beatmaps.value = await loadUserBeatmaps(user.id)
+
+    openAddBeatmap.value = false
+  } catch (error: unknown) {
+    isError.value = true
     if (error instanceof Error) {
-      errValue.value = error.message
-    } 
-    else {
-      errValue.value = String(error ?? '')
+      errorMsg.value = error.message
+    } else {
+      errorMsg.value = String(error ?? '')
     }
-    isSubmitting.value = false;
+    isSubmitting.value = false
   }
 }
 
@@ -154,7 +164,7 @@ onMounted(async () => {
     text-align: center;
   }
 
-  Article {
+  article {
     display: flex;
     flex-direction: column;
 
@@ -164,7 +174,7 @@ onMounted(async () => {
       align-items: center;
       gap: 40px;
 
-      @media(max-width: 545px){
+      @media (max-width: 545px) {
         flex-direction: column;
         align-self: center;
       }
@@ -185,7 +195,7 @@ onMounted(async () => {
       }
     }
 
-    & > section:nth-child(2) {
+    .manage-section {
       width: 100%;
       h2 {
         font-weight: 600;
@@ -199,7 +209,7 @@ onMounted(async () => {
         gap: 50px;
         width: 100%;
         margin-bottom: 30px;
-        @media(max-width: 900px){
+        @media (max-width: 900px) {
           grid-template-columns: 1fr;
         }
       }
@@ -249,6 +259,9 @@ onMounted(async () => {
           font-size: 14px;
           font-weight: 500;
         }
+      }
+      .error {
+        color: darkred;
       }
     }
   }

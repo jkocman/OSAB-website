@@ -25,7 +25,6 @@ export const getBeatmapImage = async (req: Request, res: Response) => {
         Key: 'default-data/devushka-neko-sakura-veer.jpg',
       })
       const newImageUrl = await getSignedUrl(r2, command, {expiresIn: 3600});
-      console.log("Fallback image URL:", newImageUrl);
       return res.redirect(newImageUrl);
     }
 

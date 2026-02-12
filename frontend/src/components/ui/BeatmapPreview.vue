@@ -14,11 +14,7 @@
       </section>
       <p v-if="dashboard" class="creator">Created by: {{ creator }}</p>
     </section>
-    <section
-      v-if="!dashboard"
-      class="trash-can"
-      @click.stop="emitDelete"
-    >
+    <section v-if="!dashboard" class="trash-can" @click.stop="emitDelete">
       <i class="fa-solid fa-trash-can"></i>
     </section>
   </main>
@@ -68,23 +64,23 @@ main {
   }
 
   .img-section {
-      height: 175px;
-      width: 250px;
-      @media (max-width: 1268px) {
-        width: 200px;
-      }
-      @media (max-width: 1000px) {
-        width: 125px;
-      }
-      @media (max-width: 800px) {
-        width: 200px;
-      }
-      @media (max-width: 570px) {
-        width: 150px;
-      }
-      @media (max-width: 506px) {
-        width: 100%;
-      }
+    height: 175px;
+    width: 250px;
+    @media (max-width: 1268px) {
+      width: 200px;
+    }
+    @media (max-width: 1000px) {
+      width: 125px;
+    }
+    @media (max-width: 800px) {
+      width: 200px;
+    }
+    @media (max-width: 570px) {
+      width: 150px;
+    }
+    @media (max-width: 506px) {
+      width: 100%;
+    }
     img {
       width: 100%;
       height: 100%;
@@ -121,11 +117,12 @@ main {
       font-size: var(--small-text-size);
     }
   }
-  .trash-can{
+  .trash-can {
     color: darkred;
     font-size: 30px;
     margin-left: 20px;
-    @media(max-width: 506px){
+    cursor: pointer;
+    @media (max-width: 506px) {
       margin-bottom: 10px;
       margin-left: 0;
     }
