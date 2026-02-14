@@ -1,6 +1,6 @@
 import router from '@/router'
 
-const URL = 'http://46.101.204.29'
+const URL = 'https://osab.online'
 
 export const postFile = async (file: File) => {
   const formData = new FormData()
