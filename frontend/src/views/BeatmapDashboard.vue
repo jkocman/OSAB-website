@@ -5,8 +5,8 @@
       <section>
         <section
           @click="
-            openAddBeatmap = true
-            isError = false
+            openAddBeatmap = true;
+            isError = false;
           "
         >
           <i class="fa-solid fa-plus"></i>
