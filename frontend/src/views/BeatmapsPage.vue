@@ -97,9 +97,9 @@ const visibleBeatmaps = computed(() => {
 
   filtered = filtered.filter(
     (beatmap) =>
-      beatmap.name.toLowerCase().includes(searched) ||
-      beatmap.creator.toLowerCase().includes(searched) ||
-      beatmap.artist.toLowerCase().includes(searched),
+      beatmap.name?.toLowerCase().includes(searched) ||
+      beatmap.creatorName?.toLowerCase().includes(searched) ||
+      beatmap.musicAuthor?.toLowerCase().includes(searched),
   )
 
   return filtered.slice(0, visibleCount.value)
