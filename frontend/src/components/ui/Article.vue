@@ -59,5 +59,8 @@ article {
     width: 1600px;
     margin: 0 auto;
   }
+  @media (max-width: 540px){
+    padding: 20px 10px;
+  }
 }
 </style>

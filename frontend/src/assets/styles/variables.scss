@@ -28,4 +28,7 @@
   @media (max-width: 1100px) {
     --global-padding: 50px;
   }
+    @media (max-width: 500px) {
+    --global-padding: 10px;
+  }
 }

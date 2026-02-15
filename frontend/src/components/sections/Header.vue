@@ -53,14 +53,14 @@
         <img src="../../assets/img/logo-without-text.png" alt="Logo" />
       </RouterLink>
 
-      <button class="burger" @click="toggleMenu()">
-        <div :class="{ open: isOpen }"></div>
-        <div :class="{ open: isOpen }"></div>
-        <div :class="{ open: isOpen }"></div>
+      <button class="burger" @click.stop="toggleMenu()">
+        <div class="line" :class="{ open: isOpen }"></div>
+        <div class="line" :class="{ open: isOpen }"></div>
+        <div class="line" :class="{ open: isOpen }"></div>
       </button>
     </section>
 
-    <section class="burger-menu" v-if="isOpen">
+    <section class="burger-menu" v-if="isOpen" ref="burgerMenu">
       <ul>
         <li class="item">
           <RouterLink to="/">Home</RouterLink>
@@ -105,6 +105,7 @@ const openSearch = ref(false)
 const home = ref<HTMLLIElement | null>(null)
 const about = ref<HTMLLIElement | null>(null)
 const beatmaps = ref<HTMLLIElement | null>(null)
+const burgerMenu = ref<HTMLElement | null>(null);
 const indicatorLeft = ref(0)
 const indicatorWidth = ref(0)
 
@@ -179,6 +180,19 @@ const updatePageFromRoute = () => {
 
 const toggleMenu = (state?: boolean) => {
   isOpen.value = state !== undefined ? state : !isOpen.value
+
+}
+
+const handleClickOutside = (event: MouseEvent) => {
+  if (isOpen.value){
+    const target = event.target as Node
+    if (
+      burgerMenu.value &&
+      !burgerMenu.value.contains(target)
+    ) {
+      isOpen.value = false
+    }
+  }
 }
 
 watch(
@@ -190,6 +204,7 @@ watch(
 onMounted(() => {
   window.addEventListener('load', updateIndicator)
   window.addEventListener('resize', updateIndicator)
+  document.addEventListener('click', handleClickOutside);
 })
 </script>
 
@@ -229,6 +244,9 @@ header {
           }
           img {
             width: 70px;
+            @media (max-width: 540px){
+              width: 30px;
+            }
           }
         }
       }
@@ -293,7 +311,7 @@ header {
     img {
       width: 70px;
     }
-    button {
+    .burger {
       background-color: transparent;
       border: none;
       display: flex;
@@ -301,11 +319,27 @@ header {
       align-items: center;
       justify-content: center;
       gap: 10px;
-      div {
-        background-color: white;
+      .line {
+        background-color: var(--terciary-foreground-color);
         width: 40px;
         height: 3px;
         border-radius: 10px;
+        transition: all 0.3s ease-in-out;
+        transform-origin: center;
+      }
+      .line.open {
+        &:nth-child(1) {
+          transform: translateY(13px) rotate(45deg); 
+        }
+
+        &:nth-child(2) {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+
+        &:nth-child(3) {
+          transform: translateY(-13px) rotate(-45deg);
+        }
       }
     }
   }
