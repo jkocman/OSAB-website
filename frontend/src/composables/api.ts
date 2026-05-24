@@ -1,6 +1,6 @@
 import router from '@/router'
 
-const URL = 'https://osab.online'
+const URL = 'https://api.osabgame.ink'
 
 export const postFile = async (file: File) => {
   const formData = new FormData()
